@@ -2,6 +2,9 @@
 # http://github.com/jimmyebaker
 
 require 'date'
+require 'base64'
+require 'pathname'
+
 module ActiveMerchant
   module Shipping
     
@@ -15,7 +18,9 @@ module ActiveMerchant
       cattr_reader :name
       @@name = "FedEx"
       
-      TEST_URL = 'https://gatewaybeta.fedex.com:443/xml'
+      #TEST_URL = 'https://gatewaybeta.fedex.com:443/xml'
+      
+      TEST_URL = 'https://wsbeta.fedex.com:443/web-services'            
       LIVE_URL = 'https://gateway.fedex.com:443/xml'
       
       CarrierCodes = {
@@ -133,15 +138,15 @@ module ActiveMerchant
         [:key, :password, :account, :login]
       end
       
-      def find_rates(origin, destination, packages, options = {})
+      def find_rates(shipper, recipient, packages, options = {})
         options = @options.update(options)
         packages = Array(packages)
         
-        rate_request = build_rate_request(origin, destination, packages, options)
+        rate_request = build_rate_request(shipper, recipient, packages, options)
         
-        response = commit(save_request(rate_request), (options[:test] || false)).gsub(/<(\/)?.*?\:(.*?)>/, '<\1\2>')
+        response = commit(save_request(rate_request), (options[:test] || false))
 
-        parse_rate_response(origin, destination, packages, response, options)
+        parse_rate_response(shipper, recipient, packages, response, options)
       end
       
       def find_tracking_info(tracking_number, options={})
@@ -151,56 +156,144 @@ module ActiveMerchant
         response = commit(save_request(tracking_request), (options[:test] || false)).gsub(/<(\/)?.*?\:(.*?)>/, '<\1\2>')
         parse_tracking_response(response, options)
       end
+      
+      def ship(shipper, recipient, packages, account_number, options = {})
+        packages = Array(packages)
+        
+        ship_request = build_ship_request(shipper, recipient, packages, account_number)        
+        response = commit(ship_request)
+        parse_ship_response(shipper, recipient, packages, response)        
+      end
 
       protected
-      def build_rate_request(origin, destination, packages, options={})
-        imperial = ['US','LR','MM'].include?(origin.country_code(:alpha2))
-
-        xml_request = XmlNode.new('RateRequest', 'xmlns' => 'http://fedex.com/ws/rate/v6') do |root_node|
-          root_node << build_request_header
-
-          # Version
-          root_node << XmlNode.new('Version') do |version_node|
-            version_node << XmlNode.new('ServiceId', 'crs')
-            version_node << XmlNode.new('Major', '6')
-            version_node << XmlNode.new('Intermediate', '0')
-            version_node << XmlNode.new('Minor', '0')
-          end
+      
+      def build_ship_request(shipper, recipient, packages, account_number)
+        imperial = true
+        xml_request = XmlNode.new('soapenv:Envelope', 'xmlns:soapenv' => 'http://schemas.xmlsoap.org/soap/envelope/', 
+                                                      'xmlns' => 'http://fedex.com/ws/ship/v12') do |root_node| 
           
-          # Returns delivery dates
-          root_node << XmlNode.new('ReturnTransitAndCommit', true)
-          # Returns saturday delivery shipping options when available
-          root_node << XmlNode.new('VariableOptions', 'SATURDAY_DELIVERY')
-          
-          root_node << XmlNode.new('RequestedShipment') do |rs|
-            rs << XmlNode.new('ShipTimestamp', ship_timestamp(options[:turn_around_time]))
-            rs << XmlNode.new('DropoffType', options[:dropoff_type] || 'REGULAR_PICKUP')
-            rs << XmlNode.new('PackagingType', options[:packaging_type] || 'YOUR_PACKAGING')
-            
-            rs << build_location_node('Shipper', (options[:shipper] || origin))
-            rs << build_location_node('Recipient', destination)
-            if options[:shipper] and options[:shipper] != origin
-              rs << build_location_node('Origin', origin)
-            end
-            
-            rs << XmlNode.new('RateRequestTypes', 'ACCOUNT')
-            rs << XmlNode.new('PackageCount', packages.size)
-            packages.each do |pkg|
-              rs << XmlNode.new('RequestedPackages') do |rps|
-                rps << XmlNode.new('Weight') do |tw|
-                  tw << XmlNode.new('Units', imperial ? 'LB' : 'KG')
-                  tw << XmlNode.new('Value', [((imperial ? pkg.lbs : pkg.kgs).to_f*1000).round/1000.0, 0.1].max)
+          root_node << XmlNode.new('soapenv:Header')
+          root_node << XmlNode.new('soapenv:Body') do |body|
+
+            body << XmlNode.new('ProcessShipmentRequest') do |request|
+              request << build_request_header
+
+              # Version
+              request << XmlNode.new('Version') do |version_node|
+                version_node << XmlNode.new('ServiceId', 'ship')
+                version_node << XmlNode.new('Major', '12')
+                version_node << XmlNode.new('Intermediate', '0')
+                version_node << XmlNode.new('Minor', '0')
+              end
+              
+              request << XmlNode.new('RequestedShipment') do |ship_request|
+                ship_request << XmlNode.new('ShipTimestamp', Time.now.utc.iso8601(2))                
+                ship_request << XmlNode.new('DropoffType', 'REGULAR_PICKUP')
+                ship_request << XmlNode.new('ServiceType', 'GROUND_HOME_DELIVERY')                
+                ship_request << XmlNode.new('PackagingType', 'YOUR_PACKAGING')       
+                ship_request << shipper.fedex_xml
+                ship_request << recipient.fedex_xml
+
+                ship_request << XmlNode.new('ShippingChargesPayment') do |charge|
+                  charge << XmlNode.new('PaymentType', 'SENDER')
+                  charge << XmlNode.new('Payor') do |payor|
+                    payor << XmlNode.new('ResponsibleParty') do |party|
+                      party << XmlNode.new('AccountNumber', account_number)
+                      party << XmlNode.new('Contact') do |contact|                      
+                        contact << XmlNode.new('PersonName', shipper.contact.person_name)
+                        contact << XmlNode.new('CompanyName', shipper.contact.company_name)
+                        contact << XmlNode.new('PhoneNumber', shipper.contact.phone_number)                                                
+                      end
+                    end
+                  end                  
                 end
-                rps << XmlNode.new('Dimensions') do |dimensions|
-                  [:length,:width,:height].each do |axis|
-                    value = ((imperial ? pkg.inches(axis) : pkg.cm(axis)).to_f*1000).round/1000.0 # 3 decimals
-                    dimensions << XmlNode.new(axis.to_s.capitalize, value.ceil)
+                
+                ship_request << XmlNode.new('LabelSpecification') do |label_spec|
+                  label_spec << XmlNode.new('LabelFormatType', 'COMMON2D')
+                  label_spec << XmlNode.new('ImageType', 'PDF')
+                  label_spec << XmlNode.new('LabelStockType', 'PAPER_LETTER')                                    
+                end                
+
+                ship_request << XmlNode.new('RateRequestTypes', 'ACCOUNT')                  
+                ship_request << XmlNode.new('PackageCount', packages.size)                
+                    
+                packages.each do |pkg|
+                  ship_request << XmlNode.new('RequestedPackageLineItems') do |rps|
+                    rps << XmlNode.new('GroupPackageCount', 1)
+                    rps << XmlNode.new('Weight') do |tw|
+                      tw << XmlNode.new('Units', imperial ? 'LB' : 'KG')
+                      tw << XmlNode.new('Value', [((imperial ? pkg.lbs : pkg.kgs).to_f*1000).round/1000.0, 0.1].max)
+                    end
+                    rps << XmlNode.new('Dimensions') do |dimensions|
+                      [:length,:width,:height].each do |axis|
+                        value = ((imperial ? pkg.inches(axis) : pkg.cm(axis)).to_f*1000).round/1000.0 # 3 decimals
+                        dimensions << XmlNode.new(axis.to_s.capitalize, value.ceil)
+                      end
+                      dimensions << XmlNode.new('Units', imperial ? 'IN' : 'CM')
+                    end
                   end
-                  dimensions << XmlNode.new('Units', imperial ? 'IN' : 'CM')
-                end
+                end                        
+              end  
+            end
+          end
+        end
+        xml_request.to_s
+      end
+      
+      def build_rate_request(shipper, recipient, packages, options={})
+        #imperial = ['US','LR','MM'].include?(shipper.address.country_code(:alpha2))
+        imperial = true
+
+        xml_request = XmlNode.new('soapenv:Envelope', 'xmlns:soapenv' => 'http://schemas.xmlsoap.org/soap/envelope/', 'xmlns' => 'http://fedex.com/ws/rate/v13') do |root_node|        
+          
+          root_node << XmlNode.new('soapenv:Header')
+          root_node << XmlNode.new('soapenv:Body') do |body|
+
+            body << XmlNode.new('RateRequest') do |request|
+              request << build_request_header
+              
+              # Version
+              request << XmlNode.new('Version') do |version_node|
+                version_node << XmlNode.new('ServiceId', 'crs')
+                version_node << XmlNode.new('Major', '13')
+                version_node << XmlNode.new('Intermediate', '0')
+                version_node << XmlNode.new('Minor', '0')
+              end
+              
+              # Returns delivery dates
+              request << XmlNode.new('ReturnTransitAndCommit', true)
+              # Returns saturday delivery shipping options when available
+              request << XmlNode.new('VariableOptions', 'SATURDAY_DELIVERY')
+              
+              request << XmlNode.new('RequestedShipment') do |rs|
+                rs << XmlNode.new('ShipTimestamp', ship_timestamp(options[:turn_around_time]))
+                rs << XmlNode.new('DropoffType', options[:dropoff_type] || 'REGULAR_PICKUP')
+                rs << XmlNode.new('PackagingType', options[:packaging_type] || 'YOUR_PACKAGING')
+                
+                rs << shipper.fedex_xml
+                rs << recipient.fedex_xml
+                
+                rs << XmlNode.new('RateRequestTypes', 'ACCOUNT')
+                rs << XmlNode.new('PackageCount', packages.size)                
+                    
+                packages.each do |pkg|
+                  rs << XmlNode.new('RequestedPackageLineItems') do |rps|
+                    rps << XmlNode.new('GroupPackageCount', 1)
+                    rps << XmlNode.new('Weight') do |tw|
+                      tw << XmlNode.new('Units', imperial ? 'LB' : 'KG')
+                      tw << XmlNode.new('Value', [((imperial ? pkg.lbs : pkg.kgs).to_f*1000).round/1000.0, 0.1].max)
+                    end
+                    rps << XmlNode.new('Dimensions') do |dimensions|
+                      [:length,:width,:height].each do |axis|
+                        value = ((imperial ? pkg.inches(axis) : pkg.cm(axis)).to_f*1000).round/1000.0 # 3 decimals
+                        dimensions << XmlNode.new(axis.to_s.capitalize, value.ceil)
+                      end
+                      dimensions << XmlNode.new('Units', imperial ? 'IN' : 'CM')
+                    end
+                  end
+                end              
               end
             end
-            
           end
         end
         xml_request.to_s
@@ -261,6 +354,60 @@ module ActiveMerchant
         end
       end
       
+      def parse_ship_response(shipper, recipient, packages, response)
+        rate_estimates = []
+        success, message = nil
+        
+        xml = REXML::Document.new(response)
+        root_node = xml.elements['//ProcessShipmentReply']
+        
+        success = response_success?(xml)
+        message = response_message(xml)
+        
+        labels = REXML::XPath.match( xml, "//v12:Label" )
+        parts = REXML::XPath.match( labels, "//v12:Parts" )                
+
+        imagecoded = parts[0].get_text('v12:Image').to_s        
+
+        image = Base64.decode64(imagecoded) if imagecoded
+
+        full_path = Pathname.new("label.pdf")
+
+        File.open(full_path, 'wb') do|f|
+          f.write(image)
+        end
+        
+        #replies.each do |rated_shipment|
+        #  service_code = rated_shipment.get_text('ServiceType').to_s
+        #  is_saturday_delivery = rated_shipment.get_text('AppliedOptions').to_s == 'SATURDAY_DELIVERY'
+        #  service_type = is_saturday_delivery ? "#{service_code}_SATURDAY_DELIVERY" : service_code
+        #  
+        #  transit_time = rated_shipment.get_text('TransitTime').to_s if service_code == "FEDEX_GROUND"
+        #  max_transit_time = rated_shipment.get_text('MaximumTransitTime').to_s if service_code == "FEDEX_GROUND"
+        #
+        #  delivery_timestamp = rated_shipment.get_text('DeliveryTimestamp').to_s
+        #
+        #  delivery_range = delivery_range_from(transit_time, max_transit_time, delivery_timestamp, options)
+        #
+        #  currency = handle_incorrect_currency_codes(rated_shipment.get_text('RatedShipmentDetails/ShipmentRateDetail/TotalNetCharge/Currency').to_s)
+        #  rate_estimates << RateEstimate.new(origin, destination, @@name,
+        #                      self.class.service_name_for_code(service_type),
+        #                      :service_code => service_code,
+        #                      :total_price => rated_shipment.get_text('RatedShipmentDetails/ShipmentRateDetail/TotalNetCharge/Amount').to_s.to_f,
+        #                      :currency => currency,
+        #                      :packages => packages,
+        #                      :delivery_range => delivery_range)
+        #end
+		    #
+        #if rate_estimates.empty?
+        #  success = false
+        #  message = "No shipping rates could be found for the destination address" if message.blank?
+        #end
+        #
+        #RateResponse.new(success, message, Hash.from_xml(response), :rates => rate_estimates, :xml => response, :request => last_request, :log_xml => options[:log_xml])
+      end
+      
+      
       def parse_rate_response(origin, destination, packages, response, options)
         rate_estimates = []
         success, message = nil
@@ -271,7 +418,9 @@ module ActiveMerchant
         success = response_success?(xml)
         message = response_message(xml)
         
-        root_node.elements.each('RateReplyDetails') do |rated_shipment|
+        replies = REXML::XPath.match( xml, "//RateReplyDetails" )        
+        
+        replies.each do |rated_shipment|
           service_code = rated_shipment.get_text('ServiceType').to_s
           is_saturday_delivery = rated_shipment.get_text('AppliedOptions').to_s == 'SATURDAY_DELIVERY'
           service_type = is_saturday_delivery ? "#{service_code}_SATURDAY_DELIVERY" : service_code
@@ -410,20 +559,31 @@ module ActiveMerchant
       end
 
       def response_status_node(document)
-        document.elements['/*/Notifications/']
+        REXML::XPath.match( document, "//Notifications" )
       end
       
       def response_success?(document)
-        %w{SUCCESS WARNING NOTE}.include? response_status_node(document).get_text('Severity').to_s
+        names = response_status_node(document)        
+        n = names.collect { |n| n.get_elements("Severity")[0].get_text.to_s}
+        n = n.uniq        
+
+        intersect = %w{SUCCESS WARNING NOTE} & n
+        if intersect.length > 0
+          return true
+        else
+          return false
+        end
       end
       
       def response_message(document)
-        response_node = response_status_node(document)
-        "#{response_status_node(document).get_text('Severity')} - #{response_node.get_text('Code')}: #{response_node.get_text('Message')}"
+        #response_node = response_status_node(document)
+        #"#{response_status_node(document).get_text('Severity')} - #{response_node.get_text('Code')}: #{response_node.get_text('Message')}"
+        ""
       end
       
-      def commit(request, test = false)
-        ssl_post(test ? TEST_URL : LIVE_URL, request.gsub("\n",''))        
+      def commit(request, test = true)
+        res = ssl_post(test ? TEST_URL : LIVE_URL, request.gsub("\n",''))        
+        res
       end
       
       def handle_incorrect_currency_codes(currency)

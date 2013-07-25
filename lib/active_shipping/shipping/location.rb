@@ -142,8 +142,6 @@ module ActiveMerchant #:nodoc:
           nil
         end
       end
-
-    end
-      
+    end      
   end
 end

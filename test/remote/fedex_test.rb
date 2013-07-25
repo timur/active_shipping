@@ -1,4 +1,10 @@
-require 'test_helper'
+# encoding: utf-8
+require_relative '../test_helper'
+
+require_relative '../../lib/active_shipping/shipping/address'
+require_relative '../../lib/active_shipping/shipping/contact'
+require_relative '../../lib/active_shipping/shipping/shipper'
+require_relative '../../lib/active_shipping/shipping/recipient'
 
 class FedExTest < Test::Unit::TestCase
 
@@ -11,6 +17,105 @@ class FedExTest < Test::Unit::TestCase
   def test_valid_credentials
     assert @carrier.valid_credentials?
   end
+  
+  def test_rate
+    packages = [
+      Package.new(  100,               
+                    [93,10],           
+                    :currency => "EUR")
+    ]
+    
+    address_shipper = ActiveMerchant::Shipping::Address.new(street_lines: 'Main Street', city: 'Harrison', state_or_providence_code: 'AR', postal_code: '72601', country_code: 'US')
+    address_rec = ActiveMerchant::Shipping::Address.new(street_lines: 'Main Street', city: 'Richmond', state_or_providence_code: 'BC', postal_code: 'V7C4V4', country_code: 'CA', residential: true)
+    
+    contact_shipper = ActiveMerchant::Shipping::Contact.new(person_name: "Sender", company_name: "Company", phone_number: "555-555-888")
+    contact_recipient = ActiveMerchant::Shipping::Contact.new(person_name: "Recipient", company_name: "Company", phone_number: "555-555-888") 
+    
+    shipper = ActiveMerchant::Shipping::Shipper.new(address: address_shipper, contact: contact_shipper)   
+    recipient = ActiveMerchant::Shipping::Recipient.new(address: address_rec, contact: contact_recipient)       
+    
+    fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', account: '510087267', login: '118511895', test: true)
+    response = fedex.find_rates(shipper, recipient, packages)
+    
+    fedex_rates = response.rates.sort_by(&:price).collect {|rate| 
+      [rate.service_name, rate.price]
+    }
+    
+    puts fedex_rates.to_s        
+  end
+  
+  def test_rate_mexico
+    packages = [
+      Package.new(100, [93,10])
+    ]
+    
+    address_shipper = ActiveMerchant::Shipping::Address.new(street_lines: 'Main Street', city: 'Ciudad de México', postal_code: '16034', country_code: 'MX')
+    address_rec = ActiveMerchant::Shipping::Address.new(street_lines: 'Main Street', city: 'Laderas de Monterrey', postal_code: '22046', country_code: 'MX', residential: true)
+    
+    contact_shipper = ActiveMerchant::Shipping::Contact.new(person_name: "Sender", company_name: "Company", phone_number: "555-555-888")
+    contact_recipient = ActiveMerchant::Shipping::Contact.new(person_name: "Recipient", company_name: "Company", phone_number: "555-555-888") 
+    
+    shipper = ActiveMerchant::Shipping::Shipper.new(address: address_shipper, contact: contact_shipper)   
+    recipient = ActiveMerchant::Shipping::Recipient.new(address: address_rec, contact: contact_recipient)       
+    
+    fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', account: '510087267', login: '118511895', test: true)
+    response = fedex.find_rates(shipper, recipient, packages)
+    
+    fedex_rates = response.rates.sort_by(&:price).collect {|rate| 
+      puts rate.currency
+      puts rate.delivery_date      
+      [rate.service_name, rate.price]
+    }
+    
+    puts fedex_rates.to_s        
+  end
+
+
+  def test_rate_germany
+    packages = [
+      Package.new(2000, [10, 10, 10], :units => :metric)
+    ]
+    
+    address_shipper = ActiveMerchant::Shipping::Address.new(street_lines: 'Main Street', city: 'Oberursel', postal_code: '61440', country_code: 'DE')
+    address_rec = ActiveMerchant::Shipping::Address.new(street_lines: 'Main Street', city: 'Frankfurt', postal_code: '60385', country_code: 'DE', residential: true)
+    
+    contact_shipper = ActiveMerchant::Shipping::Contact.new(person_name: "Sender", company_name: "Company", phone_number: "555-555-888")
+    contact_recipient = ActiveMerchant::Shipping::Contact.new(person_name: "Recipient", company_name: "Company", phone_number: "555-555-888") 
+    
+    shipper = ActiveMerchant::Shipping::Shipper.new(address: address_shipper, contact: contact_shipper)   
+    recipient = ActiveMerchant::Shipping::Recipient.new(address: address_rec, contact: contact_recipient)       
+    
+    fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', account: '510087267', login: '118511895', test: true)
+    response = fedex.find_rates(shipper, recipient, packages)
+    
+    fedex_rates = response.rates.sort_by(&:price).collect {|rate| 
+      puts rate.currency
+      puts rate.delivery_date      
+      [rate.service_name, rate.price]
+    }
+    
+    puts fedex_rates.to_s        
+  end
+  
+  def test_ship
+    packages = [
+      Package.new(  100,               
+                    [93,10],           
+                    :currency => "EUR")
+    ]
+    
+    address_shipper = ActiveMerchant::Shipping::Address.new(street_lines: 'Main Street', city: 'Harrison', state_or_providence_code: 'AR', postal_code: '72601', country_code: 'US')
+      address_rec = ActiveMerchant::Shipping::Address.new(street_lines: 'Main Street', city: 'Franklin Park', state_or_providence_code: 'IL', postal_code: '60131', country_code: 'US', residential: true)
+    
+    contact_shipper = ActiveMerchant::Shipping::Contact.new(person_name: "Sender", company_name: "Company", phone_number: "555-555-888")
+    contact_recipient = ActiveMerchant::Shipping::Contact.new(person_name: "Recipient", company_name: "Company", phone_number: "555-555-888") 
+    
+    shipper = ActiveMerchant::Shipping::Shipper.new(address: address_shipper, contact: contact_shipper)   
+    recipient = ActiveMerchant::Shipping::Recipient.new(address: address_rec, contact: contact_recipient)       
+    
+    fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', account: '510087267', login: '118511895', test: true)
+    fedex.ship(shipper, recipient, packages, '510087267')    
+  end    
     
   def test_us_to_canada
     response = nil
