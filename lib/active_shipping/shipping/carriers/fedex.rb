@@ -3,7 +3,6 @@
 
 require 'date'
 require 'base64'
-require 'pathname'
 
 module ActiveMerchant
   module Shipping
@@ -368,10 +367,6 @@ module ActiveMerchant
         imagecoded = images[0].get_text
         
         image = Base64.decode64(imagecoded.to_s) if imagecoded
-        full_path = Pathname.new("label.pdf")
-        File.open(full_path, 'wb') do|f|
-          f.write(image)
-        end        
         
         details = REXML::XPath.match( parts, "//version:CompletedPackageDetails", 'version' => 'http://fedex.com/ws/ship/v12' )                
         sequence = REXML::XPath.match( parts, "//version:SequenceNumber", 'version' => 'http://fedex.com/ws/ship/v12' )                                
@@ -380,7 +375,7 @@ module ActiveMerchant
 
         tr = tracking_number[0].get_text('TrackingNumber').to_s
         
-        ShipResponse.new(success, message, request: request, response: response, tracking_number: tr)        
+        ShipResponse.new(success, message, request: request, response: response, tracking_number: tr, imagecoded: image)        
       end
             
       def parse_rate_response(origin, destination, packages, request, response, options)
