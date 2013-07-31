@@ -240,7 +240,7 @@ module ActiveMerchant
       
       def build_rate_request(shipper, recipient, packages, options={})
         #imperial = ['US','LR','MM'].include?(shipper.address.country_code(:alpha2))
-        imperial = true
+        imperial = false
 
         xml_request = XmlNode.new('soapenv:Envelope', 'xmlns:soapenv' => 'http://schemas.xmlsoap.org/soap/envelope/', 'xmlns' => 'http://fedex.com/ws/rate/v13') do |root_node|        
           
@@ -276,7 +276,7 @@ module ActiveMerchant
                     
                 packages.each do |pkg|
                   rs << XmlNode.new('RequestedPackageLineItems') do |rps|
-                    rps << XmlNode.new('GroupPackageCount', 1)
+                    rps << XmlNode.new('GroupPackageCount', pkg.quantity)
                     rps << XmlNode.new('Weight') do |tw|
                       tw << XmlNode.new('Units', imperial ? 'LB' : 'KG')
                       tw << XmlNode.new('Value', [((imperial ? pkg.lbs : pkg.kgs).to_f*1000).round/1000.0, 0.1].max)
