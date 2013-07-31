@@ -159,9 +159,9 @@ module ActiveMerchant
       def ship(shipper, recipient, packages, account_number, options = {})
         packages = Array(packages)
         
-        ship_request = build_ship_request(shipper, recipient, packages, account_number)        
-        response = commit(ship_request)
-        parse_ship_response(shipper, recipient, packages, response)        
+        request = build_ship_request(shipper, recipient, packages, account_number)        
+        response = commit(request)
+        parse_ship_response(shipper, recipient, packages, request, response)        
       end
 
       protected
@@ -353,7 +353,7 @@ module ActiveMerchant
         end
       end
       
-      def parse_ship_response(shipper, recipient, packages, response)
+      def parse_ship_response(shipper, recipient, packages, request, response)
         rate_estimates = []
         success, message = nil
 
@@ -379,14 +379,11 @@ module ActiveMerchant
         ids = REXML::XPath.match( details, "//version:TrackingIds", 'version' => 'http://fedex.com/ws/ship/v12' )                  
         tracking_number = REXML::XPath.match( ids, "//version:TrackingNumber", 'version' => 'http://fedex.com/ws/ship/v12')          
 
-        #puts "SUCCESS #{success}"
-        #puts "TRACKING #{tracking_number.size}"
-        #tr = tracking_number[0].get_text('TrackingNumber').to_s
+        tr = tracking_number[0].get_text('TrackingNumber').to_s
         
-        ShipResponse.new(success, message, Hash.from_xml(response), xml: response)        
+        ShipResponse.new(success, message, request: request, response: response, tracking_number: tr)        
       end
-      
-      
+            
       def parse_rate_response(origin, destination, packages, response, options)
         rate_estimates = []
         success, message = nil

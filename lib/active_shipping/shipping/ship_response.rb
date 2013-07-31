@@ -3,10 +3,13 @@ module ActiveMerchant
     
     class ShipResponse < Response
       
-      attr_reader :shipment
-      
-      def initialize(success, message, params = {}, options = {})
-        @tracking_number = options[:tracking_number]
+      attr_reader :tracking_number, :success, :request, :response
+            
+      def initialize(success, message, params = {})
+        @tracking_number = params[:tracking_number]
+        @request = params[:request]
+        @response = params[:response]                
+        @success = success
         super
       end
       

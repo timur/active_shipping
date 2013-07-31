@@ -37,7 +37,7 @@ class FedExTest < Test::Unit::TestCase
       [rate.service_name, rate.price]
     }
     
-    puts fedex_rates.to_s        
+    assert_not_nil fedex_rates   
   end
   
   def test_rate_mexico
@@ -63,7 +63,7 @@ class FedExTest < Test::Unit::TestCase
       [rate.service_name, rate.price]
     }
     
-    puts fedex_rates.to_s        
+    assert_not_nil fedex_rates
   end
 
 
@@ -110,7 +110,8 @@ class FedExTest < Test::Unit::TestCase
     recipient = ActiveMerchant::Shipping::Recipient.new(address: address_rec, contact: contact_recipient)       
     
     fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', account: '510087267', login: '118511895', test: true)
-    fedex.ship(shipper, recipient, packages, '510087267')    
+    shipping_response = fedex.ship(shipper, recipient, packages, '510087267')
+    assert_not_nil shipping_response.tracking_number    
   end    
 
   #def test_tracking
