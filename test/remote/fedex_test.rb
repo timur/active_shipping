@@ -104,7 +104,7 @@ class FedExTest < Test::Unit::TestCase
     recipient = ActiveMerchant::Shipping::ShippingRecipient.new(address: address_rec, contact: contact_recipient)       
     
     fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', account: '510087267', login: '118511895', test: true)
-    shipping_response = fedex.ship(shipper, recipient, packages, '510087267')
+    shipping_response = fedex.ship(shipper, recipient, packages, account_number: '510087267', service_code: 'GROUND_HOME_DELIVERY')
     assert_not_nil shipping_response.tracking_number    
   end    
 

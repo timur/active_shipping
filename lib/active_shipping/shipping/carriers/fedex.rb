@@ -155,17 +155,17 @@ module ActiveMerchant
         parse_tracking_response(response, options)
       end
       
-      def ship(shipper, recipient, packages, account_number, options = {})
+      def ship(shipper, recipient, packages, options = {})
         packages = Array(packages)
         
-        request = build_ship_request(shipper, recipient, packages, account_number)        
+        request = build_ship_request(shipper, recipient, packages, options)        
         response = commit(request)
         parse_ship_response(shipper, recipient, packages, request, response)        
       end
 
       protected
       
-      def build_ship_request(shipper, recipient, packages, account_number)
+      def build_ship_request(shipper, recipient, packages, options = {})
         imperial = true
         xml_request = XmlNode.new('soapenv:Envelope', 'xmlns:soapenv' => 'http://schemas.xmlsoap.org/soap/envelope/', 
                                                       'xmlns' => 'http://fedex.com/ws/ship/v12') do |root_node| 
@@ -187,7 +187,7 @@ module ActiveMerchant
               request << XmlNode.new('RequestedShipment') do |ship_request|
                 ship_request << XmlNode.new('ShipTimestamp', Time.now.utc.iso8601(2))                
                 ship_request << XmlNode.new('DropoffType', 'REGULAR_PICKUP')
-                ship_request << XmlNode.new('ServiceType', 'GROUND_HOME_DELIVERY')                
+                ship_request << XmlNode.new('ServiceType', options[:service_code])                
                 ship_request << XmlNode.new('PackagingType', 'YOUR_PACKAGING')       
                 ship_request << shipper.fedex_xml
                 ship_request << recipient.fedex_xml
@@ -196,7 +196,7 @@ module ActiveMerchant
                   charge << XmlNode.new('PaymentType', 'SENDER')
                   charge << XmlNode.new('Payor') do |payor|
                     payor << XmlNode.new('ResponsibleParty') do |party|
-                      party << XmlNode.new('AccountNumber', account_number)
+                      party << XmlNode.new('AccountNumber', options[:account_number])
                       party << XmlNode.new('Contact') do |contact|                      
                         contact << XmlNode.new('PersonName', shipper.contact.person_name)
                         contact << XmlNode.new('CompanyName', shipper.contact.company_name)
