@@ -144,7 +144,6 @@ module ActiveMerchant
         
         request = build_rate_request(shipper, recipient, packages, options)        
         response = commit(save_request(request), (options[:test] || false))
-        
         parse_rate_response(shipper, recipient, packages, request, response, options)
       end
       
