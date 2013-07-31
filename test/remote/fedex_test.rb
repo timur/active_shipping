@@ -48,8 +48,8 @@ class FedExTest < Test::Unit::TestCase
     address_shipper = ActiveMerchant::Shipping::Address.new(street_lines: 'Main Street', city: 'Ciudad de México', postal_code: '16034', country_code: 'MX')
     address_rec = ActiveMerchant::Shipping::Address.new(street_lines: 'Main Street', city: 'Laderas de Monterrey', postal_code: '22046', country_code: 'MX', residential: true)
     
-    contact_shipper = ActiveMerchant::Shipping::Contact.new(person_name: "Sender", company_name: "Company", phone_number: "555-555-888")
-    contact_recipient = ActiveMerchant::Shipping::Contact.new(person_name: "Recipient", company_name: "Company", phone_number: "555-555-888") 
+    contact_shipper = ActiveMerchant::Shipping::Contact.new(person_name: "Sender", company_name: "Company")
+    contact_recipient = ActiveMerchant::Shipping::Contact.new(person_name: "Recipient", company_name: "Company") 
     
     shipper = ActiveMerchant::Shipping::Shipper.new(address: address_shipper, contact: contact_shipper)   
     recipient = ActiveMerchant::Shipping::Recipient.new(address: address_rec, contact: contact_recipient)       
@@ -58,11 +58,10 @@ class FedExTest < Test::Unit::TestCase
     response = fedex.find_rates(shipper, recipient, packages)
     
     fedex_rates = response.rates.sort_by(&:price).collect {|rate| 
-      puts rate.currency
-      puts rate.delivery_date      
       [rate.service_name, rate.price]
     }
     
+    puts fedex_rates
     assert_not_nil fedex_rates
   end
 
@@ -101,7 +100,7 @@ class FedExTest < Test::Unit::TestCase
     ]
     
     address_shipper = ActiveMerchant::Shipping::Address.new(street_lines: 'Main Street', city: 'Harrison', state_or_providence_code: 'AR', postal_code: '72601', country_code: 'US')
-      address_rec = ActiveMerchant::Shipping::Address.new(street_lines: 'Main Street', city: 'Franklin Park', state_or_providence_code: 'IL', postal_code: '60131', country_code: 'US', residential: true)
+    address_rec = ActiveMerchant::Shipping::Address.new(street_lines: 'Main Street', city: 'Franklin Park', state_or_providence_code: 'IL', postal_code: '60131', country_code: 'US', residential: true)
     
     contact_shipper = ActiveMerchant::Shipping::Contact.new(person_name: "Sender", company_name: "Company", phone_number: "555-555-888")
     contact_recipient = ActiveMerchant::Shipping::Contact.new(person_name: "Recipient", company_name: "Company", phone_number: "555-555-888") 

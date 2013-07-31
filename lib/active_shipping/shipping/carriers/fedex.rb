@@ -142,10 +142,10 @@ module ActiveMerchant
         options = @options.update(options)
         packages = Array(packages)
         
-        rate_request = build_rate_request(shipper, recipient, packages, options)        
-        response = commit(save_request(rate_request), (options[:test] || false))
+        request = build_rate_request(shipper, recipient, packages, options)        
+        response = commit(save_request(request), (options[:test] || false))
         
-        parse_rate_response(shipper, recipient, packages, response, options)
+        parse_rate_response(shipper, recipient, packages, request, response, options)
       end
       
       def find_tracking_info(tracking_number, options={})
@@ -384,7 +384,7 @@ module ActiveMerchant
         ShipResponse.new(success, message, request: request, response: response, tracking_number: tr)        
       end
             
-      def parse_rate_response(origin, destination, packages, response, options)
+      def parse_rate_response(origin, destination, packages, request, response, options)
         rate_estimates = []
         success, message = nil
         
@@ -423,7 +423,7 @@ module ActiveMerchant
           message = "No shipping rates could be found for the destination address" if message.blank?
         end
 
-        RateResponse.new(success, message, Hash.from_xml(response), :rates => rate_estimates, :xml => response, :request => last_request, :log_xml => options[:log_xml])
+        RateResponse.new(success, message, rates: rate_estimates, request: request, response: response)
       end
 
       def delivery_range_from(transit_time, max_transit_time, delivery_timestamp, options)

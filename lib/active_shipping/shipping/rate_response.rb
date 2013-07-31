@@ -3,10 +3,12 @@ module ActiveMerchant #:nodoc:
     
     class RateResponse < Response
       
-      attr_reader :rates
+      attr_reader :rates, :response, :request
       
-      def initialize(success, message, params = {}, options = {})
-        @rates = Array(options[:estimates] || options[:rates] || options[:rate_estimates])
+      def initialize(success, message, params = {})
+        @rates = Array(params[:estimates] || params[:rates] || params[:rate_estimates])
+        @request = params[:request]
+        @response = params[:response]        
         super
       end
       
