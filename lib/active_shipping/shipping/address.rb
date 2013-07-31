@@ -3,6 +3,7 @@ module ActiveMerchant
     class Address
 
       attr_reader :street_lines, :city, :state_or_providence_code, :postal_code, :country_code, :urbanization_code, :residential
+      attr_accessible :street_lines, :city, :state_or_providence_code, :postal_code, :country_code, :urbanization_code, :residential            
 
       def initialize(options = {})
         @street_lines = options[:street_lines]

@@ -3,6 +3,7 @@ module ActiveMerchant
     class Shipper
 
       attr_reader :contact, :address
+      attr_accessible :contact, :address
 
       def initialize(options = {})
         @contact = options[:contact]

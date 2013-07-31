@@ -3,7 +3,8 @@ module ActiveMerchant
     class Contact
 
       attr_reader :company_name, :title, :person_name, :department, :phone_number, :pager_number, :fax_number, :email_address
-
+      attr_accessible :company_name, :title, :person_name, :department, :phone_number, :pager_number, :fax_number, :email_address      
+      
       def initialize(options = {})
         @company_name = options[:company_name]
         @title = options[:title]
