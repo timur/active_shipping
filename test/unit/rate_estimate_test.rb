@@ -4,7 +4,7 @@ class RateEstimateTest < Test::Unit::TestCase
   def setup
     @origin      = {:address1 => "61A York St", :city => "Ottawa", :province => "ON", :country => "Canada", :postal_code => "K1N 5T2"}
     @destination = {:city => "Beverly Hills", :state => "CA", :country => "United States", :postal_code => "90210"}
-    @line_items  = [Package.new(500, [2, 3, 4], :description => "a box full of stuff", :value => 2500)]
+    @line_items  = [ShippingPackage.new(500, [2, 3, 4], :description => "a box full of stuff", :value => 2500)]
     @carrier = CanadaPost.new(fixtures(:canada_post))
     @options = {}
 

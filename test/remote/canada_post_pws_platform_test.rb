@@ -10,9 +10,9 @@ class CanadaPostPWSPlatformTest < Test::Unit::TestCase
     @login = fixtures(:canada_post_pws_production)
     
     # 100 grams, 93 cm long, 10 cm diameter, cylinders have different volume calculations
-    # @pkg1 = Package.new(1000, [93,10], :value => 10.00)
-    @pkg1 = Package.new(10, nil, :value => 10.00)
-    @pkg2 = Package.new(10, [20.0, 10.0, 1.0], :value => 10.00)
+    # @pkg1 = ShippingPackage.new(1000, [93,10], :value => 10.00)
+    @pkg1 = ShippingPackage.new(10, nil, :value => 10.00)
+    @pkg2 = ShippingPackage.new(10, [20.0, 10.0, 1.0], :value => 10.00)
 
     @line_item1 = TestFixtures.line_items1
 

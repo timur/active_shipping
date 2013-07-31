@@ -25,7 +25,7 @@ class USPSTest < Test::Unit::TestCase
       response = @carrier.find_rates(
                    Location.new(:zip => 40524),
                    Location.new(:zip => 40515),
-                   Package.new(16, [12,6,2], :units => :imperial)
+                   ShippingPackage.new(16, [12,6,2], :units => :imperial)
                  )
     end
   end
@@ -35,7 +35,7 @@ class USPSTest < Test::Unit::TestCase
       response = @carrier.find_rates(
                    @locations[:beverly_hills],
                    Location.new(:country => 'CZ'),
-                   Package.new(100, [5,10,20])
+                   ShippingPackage.new(100, [5,10,20])
                  )
     end
   end
@@ -147,7 +147,7 @@ class USPSTest < Test::Unit::TestCase
       @carrier.find_rates(
         @locations[:beverly_hills], # imperial (U.S. origin)
         @locations[:new_york],
-        Package.new(0,0),
+        ShippingPackage.new(0,0),
         :test => true
       )
     rescue ResponseError => e
@@ -162,7 +162,7 @@ class USPSTest < Test::Unit::TestCase
       @carrier.find_rates(
         @locations[:beverly_hills], # imperial (U.S. origin)
         @locations[:ottawa],
-        Package.new(0,0),
+        ShippingPackage.new(0,0),
         :test => true
       )
     rescue ResponseError => e
@@ -177,7 +177,7 @@ class USPSTest < Test::Unit::TestCase
       @carrier.find_rates(
         @locations[:beverly_hills], # imperial (U.S. origin)
         @locations[:new_york],
-        Package.new(0,0),
+        ShippingPackage.new(0,0),
         {
           :test => true,
           :service => :first_class,
@@ -196,7 +196,7 @@ class USPSTest < Test::Unit::TestCase
       @carrier.find_rates(
         @locations[:beverly_hills], # imperial (U.S. origin)
         @locations[:new_york],
-        Package.new(0,0),
+        ShippingPackage.new(0,0),
         {
           :test => true,
           :service => :first_class
@@ -213,7 +213,7 @@ class USPSTest < Test::Unit::TestCase
       @carrier.find_rates(
         @locations[:beverly_hills], # imperial (U.S. origin)
         @locations[:new_york],
-        Package.new(0,0),
+        ShippingPackage.new(0,0),
         {
           :test => true,
           :service => :first_class,

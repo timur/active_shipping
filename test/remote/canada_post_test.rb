@@ -15,7 +15,7 @@ class CanadaPostTest < Test::Unit::TestCase
     
     @origin      = {:address1 => "61A York St", :city => "Ottawa", :province => "Ontario", :country => "Canada", :postal_code => "K1N 5T2"}
     @destination = {:city => "Beverly Hills", :state => "CA", :country => "United States", :postal_code => "90210"}
-    @line_items  = [Package.new(500, [2, 3, 4], :description => "a box full of stuff", :value => 25)]
+    @line_items  = [ShippingPackage.new(500, [2, 3, 4], :description => "a box full of stuff", :value => 25)]
   end
   
   def test_valid_credentials

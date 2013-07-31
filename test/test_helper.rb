@@ -9,7 +9,6 @@ require 'test/unit'
 require 'active_shipping'
 require 'mocha'
 require 'timecop'
-require 'nokogiri'
 
 XmlNode # trigger autorequire
 
@@ -76,22 +75,22 @@ module ActiveMerchant
       mattr_reader :packages, :locations, :line_items1
       
       @@packages = {
-        :just_ounces => Package.new(16, nil, :units => :imperial),
-        :just_grams => Package.new(1000, nil),
-        :just_zero_grams => Package.new(0, nil),
-        :all_imperial => Package.new(16, [1,8,12], :units => :imperial),
-        :all_metric => Package.new(1000, [2,20,40]),
-        :book => Package.new(250, [14, 19, 2]),
-        :wii => Package.new((7.5 * 16), [15, 10, 4.5], :units => :imperial, :value => 269.99, :currency => 'GBP'),
-        :american_wii => Package.new((7.5 * 16), [15, 10, 4.5], :units => :imperial, :value => 269.99, :currency => 'USD'),
-        :new_zealand_wii => Package.new((7.5 * 16), [15, 10, 4.5], :units => :imperial, :value => 269.99, :currency => 'NZD'),
-        :worthless_wii => Package.new((7.5 * 16), [15, 10, 4.5], :units => :imperial, :value => 0.0, :currency => 'USD'),
-        :poster => Package.new(100, [93,10], :cylinder => true),
-        :small_half_pound => Package.new(8, [1,1,1], :units => :imperial),
-        :big_half_pound => Package.new((16 * 50), [24,24,36], :units => :imperial),
-        :chocolate_stuff => Package.new(80, [2,6,12], :units => :imperial),
-        :shipping_container => Package.new(2200000, [2440, 2600, 6058], :description => '20 ft Standard Container', :units => :metric),
-        :largest_gold_bar => Package.new(250000, [ 45.5, 22.5, 17 ], :value => 15300000)
+        :just_ounces => ShippingPackage.new(16, nil, :units => :imperial),
+        :just_grams => ShippingPackage.new(1000, nil),
+        :just_zero_grams => ShippingPackage.new(0, nil),
+        :all_imperial => ShippingPackage.new(16, [1,8,12], :units => :imperial),
+        :all_metric => ShippingPackage.new(1000, [2,20,40]),
+        :book => ShippingPackage.new(250, [14, 19, 2]),
+        :wii => ShippingPackage.new((7.5 * 16), [15, 10, 4.5], :units => :imperial, :value => 269.99, :currency => 'GBP'),
+        :american_wii => ShippingPackage.new((7.5 * 16), [15, 10, 4.5], :units => :imperial, :value => 269.99, :currency => 'USD'),
+        :new_zealand_wii => ShippingPackage.new((7.5 * 16), [15, 10, 4.5], :units => :imperial, :value => 269.99, :currency => 'NZD'),
+        :worthless_wii => ShippingPackage.new((7.5 * 16), [15, 10, 4.5], :units => :imperial, :value => 0.0, :currency => 'USD'),
+        :poster => ShippingPackage.new(100, [93,10], :cylinder => true),
+        :small_half_pound => ShippingPackage.new(8, [1,1,1], :units => :imperial),
+        :big_half_pound => ShippingPackage.new((16 * 50), [24,24,36], :units => :imperial),
+        :chocolate_stuff => ShippingPackage.new(80, [2,6,12], :units => :imperial),
+        :shipping_container => ShippingPackage.new(2200000, [2440, 2600, 6058], :description => '20 ft Standard Container', :units => :metric),
+        :largest_gold_bar => ShippingPackage.new(250000, [ 45.5, 22.5, 17 ], :value => 15300000)
       }
       
       @@locations = {

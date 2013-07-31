@@ -36,7 +36,7 @@ module ActiveMerchant
               state = :package_full
             end
           when :package_full
-            packages << ActiveMerchant::Shipping::Package.new(package_weight, dimensions, :value => package_value, :currency => currency)
+            packages << ActiveMerchant::Shipping::ShippingPackage.new(package_weight, dimensions, :value => package_value, :currency => currency)
             state = items.any? ? :package_empty : :packing_finished
           end
         end

@@ -56,7 +56,7 @@ class UPSTest < Test::Unit::TestCase
        response = @carrier.find_rates(
                     @locations[:beverly_hills],
                     Location.new(:country => 'CA'),
-                    Package.new(100, [5,10,20])
+                    ShippingPackage.new(100, [5,10,20])
                   )
        assert_not_equal [], response.rates
      end
@@ -171,7 +171,7 @@ class UPSTest < Test::Unit::TestCase
 
   def test_bare_packages
     response = nil
-    p = Package.new(0,0)
+    p = ShippingPackage.new(0,0)
     assert_nothing_raised do
       response = @carrier.find_rates(
                    @locations[:beverly_hills], # imperial (U.S. origin)

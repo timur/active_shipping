@@ -263,7 +263,7 @@ class USPSTest < Test::Unit::TestCase
       @carrier.find_rates(
         @locations[:beverly_hills], # imperial (U.S. origin)
         @locations[:new_york],
-        Package.new(0,0),
+        ShippingPackage.new(0,0),
         {
           :test => true,
           :service => :first_class,
@@ -283,7 +283,7 @@ class USPSTest < Test::Unit::TestCase
       @carrier.find_rates(
         @locations[:beverly_hills], # imperial (U.S. origin)
         @locations[:new_york],
-        Package.new(0,0),
+        ShippingPackage.new(0,0),
         {
           :test => true,
           :service => :first_class

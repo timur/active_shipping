@@ -24,7 +24,7 @@ module ActiveMerchant #:nodoc:
         else
           @package_rates = Array(options[:packages]).map {|p| {:package => p}}
         end
-        @total_price = Package.cents_from(options[:total_price])
+        @total_price = ShippingPackage.cents_from(options[:total_price])
         @negotiated_rate = options[:negotiated_rate] ? Package.cents_from(options[:negotiated_rate]) : nil
         @currency = options[:currency]
         @delivery_range = options[:delivery_range] ? options[:delivery_range].map { |date| date_for(date) }.compact : []

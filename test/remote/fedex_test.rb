@@ -11,7 +11,7 @@ class FedExTest < Test::Unit::TestCase
     
   def test_rate
     packages = [
-      Package.new(  100,               
+      ShippingPackage.new(  100,               
                     [93,10],           
                     :currency => "EUR")
     ]
@@ -37,7 +37,7 @@ class FedExTest < Test::Unit::TestCase
   
   def test_rate_mexico
     packages = [
-      Package.new(100, [93,10])
+      ShippingPackage.new(100, [93,10])
     ]
     
     address_shipper = ActiveMerchant::Shipping::ShippingAddress.new(street_lines: 'Main Street', city: 'Ciudad de México', postal_code: '16034', country_code: 'MX')
@@ -63,7 +63,7 @@ class FedExTest < Test::Unit::TestCase
 
   def test_rate_germany
     packages = [
-      Package.new(2000, [10, 10, 10], :units => :metric)
+      ShippingPackage.new(2000, [10, 10, 10], :units => :metric)
     ]
     
     address_shipper = ActiveMerchant::Shipping::ShippingAddress.new(street_lines: 'Main Street', city: 'Oberursel', postal_code: '61440', country_code: 'DE')
@@ -89,7 +89,7 @@ class FedExTest < Test::Unit::TestCase
   
   def test_ship
     packages = [
-      Package.new(  100,               
+      ShippingPackage.new(  100,               
                     [93,10],           
                     :currency => "EUR")
     ]
