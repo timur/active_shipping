@@ -142,10 +142,9 @@ module ActiveMerchant
         options = @options.update(options)
         packages = Array(packages)
         
-        rate_request = build_rate_request(shipper, recipient, packages, options)
-        
+        rate_request = build_rate_request(shipper, recipient, packages, options)        
         response = commit(save_request(rate_request), (options[:test] || false))
-
+        
         parse_rate_response(shipper, recipient, packages, response, options)
       end
       
@@ -357,54 +356,34 @@ module ActiveMerchant
       def parse_ship_response(shipper, recipient, packages, response)
         rate_estimates = []
         success, message = nil
-        
+
         xml = REXML::Document.new(response)
-        root_node = xml.elements['//ProcessShipmentReply']
+
+        success = response_success?(xml, 'http://fedex.com/ws/ship/v12')
+        message = response_message(xml, 'http://fedex.com/ws/ship/v12')        
+
+        shipment_label = REXML::XPath.match(xml, "//version:Label", 'version' => 'http://fedex.com/ws/ship/v12' )        
+        parts = REXML::XPath.match( shipment_label, "//version:Parts", 'version' => 'http://fedex.com/ws/ship/v12' )        
+
+        images = REXML::XPath.match( parts, "//version:Image", 'version' => 'http://fedex.com/ws/ship/v12' )        
+        imagecoded = images[0].get_text
         
-        success = response_success?(xml)
-        message = response_message(xml)
-        
-        labels = REXML::XPath.match( xml, "//v12:Label" )
-        parts = REXML::XPath.match( labels, "//v12:Parts" )                
-
-        imagecoded = parts[0].get_text('v12:Image').to_s        
-
-        image = Base64.decode64(imagecoded) if imagecoded
-
+        image = Base64.decode64(imagecoded.to_s) if imagecoded
         full_path = Pathname.new("label.pdf")
-
         File.open(full_path, 'wb') do|f|
           f.write(image)
-        end
+        end        
         
-        #replies.each do |rated_shipment|
-        #  service_code = rated_shipment.get_text('ServiceType').to_s
-        #  is_saturday_delivery = rated_shipment.get_text('AppliedOptions').to_s == 'SATURDAY_DELIVERY'
-        #  service_type = is_saturday_delivery ? "#{service_code}_SATURDAY_DELIVERY" : service_code
-        #  
-        #  transit_time = rated_shipment.get_text('TransitTime').to_s if service_code == "FEDEX_GROUND"
-        #  max_transit_time = rated_shipment.get_text('MaximumTransitTime').to_s if service_code == "FEDEX_GROUND"
-        #
-        #  delivery_timestamp = rated_shipment.get_text('DeliveryTimestamp').to_s
-        #
-        #  delivery_range = delivery_range_from(transit_time, max_transit_time, delivery_timestamp, options)
-        #
-        #  currency = handle_incorrect_currency_codes(rated_shipment.get_text('RatedShipmentDetails/ShipmentRateDetail/TotalNetCharge/Currency').to_s)
-        #  rate_estimates << RateEstimate.new(origin, destination, @@name,
-        #                      self.class.service_name_for_code(service_type),
-        #                      :service_code => service_code,
-        #                      :total_price => rated_shipment.get_text('RatedShipmentDetails/ShipmentRateDetail/TotalNetCharge/Amount').to_s.to_f,
-        #                      :currency => currency,
-        #                      :packages => packages,
-        #                      :delivery_range => delivery_range)
-        #end
-		    #
-        #if rate_estimates.empty?
-        #  success = false
-        #  message = "No shipping rates could be found for the destination address" if message.blank?
-        #end
-        #
-        #RateResponse.new(success, message, Hash.from_xml(response), :rates => rate_estimates, :xml => response, :request => last_request, :log_xml => options[:log_xml])
+        details = REXML::XPath.match( parts, "//version:CompletedPackageDetails", 'version' => 'http://fedex.com/ws/ship/v12' )                
+        sequence = REXML::XPath.match( parts, "//version:SequenceNumber", 'version' => 'http://fedex.com/ws/ship/v12' )                                
+        ids = REXML::XPath.match( details, "//version:TrackingIds", 'version' => 'http://fedex.com/ws/ship/v12' )                  
+        tracking_number = REXML::XPath.match( ids, "//version:TrackingNumber", 'version' => 'http://fedex.com/ws/ship/v12')          
+
+        #puts "SUCCESS #{success}"
+        #puts "TRACKING #{tracking_number.size}"
+        #tr = tracking_number[0].get_text('TrackingNumber').to_s
+        
+        ShipResponse.new(success, message, Hash.from_xml(response), xml: response)        
       end
       
       
@@ -415,8 +394,8 @@ module ActiveMerchant
         xml = REXML::Document.new(response)
         root_node = xml.elements['RateReply']
         
-        success = response_success?(xml)
-        message = response_message(xml)
+        success = response_success?(xml, 'http://fedex.com/ws/rate/v13')
+        message = response_message(xml, 'http://fedex.com/ws/rate/v13')
         
         replies = REXML::XPath.match( xml, "//RateReplyDetails" )        
         
@@ -558,16 +537,25 @@ module ActiveMerchant
         (Time.now + delay_in_hours.hours).to_date
       end
 
-      def response_status_node(document)
-        REXML::XPath.match( document, "//Notifications" )
+      def response_status_node(document, namespace = "")
+        REXML::XPath.match( document, "//version:Notifications", 'version' => namespace )        
       end
       
-      def response_success?(document)
-        names = response_status_node(document)        
-        n = names.collect { |n| n.get_elements("Severity")[0].get_text.to_s}
-        n = n.uniq        
-
-        intersect = %w{SUCCESS WARNING NOTE} & n
+      def response_success?(document, namespace = "")
+        #formatter = REXML::Formatters::Pretty.new(2)
+        #formatter.compact = true # This is the magic line that does what you need!
+        #formatter.write(document, $stdout)
+        
+        names = response_status_node(document, namespace)        
+        
+        highest = REXML::XPath.match( document, "//version:HighestSeverity", 'version' => namespace )        
+        
+        h = []
+        if highest && highest.size > 0
+          h << highest[0].get_text.to_s
+        end
+        
+        intersect = %w{SUCCESS WARNING NOTE} & h
         if intersect.length > 0
           return true
         else
@@ -575,10 +563,13 @@ module ActiveMerchant
         end
       end
       
-      def response_message(document)
-        #response_node = response_status_node(document)
-        #"#{response_status_node(document).get_text('Severity')} - #{response_node.get_text('Code')}: #{response_node.get_text('Message')}"
-        ""
+      def response_message(document, namespace)
+        back = []
+        response_node = response_status_node(document, namespace)
+        response_node.each do |node|
+          back << "#{node.get_text('Severity')} - #{node.get_text('Code')}: #{node.get_text('LocalizedMessage')}"  
+        end
+        back
       end
       
       def commit(request, test = true)
