@@ -353,7 +353,7 @@ module ActiveMerchant
       
       def parse_ship_response(shipper, recipient, packages, request, response)
         rate_estimates = []
-        success, message, imagecoded = nil
+        success, message, imagecoded, tr = nil
 
         xml = REXML::Document.new(response)
 
@@ -371,9 +371,9 @@ module ActiveMerchant
         details = REXML::XPath.match( parts, "//version:CompletedPackageDetails", 'version' => 'http://fedex.com/ws/ship/v12' )                
         sequence = REXML::XPath.match( parts, "//version:SequenceNumber", 'version' => 'http://fedex.com/ws/ship/v12' )                                
         ids = REXML::XPath.match( details, "//version:TrackingIds", 'version' => 'http://fedex.com/ws/ship/v12' )                  
+        
         tracking_number = REXML::XPath.match( ids, "//version:TrackingNumber", 'version' => 'http://fedex.com/ws/ship/v12')          
-
-        tr = tracking_number[0].get_text('TrackingNumber').to_s
+        tr = tracking_number[0].get_text('TrackingNumber').to_s if tracking_number.size > 0
         
         ShipResponse.new(success, message, request: request, response: response, tracking_number: tr, imagecoded: image)        
       end
