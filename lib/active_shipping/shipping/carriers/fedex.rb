@@ -382,34 +382,41 @@ module ActiveMerchant
         rate_estimates = []
         success, message = nil
         
+        currency, total_price = nil
+        
         xml = REXML::Document.new(response)
-        root_node = xml.elements['RateReply']
         
         success = response_success?(xml, 'http://fedex.com/ws/rate/v13')
-        message = response_message(xml, 'http://fedex.com/ws/rate/v13')
+        message = response_message(xml, 'http://fedex.com/ws/rate/v13')        
         
-        replies = REXML::XPath.match( xml, "//RateReplyDetails" )        
+        replies = REXML::XPath.match( xml, "//version:RateReplyDetails", 'version' => 'http://fedex.com/ws/rate/v13' )    
         
         replies.each do |rated_shipment|
-          service_code = rated_shipment.get_text('ServiceType').to_s
-          is_saturday_delivery = rated_shipment.get_text('AppliedOptions').to_s == 'SATURDAY_DELIVERY'
-          service_type = is_saturday_delivery ? "#{service_code}_SATURDAY_DELIVERY" : service_code
+          service_type = REXML::XPath.match( rated_shipment, "version:ServiceType", 'version' => 'http://fedex.com/ws/rate/v13' )    
+          service_code = service_type[0].get_text.to_s
+
+          timestamp = REXML::XPath.match( rated_shipment, "version:DeliveryTimestamp", 'version' => 'http://fedex.com/ws/rate/v13' )              
+          delivery_timestamp = timestamp[0].get_text.to_s if timestamp.size > 0
           
-          transit_time = rated_shipment.get_text('TransitTime').to_s if service_code == "FEDEX_GROUND"
-          max_transit_time = rated_shipment.get_text('MaximumTransitTime').to_s if service_code == "FEDEX_GROUND"
+          rated_shipment_details = REXML::XPath.match( rated_shipment, "version:RatedShipmentDetails", 'version' => 'http://fedex.com/ws/rate/v13' )    
+          
+          rated_shipment_details.each do |rated_shipment_detail|
+            shipment_rate_detail = REXML::XPath.match( rated_shipment_detail, "version:ShipmentRateDetail", 'version' => 'http://fedex.com/ws/rate/v13' )                
+            total_net_charge_tag = REXML::XPath.match( shipment_rate_detail, "version:TotalNetCharge", 'version' => 'http://fedex.com/ws/rate/v13' )    
 
-          delivery_timestamp = rated_shipment.get_text('DeliveryTimestamp').to_s
-
-          delivery_range = delivery_range_from(transit_time, max_transit_time, delivery_timestamp, options)
-
-          currency = handle_incorrect_currency_codes(rated_shipment.get_text('RatedShipmentDetails/ShipmentRateDetail/TotalNetCharge/Currency').to_s)
+            currency_tag = REXML::XPath.match( total_net_charge_tag, "version:Currency", 'version' => 'http://fedex.com/ws/rate/v13' )    
+            amount_tag = REXML::XPath.match( total_net_charge_tag, "version:Amount", 'version' => 'http://fedex.com/ws/rate/v13' )    
+            
+            currency = currency_tag[0].get_text.to_s          
+            total_price = amount_tag[0].get_text.to_s                      
+          end
+          
           rate_estimates << RateEstimate.new(origin, destination, @@name,
-                              self.class.service_name_for_code(service_type),
+                              self.class.service_name_for_code(service_code),
                               :service_code => service_code,
-                              :total_price => rated_shipment.get_text('RatedShipmentDetails/ShipmentRateDetail/TotalNetCharge/Amount').to_s.to_f,
+                              :total_price => total_price.to_f,
                               :currency => currency,
                               :packages => packages,
-                              :delivery_range => delivery_range,
                               :delivery_timestamp => delivery_timestamp)
         end
 		
@@ -417,7 +424,7 @@ module ActiveMerchant
           success = false
           message = "No shipping rates could be found for the destination address" if message.blank?
         end
-
+        
         RateResponse.new(success, message, rates: rate_estimates, request: request, response: response)
       end
 
