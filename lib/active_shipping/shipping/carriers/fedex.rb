@@ -159,7 +159,7 @@ module ActiveMerchant
         
         request = build_ship_request(shipper, recipient, packages, options)        
         response = commit(request)
-        parse_ship_response(shipper, recipient, packages, request, response)        
+        parse_ship_response(request, response)        
       end
 
       protected
@@ -351,7 +351,7 @@ module ActiveMerchant
         end
       end
       
-      def parse_ship_response(shipper, recipient, packages, request, response)
+      def parse_ship_response(request, response)
         rate_estimates = []
         success, message, imagecoded, tr = nil
 
@@ -373,7 +373,7 @@ module ActiveMerchant
         ids = REXML::XPath.match( details, "//version:TrackingIds", 'version' => 'http://fedex.com/ws/ship/v12' )                  
         
         tracking_number = REXML::XPath.match( ids, "//version:TrackingNumber", 'version' => 'http://fedex.com/ws/ship/v12')          
-        tr = tracking_number[0].get_text('TrackingNumber').to_s if tracking_number.size > 0
+        tr = tracking_number[0].get_text.to_s if tracking_number.size > 0
         
         ShipResponse.new(success, message, request: request, response: response, tracking_number: tr, imagecoded: image)        
       end

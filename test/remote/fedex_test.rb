@@ -107,6 +107,15 @@ class FedExTest < Test::Unit::TestCase
     shipping_response = fedex.ship(shipper, recipient, packages, account_number: '510087267', service_code: 'GROUND_HOME_DELIVERY')
     assert_not_nil shipping_response.tracking_number    
   end    
+  
+  def test_ship_response
+    resp = xml_fixture("fedex/response_ship")
+    fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', account: '510087267', login: '118511895', test: true)
+    response = fedex.send(:parse_ship_response, nil, resp)
+    
+    assert_not_empty response.tracking_number
+    assert_equal response.tracking_number, '794807741785'
+  end
 
   #def test_tracking
   #  assert_nothing_raised do
