@@ -29,7 +29,6 @@ module ActiveMerchant #:nodoc:
         @success, @message, @params = success, message, params.stringify_keys
         @test = options[:test] || false
         @xml = options[:xml]
-        raise ResponseError.new(self) unless success
       end
     
       def success?
