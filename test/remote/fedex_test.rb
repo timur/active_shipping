@@ -116,6 +116,12 @@ class FedExTest < Test::Unit::TestCase
     assert_not_empty response.tracking_number
     assert_equal response.tracking_number, '794807741785'
   end
+  
+  def test_track
+    fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', account: '510087267', login: '118511895', test: true)
+    xml = fedex.send(:build_tracking_request, 794807744935)
+    puts xml
+  end  
 
   #def test_tracking
   #  assert_nothing_raised do

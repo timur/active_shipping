@@ -137,11 +137,11 @@ module ActiveMerchant
         [:key, :password, :account, :login]
       end
       
-      def find_rates(shipper, recipient, packages, options = {})
+      def find_rates(shipper, recipient, packages, envelope, options = {})
         options = @options.update(options)
         packages = Array(packages)
         
-        request = build_rate_request(shipper, recipient, packages, options)        
+        request = build_rate_request(shipper, recipient, packages, envelope, options)        
         response = commit(save_request(request), (options[:test] || false))
         parse_rate_response(shipper, recipient, packages, request, response, options)
       end
@@ -237,7 +237,7 @@ module ActiveMerchant
         xml_request.to_s
       end
       
-      def build_rate_request(shipper, recipient, packages, options={})
+      def build_rate_request(shipper, recipient, packages, envelope, options={})
         #imperial = ['US','LR','MM'].include?(shipper.address.country_code(:alpha2))
         imperial = false
 
@@ -271,24 +271,27 @@ module ActiveMerchant
                 rs << recipient.fedex_xml
                 
                 rs << XmlNode.new('RateRequestTypes', 'ACCOUNT')
-                rs << XmlNode.new('PackageCount', packages.size)                
-                    
-                packages.each do |pkg|
-                  rs << XmlNode.new('RequestedPackageLineItems') do |rps|
-                    rps << XmlNode.new('GroupPackageCount', pkg.quantity)
-                    rps << XmlNode.new('Weight') do |tw|
-                      tw << XmlNode.new('Units', imperial ? 'LB' : 'KG')
-                      tw << XmlNode.new('Value', [((imperial ? pkg.lbs : pkg.kgs).to_f*1000).round/1000.0, 0.1].max)
-                    end
-                    rps << XmlNode.new('Dimensions') do |dimensions|
-                      [:length,:width,:height].each do |axis|
-                        value = ((imperial ? pkg.inches(axis) : pkg.cm(axis)).to_f*1000).round/1000.0 # 3 decimals
-                        dimensions << XmlNode.new(axis.to_s.capitalize, value.ceil)
+                
+                unless envelope
+                  rs << XmlNode.new('PackageCount', packages.size)                
+                      
+                  packages.each do |pkg|
+                    rs << XmlNode.new('RequestedPackageLineItems') do |rps|
+                      rps << XmlNode.new('GroupPackageCount', pkg.quantity)
+                      rps << XmlNode.new('Weight') do |tw|
+                        tw << XmlNode.new('Units', imperial ? 'LB' : 'KG')
+                        tw << XmlNode.new('Value', [((imperial ? pkg.lbs : pkg.kgs).to_f*1000).round/1000.0, 0.1].max)
                       end
-                      dimensions << XmlNode.new('Units', imperial ? 'IN' : 'CM')
+                      rps << XmlNode.new('Dimensions') do |dimensions|
+                        [:length,:width,:height].each do |axis|
+                          value = ((imperial ? pkg.inches(axis) : pkg.cm(axis)).to_f*1000).round/1000.0 # 3 decimals
+                          dimensions << XmlNode.new(axis.to_s.capitalize, value.ceil)
+                        end
+                        dimensions << XmlNode.new('Units', imperial ? 'IN' : 'CM')
+                      end
                     end
-                  end
-                end              
+                  end   
+                end           
               end
             end
           end
@@ -297,25 +300,32 @@ module ActiveMerchant
       end
       
       def build_tracking_request(tracking_number, options={})
-        xml_request = XmlNode.new('TrackRequest', 'xmlns' => 'http://fedex.com/ws/track/v3') do |root_node|
-          root_node << build_request_header
+        xml_request = XmlNode.new('soapenv:Envelope', 'xmlns:soapenv' => 'http://schemas.xmlsoap.org/soap/envelope/', 'xmlns' => 'http://fedex.com/ws/track/v6') do |root_node|        
           
-          # Version
-          root_node << XmlNode.new('Version') do |version_node|
-            version_node << XmlNode.new('ServiceId', 'trck')
-            version_node << XmlNode.new('Major', '3')
-            version_node << XmlNode.new('Intermediate', '0')
-            version_node << XmlNode.new('Minor', '0')
+          root_node << XmlNode.new('soapenv:Header')
+          root_node << XmlNode.new('soapenv:Body') do |body|
+
+            body << XmlNode.new('TrackRequest', 'xmlns' => 'http://fedex.com/ws/track/v6') do |request|        
+              request << build_request_header
+          
+              # Version
+              request << XmlNode.new('Version') do |version_node|
+                version_node << XmlNode.new('ServiceId', 'trck')
+                version_node << XmlNode.new('Major', '6')
+                version_node << XmlNode.new('Intermediate', '0')
+                version_node << XmlNode.new('Minor', '0')
+              end
+              
+              request << XmlNode.new('PackageIdentifier') do |package_node|
+                package_node << XmlNode.new('Value', tracking_number)
+                package_node << XmlNode.new('Type', PackageIdentifierTypes[options['package_identifier_type'] || 'tracking_number'])
+              end
+              
+              #root_node << XmlNode.new('ShipDateRangeBegin', options['ship_date_range_begin']) if options['ship_date_range_begin']
+              #root_node << XmlNode.new('ShipDateRangeEnd', options['ship_date_range_end']) if options['ship_date_range_end']
+              request << XmlNode.new('IncludeDetailedScans', 1)
+            end
           end
-          
-          root_node << XmlNode.new('PackageIdentifier') do |package_node|
-            package_node << XmlNode.new('Value', tracking_number)
-            package_node << XmlNode.new('Type', PackageIdentifierTypes[options['package_identifier_type'] || 'tracking_number'])
-          end
-          
-          root_node << XmlNode.new('ShipDateRangeBegin', options['ship_date_range_begin']) if options['ship_date_range_begin']
-          root_node << XmlNode.new('ShipDateRangeEnd', options['ship_date_range_end']) if options['ship_date_range_end']
-          root_node << XmlNode.new('IncludeDetailedScans', 1)
         end
         xml_request.to_s
       end
