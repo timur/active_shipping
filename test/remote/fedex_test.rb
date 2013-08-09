@@ -26,7 +26,7 @@ class FedExTest < Test::Unit::TestCase
     recipient = ActiveMerchant::Shipping::ShippingRecipient.new(address: address_rec, contact: contact_recipient)       
     
     fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', account: '510087267', login: '118511895', test: true)
-    response = fedex.find_rates(shipper, recipient, packages)
+    response = fedex.find_rates(shipper, recipient, packages, false)
     
     fedex_rates = response.rates.sort_by(&:price).collect {|rate| 
       [rate.service_name, rate.price]
@@ -50,7 +50,7 @@ class FedExTest < Test::Unit::TestCase
     recipient = ActiveMerchant::Shipping::ShippingRecipient.new(address: address_rec, contact: contact_recipient)       
     
     fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', account: '510087267', login: '118511895', test: true)
-    response = fedex.find_rates(shipper, recipient, packages)
+    response = fedex.find_rates(shipper, recipient, packages, false)
     
     fedex_rates = response.rates.sort_by(&:price).collect {|rate| 
       [rate.service_name, rate.price]
@@ -76,7 +76,7 @@ class FedExTest < Test::Unit::TestCase
     recipient = ActiveMerchant::Shipping::ShippingRecipient.new(address: address_rec, contact: contact_recipient)       
     
     fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', account: '510087267', login: '118511895', test: true)
-    response = fedex.find_rates(shipper, recipient, packages)
+    response = fedex.find_rates(shipper, recipient, packages, false)
     
     fedex_rates = response.rates.sort_by(&:price).collect {|rate| 
       puts rate.currency
