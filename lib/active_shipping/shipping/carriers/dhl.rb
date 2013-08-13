@@ -5,11 +5,11 @@ module ActiveMerchant
       self.retry_safe = true
 
       cattr_reader :name
-      @@name = "Dhl"
+      @@name = "DHL"
 
       TEST_URL = 'https://xmlpitest-ea.dhl.com/XMLShippingServlet'
       LIVE_URL = 'https://xmlpi-ea.dhl.com/XMLShippingServlet'
-
+      
       PackageTypes = {
         "EE" => "DHL Express Envelope",
         "OD" => "Other DHL Packaging",
@@ -32,7 +32,6 @@ module ActiveMerchant
       }
 
       GlobalProductCodes = {
-
         "0"	=> "LOGISTICS SERVICES",
         "1"	=> "CUSTOMS SERVICES",
         "2"	=> "EASY SHOP",
@@ -318,23 +317,15 @@ module ActiveMerchant
         [:login, :password, :account_number, :test]
       end
 
+      def finde_quotes(options = {})
+        response = commit(save_request(request), (options[:test] || false))
 
-      def generate_label(origin, destination, packages, options = {})
-        options = @options.update(options)
-        packages = Array(packages)
-        label_request = build_label_request(origin, destination, packages, options)
-
-        response = commit(save_request(label_request), options[:test])
-        result =  parse_label_response(response, options)
-        result
-      end
-
-      def parse_label_response(response, options ={})
-
-        xml = REXML::Document.new(response).root
-        success = response_success?(xml)
-        message = response_message(response) unless success
-        DhlLabelResponse.new(success, message, Hash.from_xml(response))
+        if Rails && Rails.logger
+          Rails.logger.debug { "Find Rates request DHL: #{last_request}" }
+          Rails.logger.debug { "Find Rates response DHL: #{response}" }          
+        end
+        
+        parse_rate_response(shipper, recipient, packages, request, response, options)
       end
 
       def response_success?(document)
@@ -355,152 +346,12 @@ module ActiveMerchant
         document.elements['/*/Note/']
       end
 
-      # def parse_label_response(response, options)
-      #   return true
-      # end
-
       protected
-
-      def build_instruct
-        '<?xml version="1.0" encoding="UTF-8"?>
-        <req:ShipmentValidateRequestEA xmlns:req="http://www.dhl.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dhl.com
-        ship-val-req_EA.xsd">'
-      end
-
-      def build_request_service_header
-        xml_request = Builder::XmlMarkup.new
-        xml_request.Request do |r|
-          r.ServiceHeader do |servhead|
-            servhead.SiteID @options[:login]
-            servhead.Password @options[:password]
-          end
-        end
-        xml_request.NewShipper 'N'
-        xml_request.LanguageCode 'en'
-        xml_request.PiecesEnabled 'Y'
-
-        xml_request.target!
-      end
-
-      def build_billing(options)
-        xml_request = Builder::XmlMarkup.new
-        xml_request.Billing do |b|
-          b.ShipperAccountNumber @options[:account_number]
-          b.ShippingPaymentType  options[:payment_type]
-          b.BillingAccountNumber @options[:account_number]
-        end
-        xml_request.target!
-      end
-
-      def build_consignee(destination)
-        xml_request = Builder::XmlMarkup.new
-        xml_request.Consignee do |c|
-          c = build_location(c, destination)
-        end
-        xml_request.target!
-      end
-
-      def build_location(target, location, options = {})
-        target.CompanyName location.company_name
-        target.RegisteredAccount options[:shipper_id] unless options[:shipper_id].nil?
-        target.AddressLine location.address1
-        target.AddressLine location.address2 unless location.address2.nil?
-        target.City location.city
-        target.Division location.state
-        target.PostalCode location.postal_code
-        target.CountryCode location.country_code
-        target.CountryName location.country
-        target.Contact do |contact|
-          contact.PersonName location.name
-          contact.PhoneNumber location.phone
-        end
-        target
-      end
-
-      def build_ship_location(target, location, options = {})
-        target.CompanyName location.company_name
-        target.RegisteredAccount options[:shipper_id] unless options[:shipper_id].nil?
-        target.AddressLine location.address1
-        target.AddressLine location.address2 unless location.address2.nil?
-        target.City location.city
-        target.Division location.state
-        target.PostalCode location.postal_code
-        target.CountryCode location.country_code
-        target.CountryName location.country
-        target.Contact do |sc|
-          sc.PersonName location.name
-          sc.PhoneNumber location.phone
-        end
-        target
-      end
-
-      def build_shipper(origin, options)
-        xml_request = Builder::XmlMarkup.new
-        xml_request.Shipper do |shipper|
-          shipper.ShipperID options[:shipper_id]
-          shipper = build_ship_location(shipper, origin, options)
-        end
-        xml_request.target!
-      end
-
-      def build_commodity
-        xml_request = Builder::XmlMarkup.new
-        xml_request.Commodity do |com|
-          com.CommodityCode '1'
-          com.CommodityName 'String'
-        end
-        xml_request.target!
-      end
-
-      def build_shipment_details(packages, origin, options)
-        imperial = ['US','LR','MM'].include?(origin.country_code(:alpha2))
-        xml_request = Builder::XmlMarkup.new
-        xml_request.ShipmentDetails do |sd|
-          sd.NumberOfPieces packages.size
-          sd.CurrencyCode DHL_Currency_Codes[origin.country_code]
-          sd.Pieces do |pieces|
-            packages.each do |package|
-              pieces.Piece do |piece|
-                piece.PieceID packages.index(package)
-                piece.PackageType options[:package_type]
-                piece.Weight package.weight.to_f.round/1000.0
-                piece.Depth  (imperial ? package.inches(:length).to_i : package.cm(:length).to_i)
-                piece.Width  (imperial ? package.inches(:width).to_i : package.cm(:width).to_i)
-                piece.Height (imperial ? package.inches(:height).to_i : package.cm(:height).to_i)
-              end
-            end
-          end
-          sd.PackageType options[:package_type]
-          sd.Weight packages.map{|package| package.weight}.inject(0){|sum, i| sum + i}
-          sd.DimensionUnit  imperial ? 'I' : 'C'
-          sd.WeightUnit imperial ? 'L' : 'K'
-          sd.GlobalProductCode options[:global_product_code]
-          sd.LocalProductCode options[:local_product_code]
-          sd.DoorTo options[:door_to]
-          sd.Date Time.now.strftime("%Y-%m-%d")
-          sd.Contents options[:content]
-        end
-
-        xml_request.target!
-      end
-
-      def build_label_request(origin, destination, packages, options)
-        request = build_instruct
-        request += build_request_service_header
-        request += build_billing(options)
-        request += build_consignee(destination)
-        request += build_shipment_details(packages, origin, options)
-        request += build_shipper(origin, options)
-        request += '</req:ShipmentValidateRequestEA>'
-        request
-      end
-
 
 
       def commit(request, test = false)
         ssl_post(test ? TEST_URL : LIVE_URL, request.gsub("\n",''))
       end
-
     end
   end
 end

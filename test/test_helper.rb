@@ -7,7 +7,7 @@ Bundler.setup
 
 require 'test/unit'
 require 'active_shipping'
-require 'mocha'
+require 'mocha/setup'
 require 'timecop'
 
 XmlNode # trigger autorequire

@@ -137,18 +137,18 @@ module ActiveMerchant
         [:key, :password, :account, :login]
       end
       
-      def find_rates(shipper, recipient, packages, envelope, options = {})
+      def find_quotes(options = {})
+        shipper = options[:shipper]
+        recipient = options[:recipient]        
+        packages = options[:packages]
+        envelope = options[:envelope]
+        
         options = @options.update(options)
         packages = Array(packages)
         
         request = build_rate_request(shipper, recipient, packages, envelope, options)        
         response = commit(save_request(request), (options[:test] || false))
 
-        if Rails && Rails.logger
-          Rails.logger.debug { "Find Rates request: #{request}" }
-          Rails.logger.debug { "Find Rates response: #{response}" }          
-        end
-        
         parse_rate_response(shipper, recipient, packages, request, response, options)
       end
       
