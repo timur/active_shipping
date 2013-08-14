@@ -149,6 +149,7 @@ module ActiveMerchant
         request = build_rate_request(shipper, recipient, packages, envelope, options)        
         response = commit(save_request(request), (options[:test] || false))
 
+        @last_response = response
         parse_rate_response(shipper, recipient, packages, request, response, options)
       end
       
@@ -166,6 +167,11 @@ module ActiveMerchant
         request = build_ship_request(shipper, recipient, packages, options)        
         response = commit(request)
         parse_ship_response(request, response)        
+      end
+
+      def commit(request, test = true)
+        res = ssl_post(test ? TEST_URL : LIVE_URL, request.gsub("\n",''))        
+        res
       end
 
       protected
@@ -194,6 +200,7 @@ module ActiveMerchant
                 ship_request << XmlNode.new('DropoffType', 'REGULAR_PICKUP')
                 ship_request << XmlNode.new('ServiceType', options[:service_code])                
                 ship_request << XmlNode.new('PackagingType', 'YOUR_PACKAGING')       
+                ship_request << XmlNode.new('PreferredCurrency', 'EUR')                       
                 ship_request << shipper.fedex_xml
                 ship_request << recipient.fedex_xml
 
@@ -244,7 +251,6 @@ module ActiveMerchant
       end
       
       def build_rate_request(shipper, recipient, packages, envelope, options={})
-        #imperial = ['US','LR','MM'].include?(shipper.address.country_code(:alpha2))
         imperial = false
 
         xml_request = XmlNode.new('soapenv:Envelope', 'xmlns:soapenv' => 'http://schemas.xmlsoap.org/soap/envelope/', 'xmlns' => 'http://fedex.com/ws/rate/v13') do |root_node|        
@@ -272,6 +278,17 @@ module ActiveMerchant
                 rs << XmlNode.new('ShipTimestamp', ship_timestamp(options[:turn_around_time]))
                 rs << XmlNode.new('DropoffType', options[:dropoff_type] || 'REGULAR_PICKUP')
                 rs << XmlNode.new('PackagingType', options[:packaging_type] || 'YOUR_PACKAGING')
+                
+                if options[:preferred_currency]
+                  rs << XmlNode.new('PreferredCurrency', options[:preferred_currency])                
+                end
+
+                if options[:insured_value]
+                  rs << XmlNode.new('TotalInsuredValue') do |insure|
+                    insure << XmlNode.new('Currency', options[:insured_currency] || 'USD')
+                    insure << XmlNode.new('Amount', options[:insured_value])                    
+                  end
+                end
                 
                 rs << shipper.fedex_xml
                 rs << recipient.fedex_xml
@@ -557,10 +574,6 @@ module ActiveMerchant
       end
       
       def response_success?(document, namespace = "")
-        #formatter = REXML::Formatters::Pretty.new(2)
-        #formatter.compact = true # This is the magic line that does what you need!
-        #formatter.write(document, $stdout)
-        
         names = response_status_node(document, namespace)        
         
         highest = REXML::XPath.match( document, "//version:HighestSeverity", 'version' => namespace )        
@@ -578,20 +591,15 @@ module ActiveMerchant
         end
       end
       
-      def response_message(document, namespace)
+      def response_message(document, namespace = "")
         back = []
         response_node = response_status_node(document, namespace)
         response_node.each do |node|
-          back << "#{node.get_text('Severity')} - #{node.get_text('Code')}: #{node.get_text('LocalizedMessage')}"  
+          back << ShippingMessage.new(severity: node.get_text('Severity'), code: node.get_text('Code'), localized_message: node.get_text('LocalizedMessage'))
         end
         back
       end
-      
-      def commit(request, test = true)
-        res = ssl_post(test ? TEST_URL : LIVE_URL, request.gsub("\n",''))        
-        res
-      end
-      
+            
       def handle_incorrect_currency_codes(currency)
         case currency
         when /UKL/i then 'GBP'

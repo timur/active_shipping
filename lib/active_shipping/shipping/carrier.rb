@@ -6,7 +6,7 @@ module ActiveMerchant
       include PostsData
       include Quantified
       
-      attr_reader :last_request
+      attr_reader :last_request, :last_response
       attr_accessor :test_mode
       alias_method :test_mode?, :test_mode
       
@@ -15,6 +15,7 @@ module ActiveMerchant
         requirements.each {|key| requires!(options, key)}
         @options = options
         @last_request = nil
+        @last_response = nil        
         @test_mode = @options[:test]
       end
 
@@ -62,8 +63,8 @@ module ActiveMerchant
       end
       
       # Use after building the request to save for later inspection. Probably won't ever be overridden.
-      def save_request(r)
-        @last_request = r
+      def save_request(request)
+        @last_request = request
       end
 
       def timestamp_from_business_day(days)

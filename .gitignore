@@ -7,5 +7,6 @@ pkg
 Gemfile.lock
 .rvmrc
 test/fixtures/live_credentials.yml
+last_requests
 .rbenv-version
 
