@@ -50,7 +50,9 @@ module ActiveMerchant
       include Virtus
       
       attribute :notes, Array
-      attribute :quotes, Array      
+      attribute :quotes, Array
+      attribute :request, String
+      attribute :response, String      
       
     end
   end

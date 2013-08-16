@@ -21,21 +21,23 @@
             <WeightUnit><%= weight_unit %></WeightUnit>
             <Pieces>
               <Piece>
-                <% @pieces.each_with_index do |piece, i| -%>
-                  <PieceID><%= piece.piece_id = i + 1 %></PieceID> 
-                  <% if piece.height -%>
-                    <Height><%= piece.height -%></Height>
+                <% if @pieces %>
+                  <% @pieces.each_with_index do |piece, i| -%>
+                    <PieceID><%= piece.piece_id = i + 1 %></PieceID> 
+                    <% if piece.height -%>
+                      <Height><%= piece.height -%></Height>
+                    <% end -%>
+                    <% if piece.depth -%>
+                      <Depth><%= piece.depth -%></Depth>
+                    <% end -%>                    
+                    <% if piece.width -%>                    
+                      <Width><%= piece.width -%></Width>
+                    <% end -%>                    
+                    <% if piece.weight -%>                  
+                      <Weight><%= piece.weight -%></Weight>
+                    <% end -%>                    
                   <% end -%>
-                  <% if piece.depth -%>
-                    <Depth><%= piece.depth -%></Depth>
-                  <% end -%>                    
-                  <% if piece.width -%>                    
-                    <Width><%= piece.width -%></Width>
-                  <% end -%>                    
-                  <% if piece.weight -%>                  
-                    <Weight><%= piece.weight -%></Weight>
-                  <% end -%>                    
-                <% end -%>                
+                <% end -%>                                  
               </Piece>
             </Pieces>
             <% if @payment_account_number -%>

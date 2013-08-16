@@ -326,9 +326,11 @@ module ActiveMerchant
         request.site_id = @options[:site_id]
         request.password = @options[:password]        
 
-        response = commit(save_request(request.to_xml), (options[:test] || false))        
-        @last_response = response        
-        parse_quote_response(Nokogiri::XML(response))
+        response = commit(save_request(request.to_xml), (options[:test] || false))             
+        response = parse_quote_response(Nokogiri::XML(response))
+        response.response = response
+        response.request = last_request
+        response
       end
       
       def parse_quote_response(document)
