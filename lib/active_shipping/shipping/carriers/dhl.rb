@@ -328,12 +328,13 @@ module ActiveMerchant
 
         response = commit(save_request(request.to_xml), (options[:test] || false))        
         @last_response = response        
-        parse_quote_response(response)
+        parse_quote_response(Nokogiri::XML(response))
       end
       
       def parse_quote_response(document)
         response = DhlQuoteResponse.new
         parse_notes(response, document)
+        parse_quotes(response, document)
         
         response
       end
@@ -346,15 +347,76 @@ module ActiveMerchant
       
       private
       
+      def parse_quotes(response, document)
+        quotes = document.xpath("//QtdShp")
+        
+        quotes.each do |qtdshp|
+          q = DhlQuote.new
+          
+          q.pickup_date = qtdshp.at('PickupDate').text if qtdshp.at('PickupDate')
+          q.global_product_code = qtdshp.at('GlobalProductCode').text if qtdshp.at('GlobalProductCode')
+          q.local_product_code = qtdshp.at('LocalProductCode').text if qtdshp.at('LocalProductCode')          
+          q.local_product_name = qtdshp.at('ProductShortName').text if qtdshp.at('ProductShortName')
+          q.product_short_name = qtdshp.at('LocalProductName').text if qtdshp.at('LocalProductName')          
+          q.delivery_date = qtdshp.at('DeliveryDate').text if qtdshp.at('DeliveryDate')          
+          q.delivery_time = qtdshp.at('DeliveryTime').text if qtdshp.at('DeliveryTime')          
+          q.transit_days = qtdshp.at('LocalProductName').text if qtdshp.at('LocalProductName')          
+          q.pickup_day_of_week = qtdshp.at('PickupDayOfWeekNum').text if qtdshp.at('PickupDayOfWeekNum')          
+          q.destination_day_of_week = qtdshp.at('DestinationDayOfWeekNum').text if qtdshp.at('DestinationDayOfWeekNum')          
+          q.product_short_name = qtdshp.at('LocalProductName').text if qtdshp.at('LocalProductName')                    
+          q.pickup_date_cutoff_time = qtdshp.at('PickupCutoffTime').text if qtdshp.at('PickupCutoffTime')          
+          q.booking_time = qtdshp.at('BookingTime').text if qtdshp.at('BookingTime')          
+          q.currency = qtdshp.at('CurrencyCode').text if qtdshp.at('CurrencyCode')          
+          q.exchange_rate = qtdshp.at('ExchangeRate').text if qtdshp.at('ExchangeRate')
+          q.pricing_date = qtdshp.at('PricingDate').text if qtdshp.at('PricingDate')   
+          q.shipping_charge = qtdshp.at('ShippingCharge').text if qtdshp.at('ShippingCharge')   
+          q.total_tax_amount = qtdshp.at('TotalTaxAmount').text if qtdshp.at('TotalTaxAmount')   
+          
+          parse_extra_charges(qtdshp, q)                                                                   
+
+          response.quotes << q
+        end        
+      end
+      
       def parse_notes(response, document)
         notes = document.xpath("//Note")
         
         notes.each do |note|
           n = DhlNote.new
           condition = note.xpath("Condition")
-          n.code = condition.at('ConditionCode').text
-          n.data = condition.at('ConditionData').text          
+          n.code = condition.at('ConditionCode').text if note.at('ConditionCode')
+          n.data = condition.at('ConditionData').text if note.at('ConditionData')          
           response.notes << n
+        end        
+      end
+      
+      def parse_extra_charges(quote_node, dhl_quote)
+        extras = quote_node.xpath("QtdShpExChrg")
+        
+        extras.each do |extra|
+          e = DhlExtraCharge.new
+          
+          e.special_service_type = extra.at('SpecialServiceType').text if extra.at('SpecialServiceType')
+          e.local_service_type = extra.at('LocalServiceType').text if extra.at('LocalServiceType')
+          e.global_service_name = extra.at('GlobalServiceName').text if extra.at('GlobalServiceName')
+          
+          e.local_service_name = extra.at('LocalServiceTypeName').text if extra.at('LocalServiceTypeName')                              
+          e.currency = extra.at('CurrencyCode').text if extra.at('CurrencyCode')                              
+          e.charge_value = extra.at('ChargeValue').text if extra.at('ChargeValue')                              
+          e.charge_tax_amount = extra.at('ChargeTaxAmount').text if extra.at('ChargeTaxAmount')                                        
+          
+          #extra_subs = extra.xpath("QtdSExtrChrgInAdCur")
+          #
+          #extra_subs.each do |sub|
+          #  code = ""
+          #  code = sub.at('CurrencyRoleTypeCode').text if sub.at('CurrencyRoleTypeCode')                              
+          #  
+          #  if code != "" && code == "BILLC"
+          #    e.charge_tax_rate = sub.at('ChargeTaxRate').text if sub.at('ChargeTaxRate')                              
+          #    e.charge_tax_amount = sub.at('ChargeTaxAmount').text if sub.at('ChargeTaxAmount')   
+          #  end            
+          #end
+          dhl_quote.extra_charges << e                  
         end        
       end
     end

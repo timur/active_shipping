@@ -1,0 +1,432 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<res:DCTResponse xmlns:res='http://www.dhl.com' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.dhl.com DCT-Response.xsd'>
+  <GetQuoteResponse>
+    <Response>
+      <ServiceHeader>
+        <MessageTime>2013-08-15T12:39:45.199+00:00</MessageTime>
+        <SiteID>DHLMexico</SiteID>
+      </ServiceHeader>
+    </Response>
+    <BkgDetails>
+      <OriginServiceArea>
+        <FacilityCode>FRA</FacilityCode>
+        <ServiceAreaCode>FRA</ServiceAreaCode>
+      </OriginServiceArea>
+      <DestinationServiceArea>
+        <FacilityCode>FRA</FacilityCode>
+        <ServiceAreaCode>FRA</ServiceAreaCode>
+      </DestinationServiceArea>
+      <QtdShp>
+        <GlobalProductCode>C</GlobalProductCode>
+        <LocalProductCode>P</LocalProductCode>
+        <ProductShortName>MEDICAL EXPRESS</ProductShortName>
+        <LocalProductName>MEDICAL EXPRESS</LocalProductName>
+        <NetworkTypeCode>TD</NetworkTypeCode>
+        <POfferedCustAgreement>Y</POfferedCustAgreement>
+        <TransInd>N</TransInd>
+        <PickupDate>2013-08-15</PickupDate>
+        <PickupCutoffTime>PT19H30M</PickupCutoffTime>
+        <BookingTime>PT18H</BookingTime>
+        <WeightCharge>0</WeightCharge> 
+        <WeightChargeTax>0</WeightChargeTax>
+        <TotalTransitDays>1</TotalTransitDays> 
+        <PickupPostalLocAddDays>0</PickupPostalLocAddDays>
+        <DeliveryPostalLocAddDays>0</DeliveryPostalLocAddDays>
+        <PickupNonDHLCourierCode> </PickupNonDHLCourierCode> 
+        <DeliveryNonDHLCourierCode> </DeliveryNonDHLCourierCode>
+        <DeliveryDate>2013-08-16</DeliveryDate>
+        <DeliveryTime>PT9H</DeliveryTime>
+        <DimensionalWeight>1.500</DimensionalWeight>
+        <WeightUnit>KG</WeightUnit>
+        <PickupDayOfWeekNum>4</PickupDayOfWeekNum>
+        <DestinationDayOfWeekNum>5</DestinationDayOfWeekNum>
+        <PricingDate>2013-08-15</PricingDate>
+        <ShippingCharge>0.000</ShippingCharge>
+        <TotalTaxAmount>0.000</TotalTaxAmount>
+        <QtdSInAdCur>
+          <CurrencyRoleTypeCode>BILLC</CurrencyRoleTypeCode>
+          <WeightCharge>0</WeightCharge>
+          <TotalAmount>0.000</TotalAmount>
+          <TotalTaxAmount>0.000</TotalTaxAmount>
+          <WeightChargeTax>0</WeightChargeTax>
+        </QtdSInAdCur>
+        <QtdSInAdCur>
+          <CurrencyRoleTypeCode>PULCL</CurrencyRoleTypeCode>
+          <WeightCharge>0</WeightCharge>
+          <TotalAmount>0.000</TotalAmount>
+          <TotalTaxAmount>0.000</TotalTaxAmount>
+          <WeightChargeTax>0</WeightChargeTax>
+        </QtdSInAdCur>
+      </QtdShp>
+      <QtdShp>
+        <GlobalProductCode>K</GlobalProductCode>
+        <LocalProductCode>H</LocalProductCode>
+        <ProductShortName>DOM EXPRESS 9:00</ProductShortName>
+        <LocalProductName>DOM EXPRESS 9:00</LocalProductName>
+        <NetworkTypeCode>TD</NetworkTypeCode>
+        <POfferedCustAgreement>N</POfferedCustAgreement>
+        <TransInd>Y</TransInd>
+        <PickupDate>2013-08-15</PickupDate>
+        <PickupCutoffTime>PT19H30M</PickupCutoffTime>
+        <BookingTime>PT18H</BookingTime>
+        <CurrencyCode>EUR</CurrencyCode>
+        <ExchangeRate>1.361200</ExchangeRate>
+        <WeightCharge>46.410</WeightCharge>
+        <WeightChargeTax>7.410</WeightChargeTax>
+        <TotalTransitDays>1</TotalTransitDays>
+        <PickupPostalLocAddDays>0</PickupPostalLocAddDays>
+        <DeliveryPostalLocAddDays>0</DeliveryPostalLocAddDays>
+        <PickupNonDHLCourierCode> </PickupNonDHLCourierCode>
+        <DeliveryNonDHLCourierCode> </DeliveryNonDHLCourierCode>
+        <DeliveryDate>2013-08-16</DeliveryDate>
+        <DeliveryTime>PT9H</DeliveryTime>
+        <DimensionalWeight>1.500</DimensionalWeight>
+        <WeightUnit>KG</WeightUnit>
+        <PickupDayOfWeekNum>4</PickupDayOfWeekNum>
+        <DestinationDayOfWeekNum>5</DestinationDayOfWeekNum>
+        <QtdShpExChrg>
+          <SpecialServiceType>FF</SpecialServiceType>
+          <LocalServiceType>FF</LocalServiceType>
+          <GlobalServiceName>FUEL SURCHARGE</GlobalServiceName>
+          <LocalServiceTypeName>FUEL SURCHARGE</LocalServiceTypeName>
+          <ChargeCodeType>SCH</ChargeCodeType>
+          <CurrencyCode>EUR</CurrencyCode>
+          <ChargeValue>3.710</ChargeValue>
+          <ChargeTaxAmount>0.590</ChargeTaxAmount>
+          <ChargeTaxRate>19.000</ChargeTaxRate>
+          <QtdSExtrChrgInAdCur>
+            <ChargeValue>3.710</ChargeValue>
+            <ChargeTaxAmount>0.590</ChargeTaxAmount>
+            <CurrencyCode>EUR</CurrencyCode>
+            <CurrencyRoleTypeCode>BILLC</CurrencyRoleTypeCode>
+          </QtdSExtrChrgInAdCur>
+          <QtdSExtrChrgInAdCur>
+            <ChargeValue>3.710</ChargeValue>
+            <ChargeTaxAmount>0.590</ChargeTaxAmount>
+            <CurrencyCode>EUR</CurrencyCode>
+            <CurrencyRoleTypeCode>PULCL</CurrencyRoleTypeCode>
+          </QtdSExtrChrgInAdCur>
+          <QtdSExtrChrgInAdCur>
+            <ChargeValue>5.050</ChargeValue>
+            <ChargeTaxAmount>0.800</ChargeTaxAmount>
+            <CurrencyCode>USD</CurrencyCode>
+            <CurrencyRoleTypeCode>BASEC</CurrencyRoleTypeCode>
+          </QtdSExtrChrgInAdCur>
+        </QtdShpExChrg>
+        <PricingDate>2013-08-15</PricingDate>
+        <ShippingCharge>50.120</ShippingCharge>
+        <TotalTaxAmount>8.000</TotalTaxAmount>
+        <QtdSInAdCur>
+          <CurrencyCode>EUR</CurrencyCode>
+          <CurrencyRoleTypeCode>BILLC</CurrencyRoleTypeCode>
+          <WeightCharge>46.410</WeightCharge>
+          <TotalAmount>50.120</TotalAmount>
+          <TotalTaxAmount>8.000</TotalTaxAmount>
+          <WeightChargeTax>7.410</WeightChargeTax>
+        </QtdSInAdCur>
+        <QtdSInAdCur>
+          <CurrencyCode>EUR</CurrencyCode>
+          <CurrencyRoleTypeCode>PULCL</CurrencyRoleTypeCode>
+          <WeightCharge>46.410</WeightCharge>
+          <TotalAmount>50.120</TotalAmount>
+          <TotalTaxAmount>8.000</TotalTaxAmount>
+          <WeightChargeTax>7.410</WeightChargeTax>
+        </QtdSInAdCur>
+        <QtdSInAdCur>
+          <CurrencyCode>USD</CurrencyCode>
+          <CurrencyRoleTypeCode>BASEC</CurrencyRoleTypeCode>
+          <WeightCharge>63.170</WeightCharge>
+          <TotalAmount>68.220</TotalAmount>
+          <TotalTaxAmount>10.890</TotalTaxAmount>
+          <WeightChargeTax>10.090</WeightChargeTax>
+        </QtdSInAdCur>
+      </QtdShp>
+      <QtdShp>
+        <GlobalProductCode>O</GlobalProductCode>
+        <LocalProductCode>O</LocalProductCode>
+        <ProductShortName>DOM EXPRESS 10:00</ProductShortName>
+        <LocalProductName>DOM EXPRESS 10:00</LocalProductName>
+        <NetworkTypeCode>TD</NetworkTypeCode>
+        <POfferedCustAgreement>N</POfferedCustAgreement>
+        <TransInd>Y</TransInd>
+        <PickupDate>2013-08-15</PickupDate>
+        <PickupCutoffTime>PT19H30M</PickupCutoffTime>
+        <BookingTime>PT18H</BookingTime>
+        <WeightCharge>0</WeightCharge>
+        <WeightChargeTax>0</WeightChargeTax>
+        <TotalTransitDays>1</TotalTransitDays>
+        <PickupPostalLocAddDays>0</PickupPostalLocAddDays>
+        <DeliveryPostalLocAddDays>0</DeliveryPostalLocAddDays>
+        <PickupNonDHLCourierCode> </PickupNonDHLCourierCode>
+        <DeliveryNonDHLCourierCode> </DeliveryNonDHLCourierCode>
+        <DeliveryDate>2013-08-16</DeliveryDate>
+        <DeliveryTime>PT10H</DeliveryTime>
+        <DimensionalWeight>1.500</DimensionalWeight>
+        <WeightUnit>KG</WeightUnit>
+        <PickupDayOfWeekNum>4</PickupDayOfWeekNum>
+        <DestinationDayOfWeekNum>5</DestinationDayOfWeekNum>
+        <PricingDate>2013-08-15</PricingDate>
+        <ShippingCharge>0.000</ShippingCharge>
+        <TotalTaxAmount>0.000</TotalTaxAmount>
+        <QtdSInAdCur>
+          <CurrencyRoleTypeCode>BILLC</CurrencyRoleTypeCode>
+          <WeightCharge>0</WeightCharge>
+          <TotalAmount>0.000</TotalAmount>
+          <TotalTaxAmount>0.000</TotalTaxAmount>
+          <WeightChargeTax>0</WeightChargeTax>
+        </QtdSInAdCur>
+        <QtdSInAdCur>
+          <CurrencyRoleTypeCode>PULCL</CurrencyRoleTypeCode>
+          <WeightCharge>0</WeightCharge>
+          <TotalAmount>0.000</TotalAmount>
+          <TotalTaxAmount>0.000</TotalTaxAmount>
+          <WeightChargeTax>0</WeightChargeTax>
+        </QtdSInAdCur>
+      </QtdShp>
+      <QtdShp>
+        <GlobalProductCode>1</GlobalProductCode>
+        <LocalProductCode>L</LocalProductCode>
+        <ProductShortName>DOM EXPRESS 12:00</ProductShortName>
+        <LocalProductName>DOM EXPRESS 12:00</LocalProductName>
+        <NetworkTypeCode>TD</NetworkTypeCode>
+        <POfferedCustAgreement>N</POfferedCustAgreement>
+        <TransInd>Y</TransInd>
+        <PickupDate>2013-08-15</PickupDate>
+        <PickupCutoffTime>PT19H30M</PickupCutoffTime>
+        <BookingTime>PT18H</BookingTime>
+        <CurrencyCode>EUR</CurrencyCode>
+        <ExchangeRate>1.361200</ExchangeRate>
+        <WeightCharge>32.130</WeightCharge>
+        <WeightChargeTax>5.130</WeightChargeTax>
+        <TotalTransitDays>1</TotalTransitDays>
+        <PickupPostalLocAddDays>0</PickupPostalLocAddDays>
+        <DeliveryPostalLocAddDays>0</DeliveryPostalLocAddDays>
+        <PickupNonDHLCourierCode> </PickupNonDHLCourierCode>
+        <DeliveryNonDHLCourierCode> </DeliveryNonDHLCourierCode>
+        <DeliveryDate>2013-08-16</DeliveryDate>
+        <DeliveryTime>PT12H</DeliveryTime>
+        <DimensionalWeight>1.500</DimensionalWeight>
+        <WeightUnit>KG</WeightUnit>
+        <PickupDayOfWeekNum>4</PickupDayOfWeekNum>
+        <DestinationDayOfWeekNum>5</DestinationDayOfWeekNum>
+        <QtdShpExChrg>
+          <SpecialServiceType>FF</SpecialServiceType>
+          <LocalServiceType>FF</LocalServiceType>
+          <GlobalServiceName>FUEL SURCHARGE</GlobalServiceName>
+          <LocalServiceTypeName>FUEL SURCHARGE</LocalServiceTypeName>
+          <ChargeCodeType>SCH</ChargeCodeType>
+          <CurrencyCode>EUR</CurrencyCode>
+          <ChargeValue>2.570</ChargeValue>
+          <ChargeTaxAmount>0.410</ChargeTaxAmount>
+          <ChargeTaxRate>19.000</ChargeTaxRate>
+          <QtdSExtrChrgInAdCur>
+            <ChargeValue>2.570</ChargeValue>
+            <ChargeTaxAmount>0.410</ChargeTaxAmount>
+            <CurrencyCode>EUR</CurrencyCode>
+            <CurrencyRoleTypeCode>BILLC</CurrencyRoleTypeCode>
+          </QtdSExtrChrgInAdCur>
+          <QtdSExtrChrgInAdCur>
+            <ChargeValue>2.570</ChargeValue>
+            <ChargeTaxAmount>0.410</ChargeTaxAmount>
+            <CurrencyCode>EUR</CurrencyCode>
+            <CurrencyRoleTypeCode>PULCL</CurrencyRoleTypeCode>
+          </QtdSExtrChrgInAdCur>
+          <QtdSExtrChrgInAdCur>
+            <ChargeValue>3.500</ChargeValue>
+            <ChargeTaxAmount>0.560</ChargeTaxAmount>
+            <CurrencyCode>USD</CurrencyCode>
+            <CurrencyRoleTypeCode>BASEC</CurrencyRoleTypeCode>
+          </QtdSExtrChrgInAdCur>
+        </QtdShpExChrg>
+        <PricingDate>2013-08-15</PricingDate>
+        <ShippingCharge>34.700</ShippingCharge>
+        <TotalTaxAmount>5.540</TotalTaxAmount>
+        <QtdSInAdCur>
+          <CurrencyCode>EUR</CurrencyCode>
+          <CurrencyRoleTypeCode>BILLC</CurrencyRoleTypeCode>
+          <WeightCharge>32.130</WeightCharge>
+          <TotalAmount>34.700</TotalAmount>
+          <TotalTaxAmount>5.540</TotalTaxAmount>
+          <WeightChargeTax>5.130</WeightChargeTax>
+        </QtdSInAdCur>
+        <QtdSInAdCur>
+          <CurrencyCode>EUR</CurrencyCode>
+          <CurrencyRoleTypeCode>PULCL</CurrencyRoleTypeCode>
+          <WeightCharge>32.130</WeightCharge>
+          <TotalAmount>34.700</TotalAmount>
+          <TotalTaxAmount>5.540</TotalTaxAmount>
+          <WeightChargeTax>5.130</WeightChargeTax>
+        </QtdSInAdCur>
+        <QtdSInAdCur>
+          <CurrencyCode>USD</CurrencyCode>
+          <CurrencyRoleTypeCode>BASEC</CurrencyRoleTypeCode>
+          <WeightCharge>43.740</WeightCharge>
+          <TotalAmount>47.230</TotalAmount>
+          <TotalTaxAmount>7.540</TotalTaxAmount>
+          <WeightChargeTax>6.980</WeightChargeTax>
+        </QtdSInAdCur>
+      </QtdShp>
+      <QtdShp>
+        <GlobalProductCode>N</GlobalProductCode>
+        <LocalProductCode>E</LocalProductCode>
+        <ProductShortName>DOMESTIC EXPRESS</ProductShortName>
+        <LocalProductName>DOMESTIC EXPRESS</LocalProductName>
+        <NetworkTypeCode>TD</NetworkTypeCode>
+        <POfferedCustAgreement>N</POfferedCustAgreement>
+        <TransInd>Y</TransInd>
+        <PickupDate>2013-08-15</PickupDate>
+        <PickupCutoffTime>PT19H30M</PickupCutoffTime>
+        <BookingTime>PT18H</BookingTime>
+        <CurrencyCode>EUR</CurrencyCode>
+        <ExchangeRate>1.361200</ExchangeRate>
+        <WeightCharge>28.560</WeightCharge>
+        <WeightChargeTax>4.560</WeightChargeTax>
+        <TotalTransitDays>1</TotalTransitDays>
+        <PickupPostalLocAddDays>0</PickupPostalLocAddDays>
+        <DeliveryPostalLocAddDays>0</DeliveryPostalLocAddDays>
+        <PickupNonDHLCourierCode> </PickupNonDHLCourierCode>
+        <DeliveryNonDHLCourierCode> </DeliveryNonDHLCourierCode>
+        <DeliveryDate>2013-08-16</DeliveryDate>
+        <DeliveryTime>PT23H59M</DeliveryTime>
+        <DimensionalWeight>1.500</DimensionalWeight>
+        <WeightUnit>KG</WeightUnit>
+        <PickupDayOfWeekNum>4</PickupDayOfWeekNum>
+        <DestinationDayOfWeekNum>5</DestinationDayOfWeekNum>
+        <QtdShpExChrg>
+          <SpecialServiceType>FF</SpecialServiceType>
+          <LocalServiceType>FF</LocalServiceType>
+          <GlobalServiceName>FUEL SURCHARGE</GlobalServiceName>
+          <LocalServiceTypeName>FUEL SURCHARGE</LocalServiceTypeName>
+          <ChargeCodeType>SCH</ChargeCodeType>
+          <CurrencyCode>EUR</CurrencyCode>
+          <ChargeValue>2.280</ChargeValue>
+          <ChargeTaxAmount>0.360</ChargeTaxAmount>
+          <ChargeTaxRate>19.000</ChargeTaxRate>
+          <QtdSExtrChrgInAdCur>
+            <ChargeValue>2.280</ChargeValue>
+            <ChargeTaxAmount>0.360</ChargeTaxAmount>
+            <CurrencyCode>EUR</CurrencyCode>
+            <CurrencyRoleTypeCode>BILLC</CurrencyRoleTypeCode>
+          </QtdSExtrChrgInAdCur>
+          <QtdSExtrChrgInAdCur>
+            <ChargeValue>2.280</ChargeValue>
+            <ChargeTaxAmount>0.360</ChargeTaxAmount>
+            <CurrencyCode>EUR</CurrencyCode>
+            <CurrencyRoleTypeCode>PULCL</CurrencyRoleTypeCode>
+          </QtdSExtrChrgInAdCur>
+          <QtdSExtrChrgInAdCur>
+            <ChargeValue>3.100</ChargeValue>
+            <ChargeTaxAmount>0.490</ChargeTaxAmount>
+            <CurrencyCode>USD</CurrencyCode>
+            <CurrencyRoleTypeCode>BASEC</CurrencyRoleTypeCode>
+          </QtdSExtrChrgInAdCur>
+        </QtdShpExChrg>
+        <PricingDate>2013-08-15</PricingDate>
+        <ShippingCharge>30.840</ShippingCharge>
+        <TotalTaxAmount>4.920</TotalTaxAmount>
+        <QtdSInAdCur>
+          <CurrencyCode>EUR</CurrencyCode>
+          <CurrencyRoleTypeCode>BILLC</CurrencyRoleTypeCode>
+          <WeightCharge>28.560</WeightCharge>
+          <TotalAmount>30.840</TotalAmount>
+          <TotalTaxAmount>4.920</TotalTaxAmount>
+          <WeightChargeTax>4.560</WeightChargeTax>
+        </QtdSInAdCur>
+        <QtdSInAdCur>
+          <CurrencyCode>EUR</CurrencyCode>
+          <CurrencyRoleTypeCode>PULCL</CurrencyRoleTypeCode>
+          <WeightCharge>28.560</WeightCharge>
+          <TotalAmount>30.840</TotalAmount>
+          <TotalTaxAmount>4.920</TotalTaxAmount>
+          <WeightChargeTax>4.560</WeightChargeTax>
+        </QtdSInAdCur>
+        <QtdSInAdCur>
+          <CurrencyCode>USD</CurrencyCode>
+          <CurrencyRoleTypeCode>BASEC</CurrencyRoleTypeCode>
+          <WeightCharge>38.880</WeightCharge>
+          <TotalAmount>41.980</TotalAmount>
+          <TotalTaxAmount>6.700</TotalTaxAmount>
+          <WeightChargeTax>6.210</WeightChargeTax>
+        </QtdSInAdCur>
+      </QtdShp>
+    </BkgDetails>
+    <Srvs>
+      <Srv>
+        <GlobalProductCode>C</GlobalProductCode>
+        <MrkSrv>
+          <LocalProductCode>P</LocalProductCode>
+          <ProductShortName>MEDICAL EXPRESS</ProductShortName>
+          <LocalProductName>MEDICAL EXPRESS</LocalProductName>
+          <NetworkTypeCode>TD</NetworkTypeCode>
+          <POfferedCustAgreement>Y</POfferedCustAgreement>
+          <TransInd>N</TransInd>
+        </MrkSrv>
+      </Srv>
+      <Srv>
+        <GlobalProductCode>K</GlobalProductCode>
+        <MrkSrv>
+          <LocalProductCode>H</LocalProductCode>
+          <ProductShortName>DOM EXPRESS 9:00</ProductShortName>
+          <LocalProductName>DOM EXPRESS 9:00</LocalProductName>
+          <NetworkTypeCode>TD</NetworkTypeCode>
+          <POfferedCustAgreement>N</POfferedCustAgreement>
+          <TransInd>Y</TransInd>
+        </MrkSrv>
+        <MrkSrv>
+          <LocalServiceType>FF</LocalServiceType>
+          <GlobalServiceName>FUEL SURCHARGE</GlobalServiceName>
+          <LocalServiceTypeName>FUEL SURCHARGE</LocalServiceTypeName>
+          <ChargeCodeType>SCH</ChargeCodeType>
+          <MrkSrvInd>N</MrkSrvInd>
+        </MrkSrv>
+      </Srv>
+      <Srv>
+        <GlobalProductCode>O</GlobalProductCode>
+        <MrkSrv>
+          <LocalProductCode>O</LocalProductCode>
+          <ProductShortName>DOM EXPRESS 10:00</ProductShortName>
+          <LocalProductName>DOM EXPRESS 10:00</LocalProductName>
+          <NetworkTypeCode>TD</NetworkTypeCode>
+          <POfferedCustAgreement>N</POfferedCustAgreement>
+          <TransInd>Y</TransInd>
+        </MrkSrv>
+      </Srv>
+      <Srv>
+        <GlobalProductCode>1</GlobalProductCode>
+        <MrkSrv>
+          <LocalProductCode>L</LocalProductCode>
+          <ProductShortName>DOM EXPRESS 12:00</ProductShortName>
+          <LocalProductName>DOM EXPRESS 12:00</LocalProductName>
+          <NetworkTypeCode>TD</NetworkTypeCode>
+          <POfferedCustAgreement>N</POfferedCustAgreement>
+          <TransInd>Y</TransInd>
+        </MrkSrv>
+        <MrkSrv>
+          <LocalServiceType>FF</LocalServiceType>
+          <GlobalServiceName>FUEL SURCHARGE</GlobalServiceName>
+          <LocalServiceTypeName>FUEL SURCHARGE</LocalServiceTypeName>
+          <ChargeCodeType>SCH</ChargeCodeType>
+          <MrkSrvInd>N</MrkSrvInd>
+        </MrkSrv>
+      </Srv>
+      <Srv>
+        <GlobalProductCode>N</GlobalProductCode>
+        <MrkSrv>
+          <LocalProductCode>E</LocalProductCode>
+          <ProductShortName>DOMESTIC EXPRESS</ProductShortName>
+          <LocalProductName>DOMESTIC EXPRESS</LocalProductName>
+          <NetworkTypeCode>TD</NetworkTypeCode>
+          <POfferedCustAgreement>N</POfferedCustAgreement>
+          <TransInd>Y</TransInd>
+        </MrkSrv>
+        <MrkSrv>
+          <LocalServiceType>FF</LocalServiceType>
+          <GlobalServiceName>FUEL SURCHARGE</GlobalServiceName>
+          <LocalServiceTypeName>FUEL SURCHARGE</LocalServiceTypeName>
+          <ChargeCodeType>SCH</ChargeCodeType>
+          <MrkSrvInd>N</MrkSrvInd>
+        </MrkSrv>
+      </Srv>
+    </Srvs>
+  </GetQuoteResponse>
+</res:DCTResponse>
