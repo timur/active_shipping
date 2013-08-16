@@ -7,26 +7,102 @@ class DhlTest < Test::Unit::TestCase
   end
       
   def test_quote
-   # packages = [
-   #   ShippingPackage.new(100, [93,10])
-   # ]
-   # 
-   # address_shipper = ActiveMerchant::Shipping::ShippingAddress.new(street_lines: 'Main Street', city: 'Ciudad de México', postal_code: '16034', country_code: 'MX')
-   # address_rec = ActiveMerchant::Shipping::ShippingAddress.new(street_lines: 'Main Street', city: 'Laderas de Monterrey', postal_code: '22046', country_code: 'MX', residential: true)
-   # 
-   # contact_shipper = ActiveMerchant::Shipping::ShippingContact.new(person_name: "Sender", company_name: "Company")
-   # contact_recipient = ActiveMerchant::Shipping::ShippingContact.new(person_name: "Recipient", company_name: "Company") 
-   # 
-   # shipper = ActiveMerchant::Shipping::ShippingShipper.new(address: address_shipper, contact: contact_shipper)   
-   # recipient = ActiveMerchant::Shipping::ShippingRecipient.new(address: address_rec, contact: contact_recipient)       
-   # 
-   # fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', account: '510087267', login: '118511895', test: true)
-   # response = fedex.find_quotes(shipper: shipper, recipient: recipient, packages: packages, envelope: false)
-   # 
-   # fedex_rates = response.rates.sort_by(&:price).collect {|rate| 
-   #   [rate.service_name, rate.price]
-   # }
-   # 
-   # assert_not_nil fedex_rates
+    pieces = []
+    pieces << ActiveMerchant::Shipping::DhlPiece.new(height: 10, width: 10, depth: 10, weight: 1.5)
+
+    quote = ActiveMerchant::Shipping::DhlQuoteRequest.new(
+      origin_country_code: "DE",
+      destination_country_code: "DE", 
+      origin_postal_code: "60385", 
+      destination_postal_code: "61440",
+      pieces: pieces       
+    )
+
+    dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6', test: true)
+    response = dhl.find_quotes(request: quote)    
+    
+    save_xml(dhl, "test_quote")
+    assert_not_nil response
   end
+  
+  def test_quote_mexico
+    pieces = []
+    pieces << ActiveMerchant::Shipping::DhlPiece.new(height: 10, width: 10, depth: 10, weight: 1.5)
+
+    quote = ActiveMerchant::Shipping::DhlQuoteRequest.new(
+      origin_country_code: "MX",
+      destination_country_code: "MX", 
+      origin_postal_code: "11510", 
+      destination_postal_code: "11510",
+      pieces: pieces       
+    )
+
+    dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6', test: true)
+    response = dhl.find_quotes(request: quote)    
+    
+    save_xml(dhl, "test_quote_mexico")
+    assert_not_nil response
+  end  
+
+  def test_quote_mexico_germany
+    pieces = []
+    pieces << ActiveMerchant::Shipping::DhlPiece.new(height: 10, width: 10, depth: 10, weight: 1.5)
+
+    quote = ActiveMerchant::Shipping::DhlQuoteRequest.new(
+      origin_country_code: "MX",
+      destination_country_code: "DE", 
+      origin_postal_code: "11510", 
+      destination_postal_code: "61440",
+      pieces: pieces       
+    )
+
+    dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6', test: true)
+    response = dhl.find_quotes(request: quote)    
+    
+    save_xml(dhl, "test_quote_mexico_germany")
+    assert_not_nil response
+  end  
+  
+  def test_quote_declared
+    pieces = []
+    pieces << ActiveMerchant::Shipping::DhlPiece.new(height: 10, width: 10, depth: 10, weight: 1.5)
+
+    quote = ActiveMerchant::Shipping::DhlQuoteRequest.new(
+      origin_country_code: "DE",
+      destination_country_code: "DE", 
+      origin_postal_code: "60385", 
+      destination_postal_code: "61440",
+      pieces: pieces,
+      declared_currency: "EUR",
+      declared_value: 100       
+    )
+
+    dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6', test: true)
+    response = dhl.find_quotes(request: quote)    
+    
+    save_xml(dhl, "test_quote_declared")
+    assert_not_nil response
+  end  
+  
+  def test_parse_quote_response
+    f = File.open(MODEL_FIXTURES + "xml/dhl/response_note.xml")
+    doc = Nokogiri::XML(f)
+    f.close
+    dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6', test: true)
+    response = dhl.parse_quote_response(doc)
+    
+    assert response.class.to_s, ActiveMerchant::Shipping::DhlQuoteResponse.class.to_s     
+    assert_equal response.notes.size, 1
+    assert_equal response.notes[0].data, "Product not available between this origin and destination."
+  end
+  
+  def test_parse_quote_response_corroup
+    f = File.open(MODEL_FIXTURES + "xml/dhl/response_note_corrupt.xml")
+    doc = Nokogiri::XML(f)
+    f.close
+    dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6', test: true)
+    response = dhl.parse_quote_response(doc)
+    
+    assert response.class.to_s, ActiveMerchant::Shipping::DhlQuoteResponse.class.to_s     
+  end  
 end

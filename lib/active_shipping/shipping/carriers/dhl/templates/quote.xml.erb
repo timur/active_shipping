@@ -42,7 +42,7 @@
                 <PaymentAccountNumber><%= @payment_account_number %></PaymentAccountNumber>
             <% end -%>
             <IsDutiable><%= dutiable? ? "Y" : "N" %></IsDutiable>
-            <% if special_services.size>0 -%>
+            <% if special_services.size > 0 -%>
                 <QtdShp>
                     <% special_services.each do |special_service_type_code| -%>
                         <QtdShpExChrg>
@@ -59,8 +59,8 @@
         </To>
         <%- if dutiable? %>
             <Dutiable>
-                <DeclaredCurrency><%= @duty[:declared_currency] %></DeclaredCurrency>
-                <DeclaredValue><%= @duty[:declared_value] %></DeclaredValue>
+                <DeclaredCurrency><%= @declared_currency %></DeclaredCurrency>
+                <DeclaredValue><%= @declared_value %></DeclaredValue>
             </Dutiable>
         <% end %>
     </GetQuote>

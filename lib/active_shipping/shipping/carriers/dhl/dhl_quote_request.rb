@@ -21,10 +21,12 @@ module ActiveMerchant
       DIMENSIONS_UNIT_CODES = { centimeters: "CM", inches: "IN" }
       WEIGHT_UNIT_CODES = { kilograms: "KG", pounds: "LB" }      
       
-      attr_reader :site_id, :password, :origin_country_code, 
+      attr_reader :origin_country_code, 
                   :origin_postal_code, :destination_country_code, 
                   :destination_postal_code, :declared_currency, :declared_value,
                   :payment_account_number, :pieces
+                  
+      attr_accessor :site_id, :password
       
       def initialize(options = {})
         @site_id = options[:site_id]

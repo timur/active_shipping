@@ -1,3 +1,5 @@
+require 'nokogiri'
+
 module ActiveMerchant
   module Shipping
 
@@ -314,43 +316,46 @@ module ActiveMerchant
       }
 
       def requirements
-        [:login, :password, :account_number, :test]
+        [:site_id, :password, :test]
       end
 
-      def finde_quotes(options = {})
-        response = commit(save_request(request), (options[:test] || false))
-
-        if Rails && Rails.logger
-          Rails.logger.debug { "Find Rates request DHL: #{last_request}" }
-          Rails.logger.debug { "Find Rates response DHL: #{response}" }          
-        end
+      def find_quotes(options = {})
+        pieces = options[:pieces]
+        request = options[:request]
         
-        parse_rate_response(shipper, recipient, packages, request, response, options)
-      end
+        request.site_id = @options[:site_id]
+        request.password = @options[:password]        
 
-      def response_success?(document)
-        if response_status_node(document)
-          %w{Success}.include? response_status_node(document).get_text('ActionNote').to_s
-        else
-          false
-        end
+        response = commit(save_request(request.to_xml), (options[:test] || false))        
+        @last_response = response        
+        parse_quote_response(response)
       end
-
-      def response_message(document)
-        res = Hash.from_xml(document)
-        res = res["ShipmentValidateErrorResponse"]
-        "#{res['Response']['Status']['Condition']['ConditionCode']} - #{res['Response']['Status']['Condition']['ConditionData']}"
-      end
-
-      def response_status_node(document)
-        document.elements['/*/Note/']
+      
+      def parse_quote_response(document)
+        response = DhlQuoteResponse.new
+        parse_notes(response, document)
+        
+        response
       end
 
       protected
 
-
       def commit(request, test = false)
         ssl_post(test ? TEST_URL : LIVE_URL, request.gsub("\n",''))
+      end
+      
+      private
+      
+      def parse_notes(response, document)
+        notes = document.xpath("//Note")
+        
+        notes.each do |note|
+          n = DhlNote.new
+          condition = note.xpath("Condition")
+          n.code = condition.at('ConditionCode').text
+          n.data = condition.at('ConditionData').text          
+          response.notes << n
+        end        
       end
     end
   end

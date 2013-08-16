@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<res:DCTResponse xmlns:res='http://www.dhl.com' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.dhl.com DCT-Response.xsd'>
+  <GetQuoteResponse>
+    <Response>
+      <ServiceHeader>
+        <MessageTime>2013-08-15T15:20:24.856+00:00</MessageTime>
+        <SiteID>DHLMexico</SiteID>
+      </ServiceHeader>
+    </Response>
+    <Note>
+      <Condition>
+        <ConditionCode>1004</ConditionCode>
+      </Condition>
+    </Note>
+  </GetQuoteResponse>
+</res:DCTResponse>
