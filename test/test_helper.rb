@@ -26,9 +26,9 @@ module Test
         @@fixtures ||= load_fixtures
       end
       
-      def save_xml(carrier, name)
-        resp = REXML::Document.new carrier.last_response
-        req = REXML::Document.new carrier.last_request    
+      def save_xml(response, name)
+        resp = REXML::Document.new response.response
+        req = REXML::Document.new response.request    
         formatter = REXML::Formatters::Pretty.new
 
         formatted_response, formatted_request = "", ""

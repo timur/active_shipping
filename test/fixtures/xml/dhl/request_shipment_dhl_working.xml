@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<req:ShipmentValidateRequest xmlns:req="http://www.dhl.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dhl.com ship-val-req.xsd">
+	<Request>
+		<ServiceHeader>
+			<MessageTime>2013-12-17T09:30:47-05:00</MessageTime>
+			<MessageReference>1234567890123456789012345678901</MessageReference>
+			<SiteID>DHLMexico</SiteID>
+			<Password>hUv5E3nMjQz6</Password>
+		</ServiceHeader>
+	</Request>
+	<RequestedPickupTime>Y</RequestedPickupTime>
+	<NewShipper>Y</NewShipper>
+	<LanguageCode>en</LanguageCode>
+	<PiecesEnabled>Y</PiecesEnabled>
+	<Billing>
+		<ShipperAccountNumber>654031018</ShipperAccountNumber>
+		<ShippingPaymentType>S</ShippingPaymentType>
+		<BillingAccountNumber>654031018</BillingAccountNumber>
+		<DutyPaymentType>S</DutyPaymentType>
+		<DutyAccountNumber>654031018</DutyAccountNumber>
+	</Billing>
+	<Consignee>
+		<CompanyName>Receiver Company BR Private Limited</CompanyName>
+		<AddressLine>Plot No 4 address 1</AddressLine>
+		<City>BELEM</City>
+		<PostalCode>35200</PostalCode>
+		<CountryCode>BR</CountryCode>
+		<CountryName>Brazil</CountryName>
+		<FederalTaxId>R_FederalTaxID_12345</FederalTaxId>
+		<StateTaxId>R_StateTaxID_1234567</StateTaxId>
+		<Contact>
+			<PersonName>Mr Robinson Peter Harrison 12345678</PersonName>
+			<PhoneNumber>12345577889</PhoneNumber>
+			<PhoneExtension>123</PhoneExtension>
+			<FaxNumber>123</FaxNumber>
+			<Telex>String</Telex>
+			<Email>
+				<From>test@email.com</From>
+				<To>test@email.com</To>
+				<cc>test@email.com</cc>
+				<Subject>Email subject</Subject>
+				<ReplyTo>test@email.com</ReplyTo>
+				<Body>email body</Body>
+			</Email>
+		</Contact>
+	</Consignee>
+
+	<Commodity>
+		<CommodityCode>1</CommodityCode>
+		<CommodityName>cm</CommodityName>
+	</Commodity>
+
+	<Dutiable>
+		<DeclaredValue>2000</DeclaredValue>
+		<DeclaredCurrency>USD</DeclaredCurrency>
+		<ScheduleB>3002905110</ScheduleB>
+		<ExportLicense>D123456</ExportLicense>
+		<ShipperEIN>1111111111</ShipperEIN>
+		<ShipperIDType>S</ShipperIDType>
+		<ConsigneeIDType>S</ConsigneeIDType>
+		<ImportLicense>Text</ImportLicense>
+		<ConsigneeEIN>Text</ConsigneeEIN>
+		<TermsOfTrade>DDU</TermsOfTrade>
+	</Dutiable>
+
+	<ExportDeclaration>
+		<InterConsignee>String</InterConsignee>
+		<IsPartiesRelation>N</IsPartiesRelation>
+		<ECCN>EAR99</ECCN>
+		<SignatureName>String</SignatureName>
+		<SignatureTitle>String</SignatureTitle>
+		<ExportReason>S</ExportReason>
+		<ExportReasonCode>P</ExportReasonCode>
+		<SedNumber>FTSR</SedNumber>
+		<SedNumberType>F</SedNumberType>
+		<MxStateCode>St</MxStateCode>
+		<ExportLineItem>
+			<LineNumber>200</LineNumber>
+			<Quantity>32</Quantity>
+			<QuantityUnit>String</QuantityUnit>
+			<Description>String</Description>
+			<Value>200.00</Value>
+			<IsDomestic>Y</IsDomestic>
+			<ScheduleB>3002905110</ScheduleB>
+			<ECCN>EAR99</ECCN>
+			<Weight>
+				<Weight>100.0</Weight>
+				<WeightUnit>L</WeightUnit>
+			</Weight>
+			<License>
+				<LicenseNumber>D123456</LicenseNumber>
+				<ExpiryDate>2013-08-21</ExpiryDate>
+			</License>
+			<LicenseSymbol>String</LicenseSymbol>
+		</ExportLineItem>
+	</ExportDeclaration>
+
+	<Reference>
+		<ReferenceID>SHIPMENT REFERENCE US-UK 1234567890</ReferenceID>
+		<ReferenceType>St</ReferenceType>
+	</Reference>
+
+	<ShipmentDetails>
+		<NumberOfPieces>2</NumberOfPieces>
+		<Pieces>
+			<Piece>
+				<PieceID>1</PieceID>
+				<PackageType>EE</PackageType>
+				<Weight>10.0</Weight>
+				<DimWeight>1.5</DimWeight>
+				<Width>10</Width>
+				<Height>20</Height>
+				<Depth>30</Depth>
+			</Piece>
+			<Piece>
+				<PieceID>2</PieceID>
+				<PackageType>EE</PackageType>
+				<Weight>20.0</Weight>
+				<DimWeight>19</DimWeight>
+				<Width>12</Width>
+				<Height>27</Height>
+				<Depth>30</Depth>
+			</Piece>
+		</Pieces>
+		<Weight>30.0</Weight>
+		<WeightUnit>L</WeightUnit>
+		<GlobalProductCode>D</GlobalProductCode>
+		<LocalProductCode>D</LocalProductCode>
+		<Date>2013-08-22</Date>
+		<Contents>FOR TESTING PURPOSE ONLY. PLEASE DO NOT SHIP. 123456789012345678901234567890123456789 STOP</Contents>
+		<DoorTo>DD</DoorTo>
+		<DimensionUnit>I</DimensionUnit>
+		<InsuredAmount>1000.00</InsuredAmount>
+		<PackageType>EE</PackageType>
+		<IsDutiable>Y</IsDutiable>
+		<CurrencyCode>USD</CurrencyCode>
+	</ShipmentDetails>
+	<Shipper>
+		<ShipperID>654031018</ShipperID>
+		<CompanyName>Brazil shipper company privated</CompanyName>
+		<RegisteredAccount>654031018</RegisteredAccount>
+		<AddressLine>15255 N Frank Lloyd W Blvd</AddressLine>
+		<City>AIMORES</City>
+		<Division>brazil</Division>
+		<DivisionCode>BR</DivisionCode>
+		<PostalCode>66810</PostalCode>
+		<CountryCode>BR</CountryCode>
+		<CountryName>Brazil</CountryName>
+		<FederalTaxId>S_FederalTaxID_12345</FederalTaxId>
+		<StateTaxId>S_StateTaxID_1234567</StateTaxId>
+		<Contact>
+			<PersonName>Ms Smart Robinson Harrison 12345678</PersonName>
+			<PhoneNumber>112233</PhoneNumber>
+			<PhoneExtension>1122</PhoneExtension>
+			<FaxNumber>1234</FaxNumber>
+			<Telex>1222</Telex>
+			<Email>
+				<From>test@email.com</From>
+				<To>test@email.com</To>
+				<cc>test@email.com</cc>
+				<Subject>Email subject</Subject>
+				<ReplyTo>test@email.com</ReplyTo>
+				<Body>email body</Body>
+			</Email>
+		</Contact>
+	</Shipper>
+	<SpecialService>
+		<SpecialServiceType>D</SpecialServiceType>
+	</SpecialService>
+	<EProcShip>N</EProcShip>
+</req:ShipmentValidateRequest>

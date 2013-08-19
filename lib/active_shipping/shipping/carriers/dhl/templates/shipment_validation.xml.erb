@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<req:ShipmentValidateRequest xmlns:req="http://www.dhl.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dhl.com ship-val-req.xsd">
+	<Request>
+		<ServiceHeader>
+      <SiteID><%= @site_id %></SiteID>
+      <Password><%= @password %></Password>
+		</ServiceHeader>
+	</Request>
+	<RequestedPickupTime>Y</RequestedPickupTime>
+	<NewShipper>Y</NewShipper>	
+	<LanguageCode><%= @language_code %></LanguageCode>
+	<PiecesEnabled><%= @pieces_enabled %></PiecesEnabled>
+	<Billing>
+		<ShipperAccountNumber><%= @shipper_account_number %></ShipperAccountNumber>
+		<ShippingPaymentType><%= @shipper_payment_type %></ShippingPaymentType>
+		<% if billingAccountNumber? %>
+		  <BillingAccountNumber><%= @billing_account_number %></BillingAccountNumber>
+		<% end -%>
+		<DutyPaymentType><%= @duty_payment_type %></DutyPaymentType>
+		<DutyAccountNumber><%= @billing_account_number %></DutyAccountNumber>
+	</Billing>
+	<Consignee>
+		<CompanyName><%= @consignee_company %></CompanyName>
+		<AddressLine><%= @consignee_address_line %></AddressLine>
+		<City><%= @consignee_city %></City>
+		<PostalCode><%= @consignee_postalcode %></PostalCode>
+		<CountryCode><%= @consignee_countrycode %></CountryCode>
+		<CountryName><%= @consignee_countryname %></CountryName>
+		<% if @contact_consignee_fullname %>		
+		  <Contact>
+		  	<PersonName><%= @contact_consignee_fullname %></PersonName>
+		  	<PhoneNumber><%= @contact_consignee_phonenumber %></PhoneNumber>
+		  	<PhoneExtension><%= @contact_consignee_phoneext %></PhoneExtension>
+		  </Contact>
+		<% end -%>
+	</Consignee>
+	<Commodity>
+		<CommodityCode>1</CommodityCode>
+		<CommodityName>cm</CommodityName>
+	</Commodity>
+	<%- if dutiable? %>
+	  <Dutiable>
+		  <DeclaredValue><%= @declared_value %></DeclaredValue>
+		  <DeclaredCurrency><%= @declared_value %></DeclaredCurrency>
+	  </Dutiable>
+	<% end -%>
+	<ShipmentDetails>
+		<NumberOfPieces><%= @shipment_details_number_of_pieces %></NumberOfPieces>		
+    <% if @pieces %>
+		  <Pieces>    
+        <% @pieces.each_with_index do |piece, i| -%>
+          <Piece>
+            <PieceID><%= piece.piece_id = i + 1 %></PieceID>             
+            <PackageType>EE</PackageType>            
+            <% if piece.weight -%>                  
+              <Weight><%= piece.weight -%></Weight>
+            <% end -%> 
+            <% if piece.width -%>                    
+              <Width><%= piece.width -%></Width>
+            <% end -%>                    
+            <% if piece.height -%>
+              <Height><%= piece.height -%></Height>
+            <% end -%>
+            <% if piece.depth -%>
+              <Depth><%= piece.depth -%></Depth>
+            <% end -%>                    
+          </Piece>
+        <% end -%>
+		  </Pieces>      
+    <% end -%>
+		<Weight><%= @shipment_details_weight %></Weight>
+		<WeightUnit>K</WeightUnit>
+		<GlobalProductCode><%= @shipment_details_global_product_code %></GlobalProductCode>
+		<LocalProductCode><%= @shipment_details_local_product_code %></LocalProductCode>
+		<Date><%= @shipment_details_date %></Date>
+		<Contents>FOR TESTING PURPOSE ONLY. PLEASE DO NOT SHIP. 123456789012345678901234567890123456789 STOP</Contents>
+		<DimensionUnit>C</DimensionUnit>
+		<% if @shipment_details_insured_amount %>
+		  <InsuredAmount><%= @shipment_details_insured_amount %></InsuredAmount>
+		<% end -%>                                  		  		
+		<PackageType><%= @shipment_details_packageType %></PackageType>
+		<IsDutiable><%= isDutiable %></IsDutiable>
+		<CurrencyCode><%= @shipment_details_currencyCode %></CurrencyCode>
+	</ShipmentDetails>
+	<Shipper>
+		<ShipperID><%= @shipper_shipper_id %></ShipperID>
+		<CompanyName><%= @shipper_company %></CompanyName>
+		<RegisteredAccount><%= @shipper_shipper_id %></RegisteredAccount>		
+		<AddressLine><%= @shipper_address_line %></AddressLine>
+		<City><%= @shipper_city %></City>
+		<Division><%= @shipper_countryname %></Division>
+		<PostalCode><%= @shipper_postalcode %></PostalCode>		
+		<CountryCode><%= @shipper_countrycode %></CountryCode>
+		<CountryName><%= @shipper_countryname %></CountryName>
+		<% if @contact_shipper_fullname %>
+		  <Contact>
+			  <PersonName><%= @contact_shipper_fullname %></PersonName>
+			  <PhoneNumber><%= @contact_shipper_phonenumber %></PhoneNumber>
+			  <PhoneExtension><%= @contact_shipper_phoneext %></PhoneExtension>
+		  </Contact>
+	  <% end -%>
+	</Shipper>
+	<EProcShip>N</EProcShip>
+	<LabelImageFormat>PDF</LabelImageFormat>	
+</req:ShipmentValidateRequest>

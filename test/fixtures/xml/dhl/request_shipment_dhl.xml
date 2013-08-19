@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<req:ShipmentValidateRequest xmlns:req="http://www.dhl.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dhl.com ship-val-req.xsd">
+	<Request>
+		<ServiceHeader>
+			<SiteID>DHLMexico</SiteID>
+			<Password>hUv5E3nMjQz6</Password>
+		</ServiceHeader>
+	</Request>
+	<RequestedPickupTime>Y</RequestedPickupTime>
+	<NewShipper>Y</NewShipper>
+	<LanguageCode>en</LanguageCode>
+	<PiecesEnabled>Y</PiecesEnabled>
+	<Billing>
+		<ShipperAccountNumber>980526857</ShipperAccountNumber>
+		<ShippingPaymentType>S</ShippingPaymentType>
+		<BillingAccountNumber>980526857</BillingAccountNumber>
+		<DutyPaymentType>S</DutyPaymentType>
+		<DutyAccountNumber>980526857</DutyAccountNumber>
+	</Billing>
+	<Consignee>
+		<CompanyName>Receiver Company BR Private Limited</CompanyName>
+		<AddressLine>Plot No 4 address 1</AddressLine>
+		<City>BELEM</City>
+		<PostalCode>11510</PostalCode>
+		<CountryCode>MX</CountryCode>
+		<CountryName>Mexico</CountryName>
+		<Contact>
+			<PersonName>Mr Robinson Peter Harrison 12345678</PersonName>
+			<PhoneNumber>12345577889</PhoneNumber>
+			<PhoneExtension>123</PhoneExtension>
+		</Contact>
+	</Consignee>
+	<Commodity>
+		<CommodityCode>1</CommodityCode>
+		<CommodityName>cm</CommodityName>
+	</Commodity>
+	<ShipmentDetails>
+		<NumberOfPieces>2</NumberOfPieces>
+		<Pieces>
+			<Piece>
+				<PieceID>1</PieceID>
+				<PackageType>EE</PackageType>
+				<Weight>10.0</Weight>
+				<Width>10</Width>
+				<Height>20</Height>
+				<Depth>30</Depth>
+			</Piece>
+			<Piece>
+				<PieceID>2</PieceID>
+				<PackageType>EE</PackageType>
+				<Weight>20.0</Weight>
+				<Width>12</Width>
+				<Height>27</Height>
+				<Depth>30</Depth>
+			</Piece>
+		</Pieces>
+		<Weight>30.0</Weight>
+		<WeightUnit>K</WeightUnit>
+		<GlobalProductCode>D</GlobalProductCode>
+		<LocalProductCode>D</LocalProductCode>
+		<Date>2013-08-22</Date>
+		<Contents>FOR TESTING PURPOSE ONLY. PLEASE DO NOT SHIP. 123456789012345678901234567890123456789 STOP</Contents>
+		<DimensionUnit>C</DimensionUnit>
+		<InsuredAmount>1000.00</InsuredAmount>
+		<PackageType>EE</PackageType>
+		<IsDutiable>N</IsDutiable>
+		<CurrencyCode>MXN</CurrencyCode>
+	</ShipmentDetails>
+	<Shipper>
+		<ShipperID>654031018</ShipperID>
+		<CompanyName>Brazil shipper company privated</CompanyName>
+		<RegisteredAccount>654031018</RegisteredAccount>
+		<AddressLine>15255 N Frank Lloyd W Blvd</AddressLine>
+		<City>AIMORES</City>
+		<Division>Mexico</Division>
+		<PostalCode>11510</PostalCode>
+		<CountryCode>MX</CountryCode>
+		<CountryName>Mexico</CountryName>
+		<Contact>
+			<PersonName>Ms Smart Robinson Harrison 12345678</PersonName>
+			<PhoneNumber>112233</PhoneNumber>
+			<PhoneExtension>1122</PhoneExtension>
+		</Contact>
+	</Shipper>
+	<EProcShip>N</EProcShip>
+	<LabelImageFormat>PDF</LabelImageFormat>
+</req:ShipmentValidateRequest>
