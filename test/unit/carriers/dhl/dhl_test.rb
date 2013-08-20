@@ -47,7 +47,59 @@ class DhlTest < Test::Unit::TestCase
     )
     
     assert_not_nil shipment.to_xml
-    puts shipment.to_xml
   end
+  
+  def test_number_of_pieces
+    pieces = []
+    pieces << ActiveMerchant::Shipping::DhlPiece.new(quantity: 3, height: 10, width: 10, depth: 10, weight: 1.5)
+    pieces << ActiveMerchant::Shipping::DhlPiece.new(height: 20, width: 20, depth: 20, weight: 2.5)        
+    pieces << ActiveMerchant::Shipping::DhlPiece.new(quantity: 1, height: 20, width: 20, depth: 20, weight: 2.5)            
+    
+    shipment = ActiveMerchant::Shipping::DhlShipmentRequest.new(
+      pieces: pieces
+    )
+    
+    shipment.calculate_attributes
+    
+    assert shipment.shipment_details_number_of_pieces == 5
+  end  
+
+  def test_country_name
+    shipment = ActiveMerchant::Shipping::DhlShipmentRequest.new(
+      shipper_countrycode: 'MX',
+      consignee_countrycode: 'DE'      
+    )
+    
+    shipment.calculate_attributes
+    
+    assert shipment.shipper_countryname == 'Mexico'
+    assert shipment.consignee_countryname == 'Germany'    
+  end  
+
+  def test_country_name
+    shipment = ActiveMerchant::Shipping::DhlShipmentRequest.new(
+      shipper_countrycode: 'MX'     
+    )
+    
+    shipment.calculate_attributes
+    
+    assert shipment.shipment_details_currencyCode == 'MXN' 
+  end  
+  
+  def test_calculate_weight
+    pieces = []
+    pieces << ActiveMerchant::Shipping::DhlPiece.new(quantity: 3, height: 10, width: 10, depth: 10, weight: 1.5)
+    pieces << ActiveMerchant::Shipping::DhlPiece.new(height: 20, width: 20, depth: 20, weight: 2.5)        
+    pieces << ActiveMerchant::Shipping::DhlPiece.new(quantity: 1, height: 20, width: 20, depth: 20, weight: 2.5)            
+    
+    shipment = ActiveMerchant::Shipping::DhlShipmentRequest.new(
+      pieces: pieces
+    )
+    
+    shipment.calculate_attributes
+    
+    assert shipment.shipment_details_weight == 9.5
+  end  
+  
 
 end

@@ -7,6 +7,7 @@ module ActiveMerchant
       include Virtus
       
       attribute :piece_id, Integer
+      attribute :quantity, Integer      
       attribute :height, Integer
       attribute :width, Integer
       attribute :depth, Integer

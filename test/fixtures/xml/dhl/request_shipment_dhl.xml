@@ -62,7 +62,6 @@
 		<Contents>FOR TESTING PURPOSE ONLY. PLEASE DO NOT SHIP. 123456789012345678901234567890123456789 STOP</Contents>
 		<DimensionUnit>C</DimensionUnit>
 		<InsuredAmount>1000.00</InsuredAmount>
-		<PackageType>EE</PackageType>
 		<IsDutiable>N</IsDutiable>
 		<CurrencyCode>MXN</CurrencyCode>
 	</ShipmentDetails>

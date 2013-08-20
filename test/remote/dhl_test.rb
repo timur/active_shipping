@@ -80,6 +80,7 @@ class DhlTest < Test::Unit::TestCase
       shipment_details_date: "2013-08-25",
       shipment_details_packageType: "CP",
       shipment_details_currencyCode: "MXN",
+      shipment_details_content: "FOR TESTING",
       dutiable: false,
       shipper_shipper_id: "654031018",
       shipper_company: "company",

@@ -73,12 +73,11 @@
 		<GlobalProductCode><%= @shipment_details_global_product_code %></GlobalProductCode>
 		<LocalProductCode><%= @shipment_details_local_product_code %></LocalProductCode>
 		<Date><%= @shipment_details_date %></Date>
-		<Contents>FOR TESTING PURPOSE ONLY. PLEASE DO NOT SHIP. 123456789012345678901234567890123456789 STOP</Contents>
+		<Contents><%= @shipment_details_content %></Contents>
 		<DimensionUnit>C</DimensionUnit>
 		<% if @shipment_details_insured_amount %>
 		  <InsuredAmount><%= @shipment_details_insured_amount %></InsuredAmount>
 		<% end -%>                                  		  		
-		<PackageType><%= @shipment_details_packageType %></PackageType>
 		<IsDutiable><%= isDutiable %></IsDutiable>
 		<CurrencyCode><%= @shipment_details_currencyCode %></CurrencyCode>
 	</ShipmentDetails>
