@@ -4,7 +4,7 @@ require 'virtus'
 module ActiveMerchant
   module Shipping
     
-    class FedexQuoteRequest
+    class FedexShipmentRequest
       include Virtus
       include ActiveMerchant::Shipping::Constants                       
       
@@ -19,9 +19,23 @@ module ActiveMerchant
       attribute :insured_value, Float
       attribute :insured_currency, String
       
+      attribute :contact_shipper_fullname, String                  
+      attribute :contact_shipper_company, String 
+      attribute :contact_shipper_phonenumber, String
+      attribute :contact_shipper_phonenumber_ext, String
+      
+      attribute :shipper_address_line, String # user input                                    
+      attribute :shipper_city, String # user input                                 
       attribute :shipper_postalcode, String # user input                           
       attribute :shipper_countrycode, String # user input                    
 
+      attribute :contact_recipient_fullname, String                  
+      attribute :contact_recipient_company, String 
+      attribute :contact_recipient_phonenumber, String
+      attribute :contact_recipient_phonenumber_ext, String
+      
+      attribute :recipient_address_line, String # user input                                    
+      attribute :recipient_city, String # user input                                 
       attribute :recipient_postalcode, String # user input                           
       attribute :recipient_countrycode, String # user input     
 
