@@ -5,7 +5,7 @@ require 'active_shipping/shipping/carriers/dhl'
 module ActiveMerchant
   module Shipping
     module Carriers
-      class <<self
+      class << self
         def all
           [UPS, FedEx, DHL]
         end

@@ -2,24 +2,33 @@ require 'test_helper'
 
 class FedExTest < Test::Unit::TestCase
   def setup
-    @carrier                = FedEx.new(:key => '1111', :password => '2222', :account => '3333', :login => '4444')
   end
   
-  def test_initialize_options_requirements
-    assert_raises ArgumentError do FedEx.new end
-    assert_raises ArgumentError do FedEx.new(:login => '999999999') end
-    assert_raises ArgumentError do FedEx.new(:password => '7777777') end
-    assert_nothing_raised { FedEx.new(:key => '999999999', :password => '7777777', :account => '123', :login => '123')}
+  def test_quote_xml
+    packages = []
+    packages << ActiveMerchant::Shipping::FedexPackage.new(quantity: 3, height: 10, width: 10, length: 10, weight: 1.5)
+    packages << ActiveMerchant::Shipping::FedexPackage.new(height: 20, width: 20, length: 20, weight: 2.5)        
+    packages << ActiveMerchant::Shipping::FedexPackage.new(quantity: 1, height: 20, width: 20, length: 20, weight: 2.5)            
+    
+    request = ActiveMerchant::Shipping::FedexQuoteRequest.new(
+      packages: packages
+    )
+
+    assert_not_nil request.to_xml
+  end  
+  
+  def test_calculate_pieces
+    packages = []
+    packages << ActiveMerchant::Shipping::FedexPackage.new(quantity: 3, height: 10, width: 10, length: 10, weight: 1.5)
+    packages << ActiveMerchant::Shipping::FedexPackage.new(height: 20, width: 20, length: 20, weight: 2.5)        
+    packages << ActiveMerchant::Shipping::FedexPackage.new(quantity: 1, height: 20, width: 20, length: 20, weight: 2.5)            
+    
+    request = ActiveMerchant::Shipping::FedexQuoteRequest.new(
+      packages: packages
+    )
+    
+    request.calculate_attributes
+    
+    assert request.package_count == 5
   end
-
-  def test_business_days
-    today = DateTime.civil(2013, 3, 12, 0, 0, 0, "-4")
-
-    Timecop.freeze(today) do
-      assert_equal DateTime.civil(2013, 3, 13, 0, 0, 0, "-4"), @carrier.send(:business_days_from, today, 1)
-      assert_equal DateTime.civil(2013, 3, 15, 0, 0, 0, "-4"), @carrier.send(:business_days_from, today, 3)
-      assert_equal DateTime.civil(2013, 3, 19, 0, 0, 0, "-4"), @carrier.send(:business_days_from, today, 5)
-    end
-  end
-
 end

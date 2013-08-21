@@ -23,7 +23,7 @@
          </v13:Version>
          <v13:ReturnTransitAndCommit>1</v13:ReturnTransitAndCommit>
          <v13:RequestedShipment>
-            <v13:ShipTimestamp>2013-08-15T09:30:47-05:00</v13:ShipTimestamp>
+            <v13:ShipTimestamp>2013-08-23T09:30:47-05:00</v13:ShipTimestamp>
             <v13:DropoffType>REGULAR_PICKUP</v13:DropoffType>
             <v13:ServiceType>INTERNATIONAL_ECONOMY</v13:ServiceType>
             <v13:PackagingType>YOUR_PACKAGING</v13:PackagingType>

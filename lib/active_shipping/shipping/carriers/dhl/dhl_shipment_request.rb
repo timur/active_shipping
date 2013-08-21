@@ -8,7 +8,8 @@ module ActiveMerchant
     class DhlShipmentRequest
       include Virtus
       include ActiveModel::Validations    
-      include ActiveMerchant::Shipping::DhlConstants  
+      include ActiveMerchant::Shipping::DhlConstants
+      include ActiveMerchant::Shipping::Constants        
       
       # authorization
       attribute :site_id, String
@@ -127,6 +128,7 @@ module ActiveMerchant
       end
             
       private
+      
         def xml_template_path
           spec = Gem::Specification.find_by_name("active_shipping")
           gem_root = spec.gem_dir
@@ -135,17 +137,17 @@ module ActiveMerchant
         
         def calculate_currency
           if self.shipper_countrycode
-            self.shipment_details_currencyCode = DHL_Currency_Codes[self.shipper_countrycode]
+            self.shipment_details_currencyCode = CURRENCY_CODES[self.shipper_countrycode]
           end
         end
         
         def calculate_country_name
           if self.shipper_countrycode
-            self.shipper_countryname = DHL_COUNTRIES[self.shipper_countrycode.to_sym]
+            self.shipper_countryname = COUNTRIES[self.shipper_countrycode.to_sym]
           end  
 
           if self.consignee_countrycode
-            self.consignee_countryname = DHL_COUNTRIES[self.consignee_countrycode.to_sym]
+            self.consignee_countryname = COUNTRIES[self.consignee_countrycode.to_sym]
           end  
         end
         

@@ -4,26 +4,7 @@ require_relative '../test_helper'
 class DhlTest < Test::Unit::TestCase
 
   def setup
-  end
-      
-  def test_quote
-    pieces = []
-    pieces << ActiveMerchant::Shipping::DhlPiece.new(height: 10, width: 10, depth: 10, weight: 1.5)
-
-    quote = ActiveMerchant::Shipping::DhlQuoteRequest.new(
-      origin_country_code: "DE",
-      destination_country_code: "DE", 
-      origin_postal_code: "60385", 
-      destination_postal_code: "61440",
-      pieces: pieces       
-    )
-
-    dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6', test: true)
-    response = dhl.find_quotes(request: quote)    
-    
-    save_xml(dhl, "test_quote")
-    assert_not_nil response
-  end
+  end      
   
   def test_quote_mexico
     pieces = []
@@ -100,26 +81,7 @@ class DhlTest < Test::Unit::TestCase
     
     save_xml(response, "test_shipment_mexico")
     assert_not_nil response
-  end  
-
-  def test_quote_mexico_germany
-    pieces = []
-    pieces << ActiveMerchant::Shipping::DhlPiece.new(height: 10, width: 10, depth: 10, weight: 1.5)
-
-    quote = ActiveMerchant::Shipping::DhlQuoteRequest.new(
-      origin_country_code: "MX",
-      destination_country_code: "DE", 
-      origin_postal_code: "11510", 
-      destination_postal_code: "61440",
-      pieces: pieces       
-    )
-
-    dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6', test: true)
-    response = dhl.find_quotes(request: quote)    
-    
-    save_xml(dhl, "test_quote_mexico_germany")
-    assert_not_nil response
-  end  
+  end    
   
   def test_quote_declared
     pieces = []
@@ -138,7 +100,7 @@ class DhlTest < Test::Unit::TestCase
     dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6', test: true)
     response = dhl.find_quotes(request: quote)    
     
-    save_xml(dhl, "test_quote_declared")
+    save_xml(response, "test_quote_declared")
     assert_not_nil response
   end  
   

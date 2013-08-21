@@ -1,0 +1,120 @@
+<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns='http://fedex.com/ws/rate/v13'>
+  <soapenv:Header/>
+  <soapenv:Body>
+    <RateRequest>
+      <WebAuthenticationDetail>
+        <UserCredential>
+          <Key><%= @key %></Key>
+          <Password><%= @password %></Password>
+        </UserCredential>
+      </WebAuthenticationDetail>
+      <ClientDetail>
+        <AccountNumber><%= @accountNumber %></AccountNumber>
+        <MeterNumber><%= @meterNumber %></MeterNumber>
+      </ClientDetail>
+      <% if @transactionId -%>
+        <TransactionDetail>
+          <CustomerTransactionId><%= @transactionId %></CustomerTransactionId>
+        </TransactionDetail>
+      <% end %>
+      <Version>
+        <ServiceId>crs</ServiceId>
+        <Major>13</Major>
+        <Intermediate>0</Intermediate>
+        <Minor>0</Minor>
+      </Version>
+      <ReturnTransitAndCommit>true</ReturnTransitAndCommit>
+      <VariableOptions>SATURDAY_DELIVERY</VariableOptions>
+      <RequestedShipment>
+        <ShipTimestamp><%= Time.now.utc.iso8601(2) %></ShipTimestamp>
+        <DropoffType>REGULAR_PICKUP</DropoffType>
+        <PackagingType><%= @packagingType %></PackagingType>
+        <% if @preferred_currency %>
+          <PreferredCurrency><%= @preferred_currency %></PreferredCurrency>
+        <% end %>
+        <% if @insured_value && @insured_currency %>
+          <TotalInsuredValue>
+            <Currency><%= @insured_currency %></Currency>
+            <Amount><%= @insured_value %></Amount>            
+          </TotalInsuredValue>
+        <% end %>        
+        <Shipper>
+          <% if @contact_shipper_fullname -%>
+            <Contact>
+              <% if @contact_shipper_fullname -%>
+                <PersonName><%= @contact_shipper_fullname %></PersonName>
+              <% end %>
+              <% if @contact_shipper_company -%>
+                <CompanyName><%= @contact_shipper_company %></CompanyName>
+              <% end %>              
+              <% if @contact_shipper_phonenumber -%>
+                <PhoneNumber><%= @contact_shipper_phonenumber %></PhoneNumber>            
+              <% end %>
+              <% if @contact_shipper_phonenumber_ext -%>  
+                <PhoneExtension><%= @contact_shipper_phonenumber_ext %></PhoneExtension>                        
+              <% end %>
+            </Contact>
+          <% end %>
+          <Address>
+            <% if @shipper_address_line -%>
+              <StreetLines><%= @shipper_address_line %></StreetLines>
+            <% end %>
+            <% if @shipper_city -%>
+              <City><%= @shipper_city %></City>
+            <% end %>
+            <PostalCode><%= @shipper_postalcode %></PostalCode>
+            <CountryCode><%= @shipper_countrycode %></CountryCode>
+          </Address>
+        </Shipper>
+        <Recipient>
+          <% if @contact_recipient_fullname -%>
+            <Contact>
+              <% if @contact_recipient_fullname -%>
+                <PersonName><%= @contact_recipient_fullname %></PersonName>
+              <% end %>
+              <% if @contact_recipient_company -%>
+                <CompanyName><%= @contact_recipient_company %></CompanyName>
+              <% end %>
+              <% if @contact_recipient_phonenumber -%>            
+                <PhoneNumber><%= @contact_recipient_phonenumber %></PhoneNumber>            
+              <% end %>
+              <% if @contact_recipient_phonenumber_ext -%>
+                <PhoneExtension><%= @contact_recipient_phonenumber_ext %></PhoneExtension>                        
+              <% end %>
+            </Contact>
+          <% end %>
+          <Address>
+            <% if @recipient_address_line -%>            
+              <StreetLines><%= @recipient_address_line %></StreetLines>
+            <% end %>
+            <% if @recipient_city -%>            
+              <City><%= @recipient_city %></City>
+            <% end %>
+            <PostalCode><%= @recipient_postalcode %></PostalCode>
+            <CountryCode><%= @recipient_countrycode %></CountryCode>
+            <Residential>true</Residential>
+          </Address>
+        </Recipient>
+        <RateRequestTypes>ACCOUNT</RateRequestTypes>
+        <PackageCount><%= @package_count %></PackageCount>
+        <% if @packages %>
+          <RequestedPackageLineItems>                    
+            <% @packages.each do |package| -%>
+              <GroupPackageCount><%= package.quantity %></GroupPackageCount>
+              <Weight>
+                <Units>KG</Units>
+                <Value><%= package.weight -%></Value>
+              </Weight>
+              <Dimensions>
+                <Length><%= package.length -%></Length>
+                <Width><%= package.width -%></Width>
+                <Height><%= package.height -%></Height>
+                <Units>CM</Units>
+              </Dimensions>            
+            <% end -%>
+          </RequestedPackageLineItems>
+        <% end -%>                                  
+      </RequestedShipment>
+    </RateRequest>
+  </soapenv:Body>
+</soapenv:Envelope>

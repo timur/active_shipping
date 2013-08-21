@@ -5,6 +5,7 @@ module ActiveMerchant
 
     class Dhl < Carrier
       include ActiveMerchant::Shipping::DhlConstants
+      include ActiveMerchant::Shipping::Constants      
 
       self.retry_safe = true
 

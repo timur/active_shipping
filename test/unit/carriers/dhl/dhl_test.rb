@@ -101,5 +101,24 @@ class DhlTest < Test::Unit::TestCase
     assert shipment.shipment_details_weight == 9.5
   end  
   
-
+  def test_quote_validation
+    quote = ActiveMerchant::Shipping::DhlQuoteRequest.new
+    assert quote.valid? == false
+    
+    assert quote.errors[:destination_postal_code].any?
+    assert quote.errors[:destination_country_code].any?    
+    
+    assert quote.errors[:origin_postal_code].any?
+    assert quote.errors[:origin_country_code].any?        
+    
+    
+    quote = ActiveMerchant::Shipping::DhlQuoteRequest.new(destination_postal_code: "12345", origin_country_code: "MX")
+    assert quote.valid? == false
+    
+    assert !quote.errors[:destination_postal_code].any?
+    assert quote.errors[:destination_country_code].any?    
+    
+    assert quote.errors[:origin_postal_code].any?
+    assert !quote.errors[:origin_country_code].any?                
+  end
 end

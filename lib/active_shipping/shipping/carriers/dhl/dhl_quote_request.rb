@@ -6,29 +6,31 @@ module ActiveMerchant
     
     # dutiable - zollpflichtig
     class DhlQuoteRequest
+      include Virtus
+      include ActiveModel::Validations    
+      include ActiveMerchant::Shipping::DhlConstants
+      include ActiveMerchant::Shipping::Constants              
       
-      DIMENSIONS_UNIT_CODES = { centimeters: "CM", inches: "IN" }
-      WEIGHT_UNIT_CODES = { kilograms: "KG", pounds: "LB" }      
+      # authorization
+      attribute :site_id, String
+      attribute :password, String      
+
+      attribute :origin_country_code, String      
+      attribute :origin_postal_code, String 
       
-      attr_reader :origin_country_code, 
-                  :origin_postal_code, :destination_country_code, 
-                  :destination_postal_code, :declared_currency, :declared_value,
-                  :payment_account_number, :pieces
-                  
-      attr_accessor :site_id, :password
+      validates :origin_country_code, presence: { message: "(origin_country_code) can't be blank" }
+      validates :origin_postal_code, presence: { message: "(origin_postal_code) can't be blank" }      
       
-      def initialize(options = {})
-        @site_id = options[:site_id]
-        @password = options[:password]
-        @origin_country_code = options[:origin_country_code]
-        @origin_postal_code = options[:origin_postal_code]
-        @destination_country_code = options[:destination_country_code]                                
-        @destination_postal_code = options[:destination_postal_code]                                        
-        @declared_value = options[:declared_value]                                        
-        @declared_currency = options[:declared_currency]
-        @pieces = options[:pieces]                                                        
-      end
+      attribute :destination_country_code, String      
+      attribute :destination_postal_code, String            
+
+      validates :destination_country_code, presence: { message: "(destination_country_code) can't be blank" }
+      validates :destination_postal_code, presence: { message: "(destination_postal_code) can't be blank" }      
       
+      attribute :declared_value, String      
+      attribute :declared_currency, String            
+      attribute :pieces, Array                  
+                      
       def to_xml
         ERB.new(File.new(xml_template_path).read, nil,'%<>-').result(binding)
       end      
@@ -55,19 +57,7 @@ module ActiveMerchant
           date
         end.strftime("%Y-%m-%d")
       end   
-         
-      def dimensions_unit
-        DIMENSIONS_UNIT_CODES[:centimeters]        
-      end
-      
-      def weight_unit
-        WEIGHT_UNIT_CODES[:kilograms]
-      end
-      
-      def pieces
-        []
-      end
-      
+            
       def special_services
         []
       end

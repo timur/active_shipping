@@ -1,0 +1,73 @@
+<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns='http://fedex.com/ws/rate/v13'>
+  <soapenv:Header/>
+  <soapenv:Body>
+    <RateRequest>
+      <WebAuthenticationDetail>
+        <UserCredential>
+          <Key>rscqm75MLampLUuV</Key>
+          <Password>8rTZHQ6vbyOsGOgtwMXrZ1kIU</Password>
+        </UserCredential>
+      </WebAuthenticationDetail>
+      <ClientDetail>
+        <AccountNumber>510087267</AccountNumber>
+        <MeterNumber>118511895</MeterNumber>
+      </ClientDetail>
+      <TransactionDetail>
+        <CustomerTransactionId>ActiveShipping</CustomerTransactionId>
+      </TransactionDetail>
+      <Version>
+        <ServiceId>crs</ServiceId>
+        <Major>13</Major>
+        <Intermediate>0</Intermediate>
+        <Minor>0</Minor>
+      </Version>
+      <ReturnTransitAndCommit>true</ReturnTransitAndCommit>
+      <VariableOptions>SATURDAY_DELIVERY</VariableOptions>
+      <RequestedShipment>
+        <ShipTimestamp>2013-08-23T15:21:17+02:00</ShipTimestamp>
+        <DropoffType>REGULAR_PICKUP</DropoffType>
+        <PackagingType>YOUR_PACKAGING</PackagingType>
+        <Shipper>
+          <Contact>
+            <PersonName>Sender</PersonName>
+            <CompanyName>Company</CompanyName>
+          </Contact>
+          <Address>
+            <StreetLines>Main Street</StreetLines>
+            <City>Ciudad de México</City>
+            <PostalCode>16034</PostalCode>
+            <CountryCode>MX</CountryCode>
+          </Address>
+        </Shipper>
+        <Recipient>
+          <Contact>
+            <PersonName>Recipient</PersonName>
+            <CompanyName>Company</CompanyName>
+          </Contact>
+          <Address>
+            <StreetLines>Main Street</StreetLines>
+            <City>Laderas de Monterrey</City>
+            <PostalCode>22046</PostalCode>
+            <CountryCode>MX</CountryCode>
+            <Residential>true</Residential>
+          </Address>
+        </Recipient>
+        <RateRequestTypes>ACCOUNT</RateRequestTypes>
+        <PackageCount>1</PackageCount>
+        <RequestedPackageLineItems>
+          <GroupPackageCount>1</GroupPackageCount>
+          <Weight>
+            <Units>KG</Units>
+            <Value>0.1</Value>
+          </Weight>
+          <Dimensions>
+            <Length>93</Length>
+            <Width>10</Width>
+            <Height>10</Height>
+            <Units>CM</Units>
+          </Dimensions>
+        </RequestedPackageLineItems>
+      </RequestedShipment>
+    </RateRequest>
+  </soapenv:Body>
+</soapenv:Envelope>
