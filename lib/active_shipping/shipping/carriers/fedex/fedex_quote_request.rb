@@ -38,7 +38,8 @@ module ActiveMerchant
       attribute :recipient_city, String # user input                                 
       attribute :recipient_postalcode, String # user input                           
       attribute :recipient_countrycode, String # user input     
-      
+
+      attribute :packaging_type, String # user input      
       attribute :packages, Array     
       attribute :package_count, Integer
       
