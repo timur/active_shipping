@@ -1,4 +1,5 @@
 require 'virtus'
+require 'time'
 
 module ActiveMerchant
   module Shipping
@@ -32,10 +33,15 @@ module ActiveMerchant
       attribute :product_short_name, String           
       attribute :pickup_date, Date
       attribute :pricing_date, Date      
-      attribute :shipping_charge, Float
+      attribute :total_charge, Float
+      attribute :base_charge, Float      
+      attribute :weight_charge, Float            
+      attribute :weight_charge_tax, Float                  
       attribute :total_tax_amount, Float
-      attribute :delivery_date, Date      
+      attribute :surcharge, Float
+      attribute :delivery_date, String      
       attribute :delivery_time, String              
+      attribute :delivery_date_calculated, DateTime
       attribute :pickup_day_of_week, Integer                    
       attribute :destination_day_of_week, Integer                          
       attribute :pickup_date_cutoff_time, String
@@ -43,7 +49,22 @@ module ActiveMerchant
       attribute :currency, String                              
       attribute :exchange_rate, Float
       attribute :transit_days, Integer 
-      attribute :extra_charges, Array                                   
+      attribute :extra_charges, Array 
+      
+      def calculate
+        self.surcharge = 0
+        extra_charges.each do |extra|
+          self.surcharge += extra.charge_value
+        end
+        self.base_charge = self.weight_charge - self.weight_charge_tax
+        
+        if self.delivery_time
+          d = Time.parse(self.delivery_time)
+          if d
+            self.delivery_date_calculated = Time.parse("#{delivery_date} #{d.hour}:#{d.min}")
+          end
+        end
+      end                                  
     end
                 
     class DhlQuoteResponse

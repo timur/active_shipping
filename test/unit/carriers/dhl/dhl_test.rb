@@ -121,4 +121,48 @@ class DhlTest < Test::Unit::TestCase
     assert quote.errors[:origin_postal_code].any?
     assert !quote.errors[:origin_country_code].any?                
   end
+  
+  def test_parse_quote_response
+    f = File.open(MODEL_FIXTURES + "xml/dhl/response_note.xml")
+    doc = Nokogiri::XML(f)
+    f.close
+    dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6', test: true)
+    response = dhl.parse_quote_response(doc)
+    
+    assert response.class.to_s, ActiveMerchant::Shipping::DhlQuoteResponse.class.to_s     
+    assert_equal response.notes.size, 1
+    assert_equal response.notes[0].data, "Product not available between this origin and destination."
+  end
+
+  def test_parse_quote_response_mexico
+    f = File.open(MODEL_FIXTURES + "xml/dhl/response_mexico_quote.xml")
+    doc = Nokogiri::XML(f)
+    f.close
+    dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6', test: true)
+    response = dhl.parse_quote_response(doc)
+    
+    assert response.class.to_s, ActiveMerchant::Shipping::DhlQuoteResponse.class.to_s     
+    assert_equal response.notes.size, 0
+    assert_operator response.quotes.size, :>, 0
+    assert_equal response.quotes[0].base_charge, 39 
+    assert_equal response.quotes[0].total_tax_amount, 8   
+    assert_equal response.quotes[0].delivery_date_calculated.hour, 9       
+    
+    assert_equal response.quotes[1].extra_charges.size, 1    
+    assert_equal response.quotes[1].extra_charges[0].global_service_name, "FUEL SURCHARGE"            
+    assert_equal response.quotes[1].extra_charges[0].charge_value, 2.57
+
+    assert_equal response.quotes[1].pickup_date, Date.parse('2013-08-15')
+    assert_equal response.quotes[1].exchange_rate, 1.3612
+  end
+  
+  def test_parse_quote_response_corroup
+    f = File.open(MODEL_FIXTURES + "xml/dhl/response_note_corrupt.xml")
+    doc = Nokogiri::XML(f)
+    f.close
+    dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6', test: true)
+    response = dhl.parse_quote_response(doc)
+    
+    assert response.class.to_s, ActiveMerchant::Shipping::DhlQuoteResponse.class.to_s     
+  end  
 end

@@ -127,12 +127,16 @@ module ActiveMerchant
             q.currency = qtdshp.at('CurrencyCode').text if qtdshp.at('CurrencyCode')          
             q.exchange_rate = qtdshp.at('ExchangeRate').text if qtdshp.at('ExchangeRate')
             q.pricing_date = qtdshp.at('PricingDate').text if qtdshp.at('PricingDate')   
-            q.shipping_charge = qtdshp.at('ShippingCharge').text if qtdshp.at('ShippingCharge')   
-            q.total_tax_amount = qtdshp.at('TotalTaxAmount').text if qtdshp.at('TotalTaxAmount')   
-            
+            q.total_charge = qtdshp.at('ShippingCharge').text if qtdshp.at('ShippingCharge')   
+            q.weight_charge = qtdshp.at('WeightCharge').text if qtdshp.at('WeightCharge')               
+            q.weight_charge_tax = qtdshp.at('WeightChargeTax').text if qtdshp.at('WeightChargeTax')                                       
+            q.total_tax_amount = qtdshp.at('TotalTaxAmount').text if qtdshp.at('TotalTaxAmount')  
+                        
             parse_extra_charges(qtdshp, q)                                                                   
-        
-            if q.shipping_charge > 0
+            
+            q.calculate 
+            
+            if q.total_charge > 0
               response.quotes << q
             end
           end        
