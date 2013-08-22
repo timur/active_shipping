@@ -61,6 +61,7 @@ module ActiveMerchant
             
       def parse_quote_response(document)
         response = DhlQuoteResponse.new
+        response.success = parse_status(document)
         parse_notes(response, document)
         parse_quotes(response, document)
         
@@ -158,6 +159,20 @@ module ActiveMerchant
             response.notes << n
           end        
         end
+        
+        def parse_status(document)
+          success = true
+          status = document.xpath("//Status")
+          
+          status.each do |s|
+            action = nil
+            action = s.at('ActionStatus').text if s.at('ActionStatus')
+            if action && action == "Error"
+              success = false
+            end             
+          end
+          success        
+        end        
         
         def parse_extra_charges(quote_node, dhl_quote)
           extras = quote_node.xpath("QtdShpExChrg")

@@ -30,11 +30,11 @@ class DhlTest < Test::Unit::TestCase
     pieces << ActiveMerchant::Shipping::DhlPiece.new(height: 10, width: 10, depth: 10, weight: 1.5)
 
     quote = ActiveMerchant::Shipping::DhlQuoteRequest.new(
-      origin_country_code: "MX",
-      destination_country_code: "US", 
-      origin_postal_code: "11510", 
-      destination_postal_code: "90210",
-      pieces: pieces       
+      #origin_country_code: "MX",
+      #destination_country_code: "US", 
+      #origin_postal_code: "11510", 
+      #destination_postal_code: "90210",
+      #pieces: pieces       
     )
      
     dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6', test: true)

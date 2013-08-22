@@ -70,6 +70,7 @@ module ActiveMerchant
     class DhlQuoteResponse
       include Virtus
       
+      attribute :success, Boolean
       attribute :notes, Array
       attribute :quotes, Array
       attribute :request, String
