@@ -1,4 +1,5 @@
 require 'nokogiri'
+require 'time'
 
 module ActiveMerchant
   module Shipping
@@ -92,8 +93,8 @@ module ActiveMerchant
         rate_reply_details.each do |details|
           q = FedexQuote.new
           q.product_name = details.at('ServiceType').text if details.at('ServiceType')
-          q.delivery_time = details.at('CommitTimestamp').text if details.at('CommitTimestamp')
-          q.day_of_week = details.at('DayOfWeek').text if details.at('DayOfWeek')                                        
+          q.delivery_time = details.at('CommitTimestamp').text if details.at('CommitTimestamp')          
+          q.delivery_date = Time.parse(q.delivery_time)
           
           parse_rated_shipment_details(q, details.xpath("RatedShipmentDetails"))
           response.quotes << q
@@ -116,29 +117,18 @@ module ActiveMerchant
         
         if current_detail
           quote.currency = current_detail.at('TotalBaseCharge//Currency').text
-          quote.total_base_charge = current_detail.at('TotalBaseCharge//Amount').text          
-          quote.total_net_fedex_charge = current_detail.at('TotalNetFedExCharge//Amount').text                    
-          quote.total_surcharge = current_detail.at('TotalSurcharges//Amount').text                              
-          quote.total_tax = current_detail.at('TotalTaxes//Amount').text    
-          quote.total_net_charge = current_detail.at('TotalNetCharge//Amount').text              
-                                              
-          
+          quote.base_charge = current_detail.at('TotalBaseCharge//Amount').text          
+          quote.total_charge = current_detail.at('TotalNetCharge//Amount').text                    
+          quote.surcharge = current_detail.at('TotalSurcharges//Amount').text                              
+          quote.taxes = current_detail.at('TotalTaxes//Amount').text    
+                                                        
           surcharges = current_detail.xpath("ShipmentRateDetail/Surcharges")
           surcharges.each do |surcharge|
             s = FedexSurcharge.new
             s.surcharge_type = surcharge.at('SurchargeType').text                                        
             s.description = surcharge.at('Description').text                                                    
             s.amount = surcharge.at('Amount/Amount').text                                                    
-            quote.surcharges << s
-          end
-
-          taxes = current_detail.xpath("ShipmentRateDetail/Taxes")
-          taxes.each do |tax|
-            t = FedexTax.new
-            t.tax_type = tax.at('TaxType').text                                        
-            t.description = tax.at('Description').text                                                    
-            t.amount = tax.at('Amount/Amount').text                                                    
-            quote.taxes << t
+            quote.extra_charges << s
           end
         end                
       end

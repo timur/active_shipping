@@ -7,16 +7,17 @@ module ActiveMerchant
       include Virtus 
       
       attribute :product_name, String           
-      attribute :delivery_time, String              
-      attribute :day_of_week, String      
-      attribute :total_base_charge, Float
-      attribute :total_net_charge, Float      
-      attribute :total_net_fedex_charge, Float
-      attribute :total_surcharge, Float
-      attribute :total_tax, Float
+      attribute :delivery_time, String  
+      attribute :delivery_date, DateTime                                
+      attribute :base_charge, Float
+      attribute :total_charge, Float      
+      attribute :surcharge, Float
+      attribute :taxes, Float
+      attribute :tax_rate, Float
       attribute :currency, Float
-      attribute :surcharges, Array
-      attribute :taxes, Array      
+      
+      attribute :extra_charges, Array      
+      
     end
 
     class FedexSurcharge
