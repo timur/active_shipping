@@ -2,13 +2,7 @@
 
 module ActiveMerchant
   module Shipping
-    class UPS < Carrier
-      self.retry_safe = true
-
-      cattr_accessor :default_options
-      cattr_reader :name
-      @@name = "UPS"
-
+    class UPS
       TEST_URL = 'https://wwwcie.ups.com'
       LIVE_URL = 'https://onlinetools.ups.com'
 
@@ -113,27 +107,7 @@ module ActiveMerchant
         parse_rate_response(origin, destination, packages, response, options)
       end
 
-      def find_tracking_info(tracking_number, options={})
-        options = @options.update(options)
-        access_request = build_access_request
-        tracking_request = build_tracking_request(tracking_number, options)
-        response = commit(:track, save_request(access_request + tracking_request), (options[:test] || false))
-        parse_tracking_response(response, options)
-      end
-
       protected
-
-      def upsified_location(location)
-        if location.country_code == 'US' && US_TERRITORIES_TREATED_AS_COUNTRIES.include?(location.state)
-          atts = {:country => location.state}
-          [:zip, :city, :address1, :address2, :address3, :phone, :fax, :address_type].each do |att|
-            atts[att] = location.send(att)
-          end
-          Location.new(atts)
-        else
-          location
-        end
-      end
 
       def build_access_request
         xml_request = XmlNode.new('AccessRequest') do |access_request|
@@ -150,8 +124,6 @@ module ActiveMerchant
           root_node << XmlNode.new('Request') do |request|
             request << XmlNode.new('RequestAction', 'Rate')
             request << XmlNode.new('RequestOption', 'Shop')
-            # not implemented: 'Rate' RequestOption to specify a single service query
-            # request << XmlNode.new('RequestOption', ((options[:service].nil? or options[:service] == :all) ? 'Shop' : 'Rate'))
           end
 
           pickup_type = options[:pickup_type] || :daily_pickup

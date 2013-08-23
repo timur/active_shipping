@@ -105,10 +105,15 @@ module ActiveMerchant
       attribute :declared_currency, String # user input                                                                              
       attribute :declared_value, Float # user input 
       
+      attribute :pieces, Array
+      
       def calculate_attributes
         calculate_pieces
         calculate_country_name
         calculate_currency
+        unless shipment_details_date
+          shipment_details_date = Date.today
+        end
       end                                                                                   
       
       def to_xml

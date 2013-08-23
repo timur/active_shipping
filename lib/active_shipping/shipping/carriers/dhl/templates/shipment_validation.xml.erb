@@ -16,8 +16,12 @@
 		<% if billingAccountNumber? %>
 		  <BillingAccountNumber><%= @billing_account_number %></BillingAccountNumber>
 		<% end -%>
-		<DutyPaymentType><%= @duty_payment_type %></DutyPaymentType>
-		<DutyAccountNumber><%= @billing_account_number %></DutyAccountNumber>
+		<% if duty_payment_type? %>
+		  <DutyPaymentType><%= @duty_payment_type %></DutyPaymentType>
+		<% end %>		  
+		<% if billing_account_number? %>
+		  <DutyAccountNumber><%= @billing_account_number %></DutyAccountNumber>
+		<% end %>
 	</Billing>
 	<Consignee>
 		<CompanyName><%= @consignee_company %></CompanyName>
@@ -30,7 +34,6 @@
 		  <Contact>
 		  	<PersonName><%= @contact_consignee_fullname %></PersonName>
 		  	<PhoneNumber><%= @contact_consignee_phonenumber %></PhoneNumber>
-		  	<PhoneExtension><%= @contact_consignee_phoneext %></PhoneExtension>
 		  </Contact>
 		<% end -%>
 	</Consignee>
@@ -95,7 +98,6 @@
 		  <Contact>
 			  <PersonName><%= @contact_shipper_fullname %></PersonName>
 			  <PhoneNumber><%= @contact_shipper_phonenumber %></PhoneNumber>
-			  <PhoneExtension><%= @contact_shipper_phoneext %></PhoneExtension>
 		  </Contact>
 	  <% end -%>
 	</Shipper>
