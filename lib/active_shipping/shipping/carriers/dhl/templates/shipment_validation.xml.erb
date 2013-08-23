@@ -13,7 +13,7 @@
 	<Billing>
 		<ShipperAccountNumber><%= @shipper_account_number %></ShipperAccountNumber>
 		<ShippingPaymentType><%= @shipper_payment_type %></ShippingPaymentType>
-		<% if billingAccountNumber %>
+		<% if billingAccountNumber? %>
 		  <BillingAccountNumber><%= @billing_account_number %></BillingAccountNumber>
 		<% end -%>
 		<% if duty_payment_type %>
