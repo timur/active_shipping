@@ -149,6 +149,7 @@ module ActiveMerchant
         def calculate_country_name
           if self.shipper_countrycode
             self.shipper_countryname = COUNTRIES[self.shipper_countrycode.to_sym]
+            self.language_code = self.shipper_countrycode
           end  
 
           if self.consignee_countrycode

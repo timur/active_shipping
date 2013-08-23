@@ -75,7 +75,7 @@
 		<WeightUnit>K</WeightUnit>
 		<GlobalProductCode><%= @shipment_details_global_product_code %></GlobalProductCode>
 		<LocalProductCode><%= @shipment_details_local_product_code %></LocalProductCode>
-		<Date><%= @shipment_details_date %></Date>
+		<Date><%= @shipment_details_date.strftime("%Y-%m-%d") %></Date>
 		<Contents><%= @shipment_details_content %></Contents>
 		<DimensionUnit>C</DimensionUnit>
 		<% if @shipment_details_insured_amount %>
