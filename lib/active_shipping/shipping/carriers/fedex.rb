@@ -92,7 +92,8 @@ module ActiveMerchant
 
         rate_reply_details.each do |details|
           q = FedexQuote.new
-          q.product_name = details.at('ServiceType').text if details.at('ServiceType')
+          q.product_code = details.at('ServiceType').text if details.at('ServiceType')
+          q.product_name = ServiceTypes[q.product_code]
           q.delivery_time = details.at('CommitTimestamp').text if details.at('CommitTimestamp')          
           q.delivery_date = Time.parse(q.delivery_time)
           
@@ -117,6 +118,7 @@ module ActiveMerchant
         
         if current_detail
           quote.currency = current_detail.at('TotalBaseCharge//Currency').text
+          quote.currency = "MXN" if quote.currency == "NMP"
           quote.base_charge = current_detail.at('TotalBaseCharge//Amount').text          
           quote.total_charge = current_detail.at('TotalNetCharge//Amount').text                    
           quote.surcharge = current_detail.at('TotalSurcharges//Amount').text                              

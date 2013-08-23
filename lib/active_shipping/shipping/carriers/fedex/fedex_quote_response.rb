@@ -6,7 +6,8 @@ module ActiveMerchant
     class FedexQuote
       include Virtus 
       
-      attribute :product_name, String           
+      attribute :product_name, String
+      attribute :product_code, String                 
       attribute :delivery_time, String  
       attribute :delivery_date, DateTime                                
       attribute :base_charge, Float
