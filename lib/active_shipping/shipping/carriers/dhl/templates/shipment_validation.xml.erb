@@ -34,6 +34,7 @@
 		  <Contact>
 		  	<PersonName><%= @contact_consignee_fullname %></PersonName>
 		  	<PhoneNumber><%= @contact_consignee_phonenumber %></PhoneNumber>
+		  	<PhoneExtension></PhoneExtension>
 		  </Contact>
 		<% end -%>
 	</Consignee>
@@ -87,6 +88,7 @@
 	<Shipper>
 		<ShipperID><%= @shipper_shipper_id %></ShipperID>
 		<CompanyName><%= @shipper_company %></CompanyName>
+    <RegisteredAccount><%= @shipper_shipper_id %></RegisteredAccount>		
 		<AddressLine><%= @shipper_address_line %></AddressLine>
 		<City><%= @shipper_city %></City>
 		<Division><%= @shipper_countryname %></Division>
@@ -97,6 +99,7 @@
 		  <Contact>
 			  <PersonName><%= @contact_shipper_fullname %></PersonName>
 			  <PhoneNumber><%= @contact_shipper_phonenumber %></PhoneNumber>
+			  <PhoneExtension></PhoneExtension>
 		  </Contact>
 	  <% end -%>
 	</Shipper>
