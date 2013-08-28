@@ -44,12 +44,28 @@ module ActiveMerchant
         resp
       end
       
-      def ship(shipper, recipient, packages, options = {})
-        packages = Array(packages)
-        
-        request = build_ship_request(shipper, recipient, packages, options)        
-        response = commit(request)
-        parse_ship_response(request, response)        
+      def shipment(options = {})
+        xml = ""
+        if options[:raw_xml]
+          xml = File.open(Dir.pwd + "/test/fixtures/xml/fedex/#{options[:raw_xml]}").read
+        else
+          request = options[:request]
+
+          request.key = @options[:key]
+          request.password = @options[:password]        
+          request.accountNumber = @options[:accountNumber]        
+          request.meterNumber = @options[:meterNumber]                        
+          
+          xml = request.to_xml
+        end        
+
+        response_raw = commit(save_request(xml), (@options[:test] || false))             
+
+        resp = parse_shipment_response(Nokogiri::XML(response_raw))
+        resp = FedexShipmentResponse.new
+        resp.response = response_raw
+        resp.request = last_request
+        resp        
       end
       
       def self.service_name_for_code(service_code)
@@ -57,7 +73,7 @@ module ActiveMerchant
       end      
 
       def commit(request, test = true)
-        res = ssl_post(test ? TEST_URL : LIVE_URL, request.gsub("\n",''))        
+        res = ssl_post(test ? TEST_URL : LIVE_URL, request.gsub("\n",''))              
         res
       end
       
@@ -68,6 +84,16 @@ module ActiveMerchant
         response_success(response, document)
         parse_quotes(response, document)
         
+        response
+      end      
+
+      def parse_shipment_response(document)
+        document.remove_namespaces!
+        response = FedexShipmentResponse.new
+        parse_notes(response, document)
+        response_success(response, document)
+        parse_shipment(response, document)
+
         response
       end      
 
@@ -85,6 +111,14 @@ module ActiveMerchant
 
           response.notes << n
         end        
+      end
+
+      def parse_shipment(response, document)
+        tracking_ids = document.xpath("//TrackingIds")   
+        response.trackingnumber = tracking_ids.at('TrackingNumber').text if tracking_ids.at('TrackingNumber')
+        
+        parts = document.xpath("//Label//Parts")   
+        response.label = parts.at('Image') if parts.at('Image')
       end
       
       def parse_quotes(response, document)
@@ -134,81 +168,7 @@ module ActiveMerchant
           end
         end                
       end
-            
-      def build_ship_request(shipper, recipient, packages, options = {})
-        imperial = true
-        xml_request = XmlNode.new('soapenv:Envelope', 'xmlns:soapenv' => 'http://schemas.xmlsoap.org/soap/envelope/', 
-                                                      'xmlns' => 'http://fedex.com/ws/ship/v12') do |root_node| 
-          
-          root_node << XmlNode.new('soapenv:Header')
-          root_node << XmlNode.new('soapenv:Body') do |body|
-
-            body << XmlNode.new('ProcessShipmentRequest') do |request|
-              request << build_request_header
-
-              # Version
-              request << XmlNode.new('Version') do |version_node|
-                version_node << XmlNode.new('ServiceId', 'ship')
-                version_node << XmlNode.new('Major', '12')
-                version_node << XmlNode.new('Intermediate', '0')
-                version_node << XmlNode.new('Minor', '0')
-              end
-              
-              request << XmlNode.new('RequestedShipment') do |ship_request|
-                ship_request << XmlNode.new('ShipTimestamp', Time.now.utc.iso8601(2))                
-                ship_request << XmlNode.new('DropoffType', 'REGULAR_PICKUP')
-                ship_request << XmlNode.new('ServiceType', options[:service_code])                
-                ship_request << XmlNode.new('PackagingType', 'YOUR_PACKAGING')       
-                ship_request << XmlNode.new('PreferredCurrency', 'EUR')                       
-                ship_request << shipper.fedex_xml
-                ship_request << recipient.fedex_xml
-
-                ship_request << XmlNode.new('ShippingChargesPayment') do |charge|
-                  charge << XmlNode.new('PaymentType', 'SENDER')
-                  charge << XmlNode.new('Payor') do |payor|
-                    payor << XmlNode.new('ResponsibleParty') do |party|
-                      party << XmlNode.new('AccountNumber', options[:account_number])
-                      party << XmlNode.new('Contact') do |contact|                      
-                        contact << XmlNode.new('PersonName', shipper.contact.person_name)
-                        contact << XmlNode.new('CompanyName', shipper.contact.company_name)
-                        contact << XmlNode.new('PhoneNumber', shipper.contact.phone_number)                                                
-                      end
-                    end
-                  end                  
-                end
-                
-                ship_request << XmlNode.new('LabelSpecification') do |label_spec|
-                  label_spec << XmlNode.new('LabelFormatType', 'COMMON2D')
-                  label_spec << XmlNode.new('ImageType', 'PDF')
-                  label_spec << XmlNode.new('LabelStockType', 'PAPER_LETTER')                                    
-                end                
-
-                ship_request << XmlNode.new('RateRequestTypes', 'ACCOUNT')                  
-                ship_request << XmlNode.new('PackageCount', packages.size)                
-                    
-                packages.each do |pkg|
-                  ship_request << XmlNode.new('RequestedPackageLineItems') do |rps|
-                    rps << XmlNode.new('GroupPackageCount', 1)
-                    rps << XmlNode.new('Weight') do |tw|
-                      tw << XmlNode.new('Units', imperial ? 'LB' : 'KG')
-                      tw << XmlNode.new('Value', [((imperial ? pkg.lbs : pkg.kgs).to_f*1000).round/1000.0, 0.1].max)
-                    end
-                    rps << XmlNode.new('Dimensions') do |dimensions|
-                      [:length,:width,:height].each do |axis|
-                        value = ((imperial ? pkg.inches(axis) : pkg.cm(axis)).to_f*1000).round/1000.0 # 3 decimals
-                        dimensions << XmlNode.new(axis.to_s.capitalize, value.ceil)
-                      end
-                      dimensions << XmlNode.new('Units', imperial ? 'IN' : 'CM')
-                    end
-                  end
-                end                        
-              end  
-            end
-          end
-        end
-        xml_request.to_s
-      end
-      
+                  
       
       def parse_ship_response(request, response)
         rate_estimates = []

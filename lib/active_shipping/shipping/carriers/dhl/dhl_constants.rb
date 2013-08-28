@@ -70,8 +70,7 @@ module ActiveMerchant
           'receiver' => 'R',
           'third_party' => 'T'
         }
-      
-
+              
     end
   end
 end

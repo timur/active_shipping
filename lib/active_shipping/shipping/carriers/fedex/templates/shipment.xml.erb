@@ -1,7 +1,7 @@
-<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns='http://fedex.com/ws/rate/v13'>
+<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns='http://fedex.com/ws/ship/v12'>
   <soapenv:Header/>
   <soapenv:Body>
-    <RateRequest>
+    <ProcessShipmentRequest>
       <WebAuthenticationDetail>
         <UserCredential>
           <Key><%= @key %></Key>
@@ -18,17 +18,16 @@
         </TransactionDetail>
       <% end %>
       <Version>
-        <ServiceId>crs</ServiceId>
-        <Major>13</Major>
+        <ServiceId>ship</ServiceId>
+        <Major>12</Major>
         <Intermediate>0</Intermediate>
         <Minor>0</Minor>
       </Version>
-      <ReturnTransitAndCommit>true</ReturnTransitAndCommit>
-      <VariableOptions>SATURDAY_DELIVERY</VariableOptions>
       <RequestedShipment>
         <ShipTimestamp><%= Time.now.utc.iso8601(2) %></ShipTimestamp>
         <DropoffType>REGULAR_PICKUP</DropoffType>
-        <PackagingType><%= @packagingType %></PackagingType>
+        <PackagingType><%= @packaging_type %></PackagingType>
+        <ServiceType><%= @service_type %></ServiceType>        
         <% if @preferred_currency %>
           <PreferredCurrency><%= @preferred_currency %></PreferredCurrency>
         <% end %>
@@ -100,21 +99,28 @@
         <% if @packages %>
           <RequestedPackageLineItems>                    
             <% @packages.each do |package| -%>
-              <GroupPackageCount><%= package.quantity %></GroupPackageCount>
-              <Weight>
-                <Units>KG</Units>
-                <Value><%= package.weight -%></Value>
-              </Weight>
-              <Dimensions>
-                <Length><%= package.length -%></Length>
-                <Width><%= package.width -%></Width>
-                <Height><%= package.height -%></Height>
-                <Units>CM</Units>
-              </Dimensions>            
+              <RequestedPackageLineItem>            
+                <GroupPackageCount><%= package.quantity %></GroupPackageCount>
+                <Weight>
+                  <Units>KG</Units>
+                  <Value><%= package.weight -%></Value>
+                </Weight>
+                <Dimensions>
+                  <Length><%= package.length -%></Length>
+                  <Width><%= package.width -%></Width>
+                  <Height><%= package.height -%></Height>
+                  <Units>CM</Units>
+                </Dimensions>  
+              </RequestedPackageLineItem>          
             <% end -%>
           </RequestedPackageLineItems>
-        <% end -%>                                  
+        <% end -%>  
+        <LabelSpecification>
+          <LabelFormatType>COMMON2D</LabelFormatType>
+          <ImageType>PDF</ImageType>
+          <LabelStockType>PAPER_LETTER</LabelStockType>
+        </LabelSpecification>                    
       </RequestedShipment>
-    </RateRequest>
+    </ProcessShipmentRequest>
   </soapenv:Body>
 </soapenv:Envelope>

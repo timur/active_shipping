@@ -1,7 +1,6 @@
 require 'virtus'
 require 'base64'
 
-
 module ActiveMerchant
   module Shipping
     

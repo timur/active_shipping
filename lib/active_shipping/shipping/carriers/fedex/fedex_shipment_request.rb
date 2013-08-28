@@ -14,7 +14,8 @@ module ActiveMerchant
       attribute :meterNumber, String
 
       attribute :transactionId, String
-      attribute :packagingType, String      
+      attribute :packaging_type, String      
+      attribute :service_type, String            
       attribute :preferred_currency, String            
       attribute :insured_value, Float
       attribute :insured_currency, String
@@ -46,8 +47,8 @@ module ActiveMerchant
                              
       def calculate_attributes
         calculate_pieces
-        unless packagingType
-          self.packagingType = "YOUR_PACKAGING"
+        unless packaging_type
+          self.packaging_type = "YOUR_PACKAGING"
         end
         
         if shipper_countrycode
@@ -81,7 +82,7 @@ module ActiveMerchant
         def xml_template_path
           spec = Gem::Specification.find_by_name("active_shipping")
           gem_root = spec.gem_dir
-          gem_root + "/lib/active_shipping/shipping/carriers/fedex/templates/quote.xml.erb"
+          gem_root + "/lib/active_shipping/shipping/carriers/fedex/templates/shipment.xml.erb"
         end
     end
   end
