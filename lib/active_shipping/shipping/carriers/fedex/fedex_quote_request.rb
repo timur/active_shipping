@@ -14,7 +14,7 @@ module ActiveMerchant
       attribute :meterNumber, String
 
       attribute :transactionId, String
-      attribute :packagingType, String      
+      attribute :packaging_type, String      
       attribute :preferred_currency, String            
       attribute :insured_value, Float
       attribute :insured_currency, String
@@ -32,12 +32,19 @@ module ActiveMerchant
                              
       def calculate_attributes
         calculate_pieces
-        unless packagingType
-          self.packagingType = "YOUR_PACKAGING"
+        unless packaging_type
+          self.packaging_type = "YOUR_PACKAGING"
+        else
+          if packaging_type == "Document"
+            self.packaging_type = "FEDEX_ENVELOPE"
+          end
         end
         
         if shipper_countrycode
           self.preferred_currency = CURRENCY_CODES[shipper_countrycode]
+          if self.preferred_currency == "MXN"
+            self.preferred_currency = "NMP"
+          end
         end
       end
                 

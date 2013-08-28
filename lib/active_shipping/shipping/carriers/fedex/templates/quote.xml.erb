@@ -23,16 +23,16 @@
       <RequestedShipment>
         <ShipTimestamp><%= Time.now.utc.iso8601(2) %></ShipTimestamp>
         <DropoffType>REGULAR_PICKUP</DropoffType>
-        <PackagingType><%= @packagingType %></PackagingType>
-        <% if @preferred_currency %>
-          <PreferredCurrency><%= @preferred_currency %></PreferredCurrency>
-        <% end %>
+        <PackagingType><%= @packaging_type %></PackagingType>
         <% if @insured_value && @insured_currency %>
           <TotalInsuredValue>
             <Currency><%= @insured_currency %></Currency>
             <Amount><%= @insured_value %></Amount>            
           </TotalInsuredValue>
-        <% end %>        
+        <% end %>
+        <% if @preferred_currency %>
+          <PreferredCurrency><%= @preferred_currency %></PreferredCurrency>
+        <% end %>
         <Shipper>
           <Address>
             <PostalCode><%= @shipper_postalcode %></PostalCode>
@@ -43,7 +43,6 @@
           <Address>
             <PostalCode><%= @recipient_postalcode %></PostalCode>
             <CountryCode><%= @recipient_countrycode %></CountryCode>
-            <Residential>true</Residential>
           </Address>
         </Recipient>
         <RateRequestTypes>LIST</RateRequestTypes>
@@ -52,16 +51,24 @@
           <RequestedPackageLineItems>                    
             <% @packages.each do |package| -%>
               <GroupPackageCount><%= package.quantity %></GroupPackageCount>
+              <% if @insured_value && @insured_currency %>            
+                <InsuredValue>
+                  <Currency><%= @insured_currency %></Currency>
+                  <Amount><%= @insured_value %></Amount>
+                </InsuredValue>                         
+              <% end %>              
               <Weight>
                 <Units>KG</Units>
                 <Value><%= package.weight -%></Value>
               </Weight>
-              <Dimensions>
-                <Length><%= package.length -%></Length>
-                <Width><%= package.width -%></Width>
-                <Height><%= package.height -%></Height>
-                <Units>CM</Units>
-              </Dimensions>            
+              <% if @packaging_type == "YOUR_PACKAGING "%>
+                <Dimensions>
+                  <Length><%= package.length -%></Length>
+                  <Width><%= package.width -%></Width>
+                  <Height><%= package.height -%></Height>
+                  <Units>CM</Units>
+                </Dimensions>            
+              <% end -%>              
             <% end -%>
           </RequestedPackageLineItems>
         <% end -%>                                  
