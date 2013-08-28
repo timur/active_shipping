@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/'>
+  <env:Header xmlns:env='http://schemas.xmlsoap.org/soap/envelope/' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'/>
+  <soapenv:Body>
+    <v13:ProcessShipmentReply xmlns:env='http://schemas.xmlsoap.org/soap/envelope/' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:v13='http://fedex.com/ws/ship/v13'>
+      <v13:HighestSeverity>ERROR</v13:HighestSeverity>
+      <v13:Notifications>
+        <v13:Severity>ERROR</v13:Severity>
+        <v13:Source>ship</v13:Source>
+        <v13:Code>3907</v13:Code>
+        <v13:Message>Invalid Customs Value</v13:Message>
+        <v13:LocalizedMessage>Invalid Customs Value</v13:LocalizedMessage>
+      </v13:Notifications>
+      <ns1:Version xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns:ns1='http://fedex.com/ws/ship/v13'>
+        <ns1:ServiceId>ship</ns1:ServiceId>
+        <ns1:Major>13</ns1:Major>
+        <ns1:Intermediate>0</ns1:Intermediate>
+        <ns1:Minor>0</ns1:Minor>
+      </ns1:Version>
+    </v13:ProcessShipmentReply>
+  </soapenv:Body>
+</soapenv:Envelope>

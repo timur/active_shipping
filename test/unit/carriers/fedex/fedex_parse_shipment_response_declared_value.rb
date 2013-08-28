@@ -17,4 +17,18 @@ class FedExParseShipmentResponseDeclaredValueTest < Test::Unit::TestCase
     assert response.trackingnumber == "794808790080"
     assert_not_nil response.label
   end    
+
+  def test_parse_shipment_response_declared_value_error
+    xml_string = File.read(Dir.pwd + "/test/fixtures/xml/fedex/testcases/ship_declared_value_int_error_response.xml")
+    xml = Nokogiri::XML(xml_string)
+    
+    fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
+    response = fedex.parse_shipment_response(xml)
+    
+    assert response.notes.size == 1
+    assert response.notes[0].message == "Invalid Customs Value"    
+    assert response.success == false
+    assert_nil response.trackingnumber
+  end    
+
 end

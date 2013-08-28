@@ -167,36 +167,7 @@ module ActiveMerchant
             quote.extra_charges << s
           end
         end                
-      end
-                  
-      
-      def parse_ship_response(request, response)
-        rate_estimates = []
-        success, message, imagecoded, tr = nil
-
-        xml = REXML::Document.new(response)
-
-        success = response_success?(xml, 'http://fedex.com/ws/ship/v12')
-        message = response_message(xml, 'http://fedex.com/ws/ship/v12')        
-
-        shipment_label = REXML::XPath.match(xml, "//version:Label", 'version' => 'http://fedex.com/ws/ship/v12' )        
-        parts = REXML::XPath.match( shipment_label, "//version:Parts", 'version' => 'http://fedex.com/ws/ship/v12' )        
-
-        images = REXML::XPath.match( parts, "//version:Image", 'version' => 'http://fedex.com/ws/ship/v12' )        
-        imagecoded = images[0].get_text if images.size > 0
-        
-        image = Base64.decode64(imagecoded.to_s) if imagecoded
-        
-        details = REXML::XPath.match( parts, "//version:CompletedPackageDetails", 'version' => 'http://fedex.com/ws/ship/v12' )                
-        sequence = REXML::XPath.match( parts, "//version:SequenceNumber", 'version' => 'http://fedex.com/ws/ship/v12' )                                
-        ids = REXML::XPath.match( details, "//version:TrackingIds", 'version' => 'http://fedex.com/ws/ship/v12' )                  
-        
-        tracking_number = REXML::XPath.match( ids, "//version:TrackingNumber", 'version' => 'http://fedex.com/ws/ship/v12')          
-        tr = tracking_number[0].get_text.to_s if tracking_number.size > 0
-        
-        ShipResponse.new(success, message, request: request, response: response, tracking_number: tr, imagecoded: image)        
-      end
-            
+      end            
       
       def response_success(response, document)
         highest = document.xpath("//HighestSeverity")
