@@ -36,7 +36,7 @@ module ActiveMerchant
           xml = request.to_xml
         end        
 
-        response_raw = commit(save_request(xml), (@options[:test] || false))             
+        response_raw = commit(save_request(xml), true)             
 
         resp = parse_quote_response(Nokogiri::XML(response_raw))
         resp.response = response_raw
@@ -62,7 +62,6 @@ module ActiveMerchant
         response_raw = commit(save_request(xml), (@options[:test] || false))             
 
         resp = parse_shipment_response(Nokogiri::XML(response_raw))
-        resp = FedexShipmentResponse.new
         resp.response = response_raw
         resp.request = last_request
         resp        

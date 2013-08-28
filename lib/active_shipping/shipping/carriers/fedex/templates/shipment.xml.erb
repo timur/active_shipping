@@ -1,5 +1,4 @@
-<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns='http://fedex.com/ws/ship/v12'>
-  <soapenv:Header/>
+<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns='http://fedex.com/ws/ship/v13'>
   <soapenv:Body>
     <ProcessShipmentRequest>
       <WebAuthenticationDetail>
@@ -19,15 +18,15 @@
       <% end %>
       <Version>
         <ServiceId>ship</ServiceId>
-        <Major>12</Major>
+        <Major>13</Major>
         <Intermediate>0</Intermediate>
         <Minor>0</Minor>
       </Version>
       <RequestedShipment>
         <ShipTimestamp><%= Time.now.utc.iso8601(2) %></ShipTimestamp>
         <DropoffType>REGULAR_PICKUP</DropoffType>
+        <ServiceType><%= @service_type %></ServiceType>                
         <PackagingType><%= @packaging_type %></PackagingType>
-        <ServiceType><%= @service_type %></ServiceType>        
         <% if @preferred_currency %>
           <PreferredCurrency><%= @preferred_currency %></PreferredCurrency>
         <% end %>
@@ -61,6 +60,9 @@
             <% if @shipper_city -%>
               <City><%= @shipper_city %></City>
             <% end %>
+            <% if @shipper_provincecode %>            
+              <StateOrProvinceCode><%= @shipper_provincecode %></StateOrProvinceCode>                        
+            <% end %>
             <PostalCode><%= @shipper_postalcode %></PostalCode>
             <CountryCode><%= @shipper_countrycode %></CountryCode>
           </Address>
@@ -89,37 +91,57 @@
             <% if @recipient_city -%>            
               <City><%= @recipient_city %></City>
             <% end %>
-            <PostalCode><%= @recipient_postalcode %></PostalCode>
+            <% if @recipient_provincecode %>
+              <StateOrProvinceCode><%= @recipient_provincecode %></StateOrProvinceCode>                  
+            <% end %>
+            <PostalCode><%= @recipient_postalcode %></PostalCode>      
             <CountryCode><%= @recipient_countrycode %></CountryCode>
-            <Residential>true</Residential>
+            <Residential>false</Residential>
           </Address>
         </Recipient>
-        <RateRequestTypes>ACCOUNT</RateRequestTypes>
-        <PackageCount><%= @package_count %></PackageCount>
-        <% if @packages %>
-          <RequestedPackageLineItems>                    
-            <% @packages.each do |package| -%>
-              <RequestedPackageLineItem>            
-                <GroupPackageCount><%= package.quantity %></GroupPackageCount>
-                <Weight>
-                  <Units>KG</Units>
-                  <Value><%= package.weight -%></Value>
-                </Weight>
-                <Dimensions>
-                  <Length><%= package.length -%></Length>
-                  <Width><%= package.width -%></Width>
-                  <Height><%= package.height -%></Height>
-                  <Units>CM</Units>
-                </Dimensions>  
-              </RequestedPackageLineItem>          
-            <% end -%>
-          </RequestedPackageLineItems>
-        <% end -%>  
+        <ShippingChargesPayment>
+          <PaymentType>SENDER</PaymentType>
+          <Payor>
+            <ResponsibleParty>
+              <AccountNumber><%= @accountNumber %></AccountNumber>
+              <Contact />
+            </ResponsibleParty>
+          </Payor>
+        </ShippingChargesPayment> 
+        <% if @declared_value %>
+          <CustomsClearanceDetail>
+            <CustomsValue>
+              <Currency><%= @declared_currency %></Currency>
+              <Amount><%= @declared_value %></Amount>
+            </CustomsValue>
+          </CustomsClearanceDetail>            
+        <% end %>
         <LabelSpecification>
           <LabelFormatType>COMMON2D</LabelFormatType>
           <ImageType>PDF</ImageType>
           <LabelStockType>PAPER_LETTER</LabelStockType>
-        </LabelSpecification>                    
+        </LabelSpecification>                               
+        <RateRequestTypes>ACCOUNT</RateRequestTypes>
+        <PackageCount><%= @package_count %></PackageCount>
+          <RequestedPackageLineItems>            
+            <GroupPackageCount><%= @package.quantity %></GroupPackageCount>
+            <% if @insured_value && @insured_currency %>            
+              <InsuredValue>
+                <Currency><%= @insured_currency %></Currency>
+                <Amount><%= @insured_value %></Amount>
+              </InsuredValue>                         
+            <% end %>  
+            <Weight>
+              <Units>KG</Units>
+              <Value><%= @package.weight -%></Value>
+            </Weight>
+            <Dimensions>
+              <Length><%= @package.length -%></Length>
+              <Width><%= @package.width -%></Width>
+              <Height><%= @package.height -%></Height>
+              <Units>CM</Units>
+            </Dimensions>  
+          </RequestedPackageLineItems>          
       </RequestedShipment>
     </ProcessShipmentRequest>
   </soapenv:Body>

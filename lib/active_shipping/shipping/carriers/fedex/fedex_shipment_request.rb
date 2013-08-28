@@ -19,6 +19,8 @@ module ActiveMerchant
       attribute :preferred_currency, String            
       attribute :insured_value, Float
       attribute :insured_currency, String
+      attribute :declared_value, Float
+      attribute :declared_currency, String
       
       attribute :contact_shipper_fullname, String                  
       attribute :contact_shipper_company, String 
@@ -29,6 +31,7 @@ module ActiveMerchant
       attribute :shipper_city, String # user input                                 
       attribute :shipper_postalcode, String # user input                           
       attribute :shipper_countrycode, String # user input                    
+      attribute :shipper_provincecode, String # user input                          
 
       attribute :contact_recipient_fullname, String                  
       attribute :contact_recipient_company, String 
@@ -38,9 +41,10 @@ module ActiveMerchant
       attribute :recipient_address_line, String # user input                                    
       attribute :recipient_city, String # user input                                 
       attribute :recipient_postalcode, String # user input                           
-      attribute :recipient_countrycode, String # user input     
+      attribute :recipient_countrycode, String # user input
+      attribute :recipient_provincecode, String # user input           
 
-      attribute :packages, Array     
+      attribute :package, FedexPackage
       attribute :package_count, Integer
       
       attribute :weight, Float                           
@@ -56,7 +60,7 @@ module ActiveMerchant
         end
                 
         if shipper_countrycode
-          self.preferred_currency = CURRENCY_CODES[shipper_countrycode]
+          #self.preferred_currency = CURRENCY_CODES[shipper_countrycode]
         end
       end
                 
@@ -67,17 +71,15 @@ module ActiveMerchant
       private
       
         def calculate_pieces
-          if packages
+          if package
             number_packages, weight = 0, 0
-            packages.each do |package|
-              if package.quantity
-                number_packages += package.quantity 
-                weight += package.weight * package.quantity if package.weight
-              else
-                number_packages += 1
-                weight += package.weight * 1 if package.weight
-              end            
-            end
+            if package.quantity
+              number_packages += package.quantity 
+              weight += package.weight * package.quantity if package.weight
+            else
+              number_packages += 1
+              weight += package.weight * 1 if package.weight
+            end            
             self.weight = weight
             self.package_count = number_packages
           end
