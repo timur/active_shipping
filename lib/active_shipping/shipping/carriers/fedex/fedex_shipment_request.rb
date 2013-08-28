@@ -49,8 +49,12 @@ module ActiveMerchant
         calculate_pieces
         unless packaging_type
           self.packaging_type = "YOUR_PACKAGING"
+        else
+          if packaging_type == "Document"
+            self.packaging_type = "FEDEX_ENVELOPE"
+          end
         end
-        
+                
         if shipper_countrycode
           self.preferred_currency = CURRENCY_CODES[shipper_countrycode]
         end

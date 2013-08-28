@@ -31,4 +31,16 @@ class FedExTest < Test::Unit::TestCase
     
     assert request.package_count == 5
   end
+  
+  def test_failure
+    xml_string = File.read(Dir.pwd + "/test/fixtures/xml/fedex/fedex_failure.xml")
+    xml = Nokogiri::XML(xml_string)
+    
+    fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
+    response = fedex.parse_quote_response(xml)
+    
+    assert response.notes.size == 1
+    assert response.notes[0].severity == "FAILURE"    
+    assert response.success == false    
+  end
 end

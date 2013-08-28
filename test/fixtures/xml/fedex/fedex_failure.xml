@@ -1,0 +1,20 @@
+<SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/'>
+  <SOAP-ENV:Header/>
+  <SOAP-ENV:Body>
+    <RateReply xmlns='http://fedex.com/ws/rate/v13'>
+      <HighestSeverity>FAILURE</HighestSeverity>
+      <Notifications>
+        <Severity>FAILURE</Severity>
+        <Source>prxy</Source>
+        <Code>9999</Code>
+        <Message>
+          Remote EJB method: getRates called on interface:
+          com.fedex.nxgen.crs.v12.ientities.CrsInterface failed. Cause:
+          weblogic.rmi.extensions.RequestTimeoutException: RJVM response from
+          'weblogic.rjvm.RJVMImpl@1266f8b1 - id:
+          '-6239732536769284719S:qje01336.zmd.fedex.com:[7164,-1,-1,-1,-1,-1,-1]:crsvtest.zmd.fedex.com:domain:crs-server01336' connect time: 'Tue Aug 20 17:08:37 CDT 2013'' for 'getRates(Lcom.fedex.nxgen.crs.v12.ientities.RateRequest;)' timed out after: 5000ms.
+        </Message>
+      </Notifications>
+    </RateReply>
+  </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
