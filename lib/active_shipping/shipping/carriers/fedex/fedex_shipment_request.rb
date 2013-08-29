@@ -50,7 +50,7 @@ module ActiveMerchant
       attribute :weight, Float                           
                              
       def calculate_attributes
-        calculate_pieces
+        calculate_package
         unless packaging_type
           self.packaging_type = "YOUR_PACKAGING"
         else
@@ -70,7 +70,7 @@ module ActiveMerchant
             
       private
       
-        def calculate_pieces
+        def calculate_package
           if package
             number_packages, weight = 0, 0
             if package.quantity
