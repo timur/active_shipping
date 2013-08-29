@@ -77,7 +77,9 @@
 		<GlobalProductCode><%= @shipment_details_global_product_code %></GlobalProductCode>
 		<LocalProductCode><%= @shipment_details_local_product_code %></LocalProductCode>
 		<Date><%= @shipment_details_date.strftime("%Y-%m-%d") %></Date>
-		<Contents><%= @shipment_details_content %></Contents>
+    <% if @shipment_details_content %>		
+		  <Contents><%= @shipment_details_content %></Contents>
+		<% end %>
 		<DimensionUnit>C</DimensionUnit>
 		<% if @shipment_details_insured_amount %>
 		  <InsuredAmount><%= @shipment_details_insured_amount %></InsuredAmount>
@@ -86,9 +88,13 @@
 		<CurrencyCode><%= @shipment_details_currencyCode %></CurrencyCode>
 	</ShipmentDetails>
 	<Shipper>
-		<ShipperID><%= @shipper_shipper_id %></ShipperID>
+	  <% if @shipper_shipper_id %>
+		  <ShipperID><%= @shipper_shipper_id %></ShipperID>
+		<% end %>
 		<CompanyName><%= @shipper_company %></CompanyName>
-    <RegisteredAccount><%= @shipper_shipper_id %></RegisteredAccount>		
+	  <% if @shipper_account_number %>		
+      <RegisteredAccount><%= @shipper_account_number %></RegisteredAccount>		
+    <% end %>      
 		<AddressLine><%= @shipper_address_line %></AddressLine>
 		<City><%= @shipper_city %></City>
 		<Division><%= @shipper_countryname %></Division>
