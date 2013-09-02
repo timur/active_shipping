@@ -19,27 +19,32 @@
             <ReadyTimeGMTOffset>+00:00</ReadyTimeGMTOffset>
             <DimensionUnit>CM</DimensionUnit>
             <WeightUnit>KG</WeightUnit>
-            <Pieces>
-              <Piece>
-                <% if @pieces %>
-                  <% @pieces.each_with_index do |piece, i| -%>
+            <% if @pieces %>
+              <Pieces>
+                <% @pieces.each_with_index do |piece, i| -%>              
+                  <Piece>
                     <PieceID><%= piece.piece_id = i + 1 %></PieceID> 
-                    <% if piece.height -%>
-                      <Height><%= piece.height -%></Height>
-                    <% end -%>
-                    <% if piece.depth -%>
-                      <Depth><%= piece.depth -%></Depth>
-                    <% end -%>                    
-                    <% if piece.width -%>                    
-                      <Width><%= piece.width -%></Width>
-                    <% end -%>                    
+                    <% if @package_type == "document"%>
+                      <PackageTypeCode>FLY</PackageTypeCode>                    
+                    <% end %>
+                    <% if @package_type == "package"%>
+                      <% if piece.height -%>
+                        <Height><%= piece.height -%></Height>
+                      <% end -%>
+                      <% if piece.depth -%>
+                        <Depth><%= piece.depth -%></Depth>
+                      <% end -%>                    
+                      <% if piece.width -%>                    
+                        <Width><%= piece.width -%></Width>
+                      <% end -%>  
+                    <% end %>                  
                     <% if piece.weight -%>                  
                       <Weight><%= piece.weight -%></Weight>
-                    <% end -%>                    
-                  <% end -%>
-                <% end -%>                                  
-              </Piece>
-            </Pieces>
+                    <% end -%>                                      
+                  </Piece>                  
+                <% end -%>                
+              </Pieces>
+            <% end -%>            
             <% if @payment_account_number -%>
                 <PaymentAccountNumber><%= @payment_account_number %></PaymentAccountNumber>
             <% end -%>
@@ -53,6 +58,10 @@
                      <% end -%>
                 </QtdShp>
             <% end -%>
+            <%- if insured? %>
+                <InsuredValue><%= @insured_value %></InsuredValue>
+                <InsuredCurrency><%= @insured_currency %></InsuredCurrency>
+            <% end %>        
         </BkgDetails>
         <To>
             <CountryCode><%= @destination_country_code %></CountryCode>

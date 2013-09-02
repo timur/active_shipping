@@ -14,6 +14,9 @@ module ActiveMerchant
       # authorization
       attribute :site_id, String
       attribute :password, String      
+      
+      # Package or Document
+      attribute :package_type, String, default: DhlConstants::PACKAGE
 
       attribute :origin_country_code, String      
       attribute :origin_postal_code, String 
@@ -29,6 +32,10 @@ module ActiveMerchant
       
       attribute :declared_value, String      
       attribute :declared_currency, String            
+
+      attribute :insured_value, String      
+      attribute :insured_currency, String            
+
       attribute :pieces, Array                  
                       
       def to_xml
@@ -39,6 +46,10 @@ module ActiveMerchant
         declared_currency && declared_value
       end
       
+      def insured?
+        insured_currency && insured_value
+      end
+            
       # ready times are only 8a-5p(17h)
       def ready_time(time = Time.now)
         if time.hour >= 17 || time.hour < 8

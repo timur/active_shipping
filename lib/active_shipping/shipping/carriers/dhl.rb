@@ -17,13 +17,19 @@ module ActiveMerchant
       
       
       def find_quotes(options = {})
-        pieces = options[:pieces]
-        request = options[:request]
-        
-        request.site_id = @options[:site_id]
-        request.password = @options[:password]        
-
-        response_raw = commit(save_request(request.to_xml), (options[:test] || false))             
+        xml = ""
+        if options[:raw_xml]
+          xml = File.open(Dir.pwd + "/test/fixtures/xml/dhl/#{options[:raw_xml]}").read
+        else        
+          pieces = options[:pieces]
+          request = options[:request]
+          
+          request.site_id = @options[:site_id]
+          request.password = @options[:password]        
+          
+          xml = request.to_xml
+        end
+        response_raw = commit(save_request(xml), (options[:test] || false))             
         resp = parse_quote_response(Nokogiri::XML(response_raw))
         resp.response = response_raw
         resp.request = last_request

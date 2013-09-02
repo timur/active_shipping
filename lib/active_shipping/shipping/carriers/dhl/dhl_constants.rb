@@ -2,6 +2,9 @@
 module ActiveMerchant
   module Shipping
     module DhlConstants
+      
+        PACKAGE = "package"
+        DOCUMENT = "document"
 
         GlobalProductCodes = {
           "0"	=> "LOGISTICS SERVICES",

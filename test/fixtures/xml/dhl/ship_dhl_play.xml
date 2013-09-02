@@ -6,8 +6,8 @@
 			<Password>hUv5E3nMjQz6</Password>
 		</ServiceHeader>
 	</Request>
-	<RequestedPickupTime>Y</RequestedPickupTime>
-	<NewShipper>Y</NewShipper>
+	<RequestedPickupTime>N</RequestedPickupTime>
+	<NewShipper>N</NewShipper>
 	<LanguageCode>en</LanguageCode>
 	<PiecesEnabled>Y</PiecesEnabled>
 	<Billing>
@@ -27,7 +27,6 @@
 		<Contact>
 			<PersonName>Mr Robinson Peter Harrison 12345678</PersonName>
 			<PhoneNumber>12345577889</PhoneNumber>
-			<PhoneExtension>123</PhoneExtension>
 		</Contact>
 	</Consignee>
 	<Commodity>
@@ -61,12 +60,11 @@
 		<Date>2013-09-01</Date>
 		<Contents>FOR TESTING PURPOSE ONLY. PLEASE DO NOT SHIP. 123456789012345678901234567890123456789 STOP</Contents>
 		<DimensionUnit>C</DimensionUnit>
-		<InsuredAmount>1000.00</InsuredAmount>
 		<IsDutiable>N</IsDutiable>
 		<CurrencyCode>MXN</CurrencyCode>
 	</ShipmentDetails>
 	<Shipper>
-		<ShipperID>654031018</ShipperID>
+		<ShipperID>ABCDA</ShipperID>
 		<CompanyName>Brazil shipper company privated</CompanyName>
 		<RegisteredAccount>654031018</RegisteredAccount>
 		<AddressLine>15255 N Frank Lloyd W Blvd</AddressLine>
@@ -78,7 +76,6 @@
 		<Contact>
 			<PersonName>Ms Smart Robinson Harrison 12345678</PersonName>
 			<PhoneNumber>112233</PhoneNumber>
-			<PhoneExtension>1122</PhoneExtension>
 		</Contact>
 	</Shipper>
 	<EProcShip>N</EProcShip>
