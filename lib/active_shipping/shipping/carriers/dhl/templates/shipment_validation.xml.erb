@@ -38,16 +38,17 @@
 		  </Contact>
 		<% end -%>
 	</Consignee>
-	<Commodity>
-		<CommodityCode>1</CommodityCode>
-		<CommodityName>cm</CommodityName>
-	</Commodity>
 	<%- if dutiable? %>
 	  <Dutiable>
 		  <DeclaredValue><%= @declared_value %></DeclaredValue>
-		  <DeclaredCurrency><%= @declared_value %></DeclaredCurrency>
+		  <DeclaredCurrency><%= @declared_currency %></DeclaredCurrency>
 	  </Dutiable>
 	<% end -%>
+	<% if shipment_reference %>
+	  <Reference>
+		  <ReferenceID><%= @shipment_reference %></ReferenceID>
+	  </Reference>		
+	<% end %>	
 	<ShipmentDetails>
 		<NumberOfPieces><%= @shipment_details_number_of_pieces %></NumberOfPieces>		
     <% if @pieces %>
@@ -55,19 +56,24 @@
         <% @pieces.each_with_index do |piece, i| -%>
           <Piece>
             <PieceID><%= piece.piece_id = i + 1 %></PieceID>             
-            <PackageType>EE</PackageType>            
-            <% if piece.weight -%>                  
-              <Weight><%= piece.weight -%></Weight>
+            <PackageType>CP</PackageType>
+            <% if @package_type == "package" %>            
+              <% if piece.weight -%>                  
+                <Weight><%= piece.weight -%></Weight>
+              <% end -%>                                              
+              <% if piece.width -%>                    
+                <Width><%= piece.width -%></Width>
+              <% end -%>                    
+              <% if piece.height -%>
+                <Height><%= piece.height -%></Height>
+              <% end -%>
+              <% if piece.depth -%>
+                <Depth><%= piece.depth -%></Depth>
+              <% end -%>    
+              <% if piece.piece_content -%>
+                <PieceContents><%= piece.piece_content -%></PieceContents>
+              <% end -%>    
             <% end -%> 
-            <% if piece.width -%>                    
-              <Width><%= piece.width -%></Width>
-            <% end -%>                    
-            <% if piece.height -%>
-              <Height><%= piece.height -%></Height>
-            <% end -%>
-            <% if piece.depth -%>
-              <Depth><%= piece.depth -%></Depth>
-            <% end -%>                    
           </Piece>
         <% end -%>
 		  </Pieces>      

@@ -13,7 +13,10 @@ module ActiveMerchant
       
       # authorization
       attribute :site_id, String
-      attribute :password, String      
+      attribute :password, String     
+      
+      # Package or Document
+      attribute :package_type, String, default: DhlConstants::PACKAGE       
       
       # mandatory    
       attribute :language_code, String # not inputed by user
@@ -104,6 +107,9 @@ module ActiveMerchant
       attribute :dutiable, Boolean # user input                                   
       attribute :declared_currency, String # user input                                                                              
       attribute :declared_value, Float # user input 
+      
+      # Optional
+      attribute :shipment_reference, String # user input 
       
       attribute :pieces, Array
       
