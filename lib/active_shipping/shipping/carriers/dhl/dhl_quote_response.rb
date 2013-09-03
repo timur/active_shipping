@@ -56,7 +56,7 @@ module ActiveMerchant
         extra_charges.each do |extra|
           self.surcharge += extra.charge_value
         end
-        self.base_charge = self.weight_charge - self.weight_charge_tax
+        self.base_charge = self.weight_charge
         
         if self.delivery_time
           d = Time.parse(self.delivery_time)
