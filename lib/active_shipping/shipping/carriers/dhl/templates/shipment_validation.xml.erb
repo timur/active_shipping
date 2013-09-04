@@ -81,7 +81,9 @@
 		<Weight><%= @shipment_details_weight %></Weight>
 		<WeightUnit>K</WeightUnit>
 		<GlobalProductCode><%= @shipment_details_global_product_code %></GlobalProductCode>
-		<LocalProductCode><%= @shipment_details_local_product_code %></LocalProductCode>
+		<% if @shipment_details_local_product_code -%>
+		  <LocalProductCode><%= @shipment_details_local_product_code %></LocalProductCode>
+		<% end -%>
 		<Date><%= @shipment_details_date.strftime("%Y-%m-%d") %></Date>
     <% if @shipment_details_content %>		
 		  <Contents><%= @shipment_details_content %></Contents>
