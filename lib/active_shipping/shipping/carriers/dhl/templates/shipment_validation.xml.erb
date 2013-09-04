@@ -81,9 +81,7 @@
 		<Weight><%= @shipment_details_weight %></Weight>
 		<WeightUnit>K</WeightUnit>
 		<GlobalProductCode><%= @shipment_details_global_product_code %></GlobalProductCode>
-		<% if @shipment_details_local_product_code -%>
-		  <LocalProductCode><%= @shipment_details_local_product_code %></LocalProductCode>
-		<% end -%>
+		<LocalProductCode><%= @shipment_details_local_product_code %></LocalProductCode>
 		<Date><%= @shipment_details_date.strftime("%Y-%m-%d") %></Date>
     <% if @shipment_details_content %>		
 		  <Contents><%= @shipment_details_content %></Contents>
@@ -93,7 +91,7 @@
 		  <InsuredAmount><%= @shipment_details_insured_amount %></InsuredAmount>
 		<% end -%>                                  		  		
 		<IsDutiable><%= isDutiable %></IsDutiable>
-		<CurrencyCode><%= @shipment_details_currencyCode %></CurrencyCode>
+		<CurrencyCode><%= @shipment_details_currency_code %></CurrencyCode>
 	</ShipmentDetails>
 	<Shipper>
 	  <% if @shipper_shipper_id %>
