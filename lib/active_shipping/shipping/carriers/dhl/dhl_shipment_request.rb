@@ -66,7 +66,7 @@ module ActiveMerchant
       attribute :shipment_details_global_product_code, String # user input            
       attribute :shipment_details_local_product_code, String # user input                               
       attribute :shipment_details_date, Date # current date by us
-      attribute :shipment_details_currencyCode, String # calculated by us
+      attribute :shipment_details_currency_code, String # calculated by us
       attribute :shipment_details_content, String # user input                                     
       # optional
       attribute :shipment_details_insured_amount, Float      
@@ -114,6 +114,7 @@ module ActiveMerchant
       attribute :pieces, Array
       
       def calculate_attributes
+        default_values
         calculate_pieces
         calculate_country_name
         calculate_currency
@@ -146,9 +147,18 @@ module ActiveMerchant
           gem_root + "/lib/active_shipping/shipping/carriers/dhl/templates/shipment_validation.xml.erb"
         end
         
+        def default_values
+          self.language_code = "en" unless self.language_code
+          self.pieces_enabled = "Y" unless self.pieces_enabled
+          self.shipper_payment_type = "S" unless self.shipper_payment_type                    
+          self.duty_payment_type = "S" unless self.duty_payment_type        
+          self.billing_account_number = self.shipper_account_number if self.shipper_account_number        
+          self.duty_account_number = self.shipper_account_number if self.shipper_account_number                  
+        end
+        
         def calculate_currency
           if self.shipper_countrycode
-            self.shipment_details_currencyCode = CURRENCY_CODES[self.shipper_countrycode]
+            self.shipment_details_currency_code = CURRENCY_CODES[self.shipper_countrycode]
           end
         end
         
