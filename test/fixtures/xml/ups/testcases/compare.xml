@@ -1,0 +1,47 @@
+<RatingServiceSelectionRequest>
+   <Request>
+      <RequestAction>Rate</RequestAction>
+      <RequestOption>Shop</RequestOption>
+   </Request>
+   <PickupType>
+      <Code>01</Code>
+   </PickupType>
+   <CustomerClassification>
+      <Code />
+   </CustomerClassification>
+   <Shipment>
+      <Shipper>
+         <Address>
+            <PostalCode>11510</PostalCode>
+            <CountryCode>MX</CountryCode>
+            <ResidentialAddressIndicator>true</ResidentialAddressIndicator>
+         </Address>
+      </Shipper>
+      <ShipTo>
+         <Address>
+            <PostalCode>11510</PostalCode>
+            <CountryCode>MX</CountryCode>
+            <ResidentialAddressIndicator>true</ResidentialAddressIndicator>
+         </Address>
+      </ShipTo>
+      <Package>
+         <PackagingType>
+            <Code>01</Code>
+         </PackagingType>
+         <Dimensions>
+            <UnitOfMeasurement>
+               <Code>CM</Code>
+            </UnitOfMeasurement>
+            <Length>10</Length>
+            <Width>10</Width>
+            <Height>10</Height>
+         </Dimensions>
+         <PackageWeight>
+            <UnitOfMeasurement>
+               <Code>KGS</Code>
+            </UnitOfMeasurement>
+            <Weight>1.5</Weight>
+         </PackageWeight>
+      </Package>
+   </Shipment>
+</RatingServiceSelectionRequest>

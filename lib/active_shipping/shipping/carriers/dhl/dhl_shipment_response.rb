@@ -1,5 +1,4 @@
 require 'virtus'
-require 'base64'
 
 module ActiveMerchant
   module Shipping
@@ -55,15 +54,6 @@ module ActiveMerchant
         success
       end
       
-      def write_label(path)
-        if self.label
-          decoded = Base64.decode64(self.label)
-
-          File.open(path, 'wb') do |f|
-            f.write(decoded)
-          end
-        end
-      end
     end
   end
 end

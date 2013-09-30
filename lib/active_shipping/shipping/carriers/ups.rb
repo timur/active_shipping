@@ -1,111 +1,41 @@
 # -*- encoding: utf-8 -*-
+require 'nokogiri'
 
 module ActiveMerchant
   module Shipping
-    class UPS
+
+    class UPS < Carrier
+      include ActiveMerchant::Shipping::UpsConstants            
+      
+      self.retry_safe = true
+
+      cattr_reader :name
+      @@name = "UPS"
+      
       TEST_URL = 'https://wwwcie.ups.com'
       LIVE_URL = 'https://onlinetools.ups.com'
 
-      RESOURCES = {
-        :rates => 'ups.app/xml/Rate',
-        :track => 'ups.app/xml/Track'
-      }
-
-      PICKUP_CODES = HashWithIndifferentAccess.new({
-        :daily_pickup => "01",
-        :customer_counter => "03",
-        :one_time_pickup => "06",
-        :on_call_air => "07",
-        :suggested_retail_rates => "11",
-        :letter_center => "19",
-        :air_service_center => "20"
-      })
-
-      CUSTOMER_CLASSIFICATIONS = HashWithIndifferentAccess.new({
-        :wholesale => "01",
-        :occasional => "03",
-        :retail => "04"
-      })
-
-      # these are the defaults described in the UPS API docs,
-      # but they don't seem to apply them under all circumstances,
-      # so we need to take matters into our own hands
-      DEFAULT_CUSTOMER_CLASSIFICATIONS = Hash.new do |hash,key|
-        hash[key] = case key.to_sym
-        when :daily_pickup then :wholesale
-        when :customer_counter then :retail
-        else
-          :occasional
+      def find_quotes(options = {})
+        xml = ""
+        if options[:raw_xml]
+          xml = File.open(Dir.pwd + "/test/fixtures/xml/ups/#{options[:raw_xml]}").read
+        else        
+          request = options[:request]
+          
+          request.access_license_number = @options[:access_license_number]
+          request.user_id = @options[:user_id]
+          request.password = @options[:password]  
+          
+          xml = request.to_xml
         end
+        response_raw = commit(UpsConstants::RESOURCES[:rates], save_request(xml), (options[:test] || false))             
+        #resp = parse_quote_response(Nokogiri::XML(response_raw))
+        resp = UpsQuoteResponse.new
+        resp.response = response_raw
+        resp.request = last_request
+        resp
       end
 
-      DEFAULT_SERVICES = {
-        "01" => "UPS Next Day Air",
-        "02" => "UPS Second Day Air",
-        "03" => "UPS Ground",
-        "07" => "UPS Worldwide Express",
-        "08" => "UPS Worldwide Expedited",
-        "11" => "UPS Standard",
-        "12" => "UPS Three-Day Select",
-        "13" => "UPS Next Day Air Saver",
-        "14" => "UPS Next Day Air Early A.M.",
-        "54" => "UPS Worldwide Express Plus",
-        "59" => "UPS Second Day Air A.M.",
-        "65" => "UPS Saver",
-        "82" => "UPS Today Standard",
-        "83" => "UPS Today Dedicated Courier",
-        "84" => "UPS Today Intercity",
-        "85" => "UPS Today Express",
-        "86" => "UPS Today Express Saver"
-      }
-
-      CANADA_ORIGIN_SERVICES = {
-        "01" => "UPS Express",
-        "02" => "UPS Expedited",
-        "14" => "UPS Express Early A.M."
-      }
-
-      MEXICO_ORIGIN_SERVICES = {
-        "07" => "UPS Express",
-        "08" => "UPS Expedited",
-        "54" => "UPS Express Plus"
-      }
-
-      EU_ORIGIN_SERVICES = {
-        "07" => "UPS Express",
-        "08" => "UPS Expedited"
-      }
-
-      OTHER_NON_US_ORIGIN_SERVICES = {
-        "07" => "UPS Express"
-      }
-
-      TRACKING_STATUS_CODES = HashWithIndifferentAccess.new({
-        'I' => :in_transit,
-        'D' => :delivered,
-        'X' => :exception,
-        'P' => :pickup,
-        'M' => :manifest_pickup
-      })
-
-      # From http://en.wikipedia.org/w/index.php?title=European_Union&oldid=174718707 (Current as of November 30, 2007)
-      EU_COUNTRY_CODES = ["GB", "AT", "BE", "BG", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"]
-
-      US_TERRITORIES_TREATED_AS_COUNTRIES = ["AS", "FM", "GU", "MH", "MP", "PW", "PR", "VI"]
-
-      def requirements
-        [:key, :login, :password]
-      end
-
-      def find_rates(origin, destination, packages, options={})
-        origin, destination = upsified_location(origin), upsified_location(destination)
-        options = @options.merge(options)
-        packages = Array(packages)
-        access_request = build_access_request
-        rate_request = build_rate_request(origin, destination, packages, options)
-        response = commit(:rates, save_request(access_request + rate_request), (options[:test] || false))
-        parse_rate_response(origin, destination, packages, response, options)
-      end
 
       protected
 
@@ -405,9 +335,9 @@ module ActiveMerchant
       end
 
       def commit(action, request, test = false)
-        ssl_post("#{test ? TEST_URL : LIVE_URL}/#{RESOURCES[action]}", request)
+        puts "COMMIT #{action} #{request} #{test}"
+        ssl_post("#{test ? TEST_URL : LIVE_URL}/#{action}", request)
       end
-
 
       def service_name_for(origin, code)
         origin = origin.country_code(:alpha2)

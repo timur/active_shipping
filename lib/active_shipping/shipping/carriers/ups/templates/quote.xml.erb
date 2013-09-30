@@ -1,0 +1,62 @@
+<AccessRequest>
+   <AccessLicenseNumber><%= @access_license_number %></AccessLicenseNumber>
+   <UserId><%= @user_id %></UserId>
+   <Password><%= @password %></Password>
+</AccessRequest>
+<RatingServiceSelectionRequest>
+   <Request>
+      <RequestAction>Rate</RequestAction>
+      <RequestOption>Shop</RequestOption>
+   </Request>
+   <PickupType>
+      <Code><%= @pickup_type %></Code>
+   </PickupType>
+   <CustomerClassification>
+      <Code><%= @customer_classification %></Code>
+   </CustomerClassification>
+   <Shipment>
+      <% if @package_type == UpsConstants::DOCUMENT %>
+        <DocumentsOnly>true</DocumentsOnly>
+      <% end %>
+      <Shipper>
+         <% if @shipper_number %>
+           <ShipperNumber><%= @shipper_number %></ShipperNumber>
+         <% end %>
+         <Address>
+            <PostalCode><%= @origin_postal_code %></PostalCode>
+            <CountryCode><%= @origin_country_code %></CountryCode>
+            <ResidentialAddressIndicator>true</ResidentialAddressIndicator>
+         </Address>
+      </Shipper>
+      <ShipTo>
+         <Address>
+            <PostalCode><%= @destination_postal_code %></PostalCode>
+            <CountryCode><%= @destination_country_code %></CountryCode>
+            <ResidentialAddressIndicator>true</ResidentialAddressIndicator>
+         </Address>
+      </ShipTo>
+      <% if @packages && @packages.size > 0 %>
+        <% @packages.each do |package| -%>
+          <Package>
+             <PackagingType>
+                <Code><%= @pickup_type %></Code>
+             </PackagingType>
+             <Dimensions>
+                <UnitOfMeasurement>
+                   <Code>CM</Code>
+                </UnitOfMeasurement>
+                <Length><%= package.length %></Length>
+                <Width><%= package.width %></Width>
+                <Height><%= package.height %></Height>
+             </Dimensions>
+             <PackageWeight>
+                <UnitOfMeasurement>
+                   <Code>KGS</Code>
+                </UnitOfMeasurement>
+                <Weight><%= package.weight %></Weight>
+             </PackageWeight>
+          </Package>
+        <% end %>
+      <% end %>
+   </Shipment>
+</RatingServiceSelectionRequest>

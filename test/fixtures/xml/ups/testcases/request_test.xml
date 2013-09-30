@@ -1,0 +1,52 @@
+<AccessRequest>
+   <AccessLicenseNumber>BCBDB1BD667FDBFA</AccessLicenseNumber>
+   <UserId>svencrone</UserId>
+   <Password>Shipper7</Password>
+</AccessRequest>
+<RatingServiceSelectionRequest>
+   <Request>
+      <RequestAction>Rate</RequestAction>
+      <RequestOption>Shop</RequestOption>
+   </Request>
+   <PickupType>
+      <Code>01</Code>
+   </PickupType>
+   <CustomerClassification>
+      <Code>01</Code>
+   </CustomerClassification>
+   <Shipment>
+      <Shipper>
+         <Address>
+            <PostalCode>11510</PostalCode>
+            <CountryCode>MX</CountryCode>
+            <ResidentialAddressIndicator>true</ResidentialAddressIndicator>
+         </Address>
+      </Shipper>
+      <ShipTo>
+         <Address>
+            <PostalCode>11510</PostalCode>
+            <CountryCode>MX</CountryCode>
+            <ResidentialAddressIndicator>true</ResidentialAddressIndicator>
+         </Address>
+      </ShipTo>
+      <Package>
+         <PackagingType>
+            <Code>02</Code>
+         </PackagingType>
+         <Dimensions>
+            <UnitOfMeasurement>
+               <Code>CM</Code>
+            </UnitOfMeasurement>
+            <Length>10</Length>
+            <Width>20</Width>
+            <Height>30</Height>
+         </Dimensions>
+         <PackageWeight>
+            <UnitOfMeasurement>
+               <Code>KGS</Code>
+            </UnitOfMeasurement>
+            <Weight>1.2</Weight>
+         </PackageWeight>
+      </Package>
+   </Shipment>
+</RatingServiceSelectionRequest>

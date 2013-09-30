@@ -77,8 +77,7 @@ module ActiveMerchant
                 :shipment_details_local_product_code, 
                 :shipment_details_date,
                 :shipment_details_content,
-                presence: true                           
-      
+                presence: true                                 
 			                                                        
       # Shipper
       # mandatory
@@ -104,7 +103,7 @@ module ActiveMerchant
       attribute :contact_shipper_phoneext, String # user input                                                                    
               
       # Dutiable
-      attribute :dutiable, Boolean # user input                                   
+      attribute :dutiable, Boolean, default: false # user input                                   
       attribute :declared_currency, String # user input                                                                              
       attribute :declared_value, Float # user input 
       
@@ -128,7 +127,7 @@ module ActiveMerchant
       end  
             
       def isDutiable
-        dutiable ? "Y" : "N"
+        self.dutiable
       end
 
       def billingAccountNumber?
@@ -151,7 +150,7 @@ module ActiveMerchant
           self.language_code = "en" unless self.language_code
           self.pieces_enabled = "Y" unless self.pieces_enabled
           self.shipper_payment_type = "S" unless self.shipper_payment_type                    
-          self.duty_payment_type = "S" unless self.duty_payment_type        
+          self.duty_payment_type = "S" unless self.duty_payment_type                  
           self.billing_account_number = self.shipper_account_number if self.shipper_account_number        
           self.duty_account_number = self.shipper_account_number if self.shipper_account_number  
           self.shipper_shipper_id = self.shipper_account_number                

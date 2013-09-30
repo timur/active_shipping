@@ -27,16 +27,23 @@ module Test
       end
       
       def save_xml(response, name)
-        resp = REXML::Document.new response.response
-        req = REXML::Document.new response.request    
+        req = nil
+        formatted_request = ""
         formatter = REXML::Formatters::Pretty.new
-
         formatted_response, formatted_request = "", ""
-
         formatter.compact = true
-        formatter.write(resp, formatted_response)
-        formatter.write(req, formatted_request)
+
+        puts "RESPONSE #{response.response}"
+        resp = REXML::Document.new response.response
         
+        begin
+          req = REXML::Document.new response.request              
+          formatter.write(req, formatted_request)
+        rescue Exception => e
+          formatted_request = response.request
+        end
+        
+        formatter.write(resp, formatted_response)        
         t = Time.now
         dir_name = "test/last_requests/" + name
         
