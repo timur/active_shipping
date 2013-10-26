@@ -167,7 +167,7 @@ module ActiveMerchant
         end
         
         def parse_status(document)
-          success = false
+          success = true
           status = document.xpath("//Status")
           
           status.each do |s|
