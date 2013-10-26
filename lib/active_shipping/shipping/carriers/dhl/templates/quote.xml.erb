@@ -48,7 +48,7 @@
             <% if @payment_account_number -%>
                 <PaymentAccountNumber><%= @payment_account_number %></PaymentAccountNumber>
             <% end -%>
-            <IsDutiable><%= dutiable? ? "Y" : "N" %></IsDutiable>
+            <IsDutiable><%= dutiable? %></IsDutiable>
             <% if special_services.size > 0 -%>
                 <QtdShp>
                     <% special_services.each do |special_service_type_code| -%>

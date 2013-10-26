@@ -127,7 +127,11 @@ module ActiveMerchant
       end  
             
       def isDutiable
-        self.dutiable
+        if self.dutiable
+          return "Y"
+        else
+          return "N"
+        end
       end
 
       def billingAccountNumber?

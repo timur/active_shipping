@@ -43,7 +43,11 @@ module ActiveMerchant
       end      
       
       def dutiable?
-        declared_currency && declared_value
+        if declared_currency && declared_value
+          return "Y"
+        else
+          return "N"
+        end
       end
       
       def insured?

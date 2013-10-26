@@ -8,7 +8,11 @@ module ActiveMerchant
       
       attribute :code, String
       attribute :data, String
-      attribute :action_code, String      
+      attribute :action_code, String   
+      
+      def to_s
+        "Code: #{code} Data: #{data} ActionCode: #{action_code}"   
+      end
     end
                 
   end
