@@ -68,7 +68,7 @@
             <Postalcode><%= @destination_postal_code %></Postalcode>
             <% if @destination_city_name -%><City><%= @destination_city_name %></City><% end -%>
         </To>
-        <%- if dutiable? %>
+        <%- if is_dutiable? %>
             <Dutiable>
                 <DeclaredCurrency><%= @declared_currency %></DeclaredCurrency>
                 <DeclaredValue><%= @declared_value %></DeclaredValue>

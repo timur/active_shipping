@@ -49,6 +49,10 @@ module ActiveMerchant
           return "N"
         end
       end
+
+      def is_dutiable?
+        declared_currency && declared_value
+      end
       
       def insured?
         insured_currency && insured_value
