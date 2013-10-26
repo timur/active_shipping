@@ -4,7 +4,7 @@ module ActiveMerchant
   module Shipping
     
     class FedexPackage
-      include Virtus
+      include Virtus.model
       
       attribute :quantity, Integer      
       attribute :height, Integer

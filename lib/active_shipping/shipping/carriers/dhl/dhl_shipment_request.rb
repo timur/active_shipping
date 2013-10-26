@@ -6,7 +6,7 @@ module ActiveMerchant
     
     # dutiable - zollpflichtig
     class DhlShipmentRequest
-      include Virtus
+      include Virtus.model
       include ActiveModel::Validations    
       include ActiveMerchant::Shipping::DhlConstants
       include ActiveMerchant::Shipping::Constants        

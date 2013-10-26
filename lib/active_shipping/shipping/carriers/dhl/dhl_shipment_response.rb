@@ -4,7 +4,7 @@ module ActiveMerchant
   module Shipping
     
     class DhlShipmentResponse
-      include Virtus
+      include Virtus.model
       
       SUCCESS = "Success"
       

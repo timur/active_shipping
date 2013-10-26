@@ -4,7 +4,7 @@ module ActiveMerchant
   module Shipping
     
     class DhlPiece
-      include Virtus
+      include Virtus.model
       
       attribute :piece_id, Integer
       attribute :quantity, Integer      

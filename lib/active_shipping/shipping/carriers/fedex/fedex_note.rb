@@ -4,7 +4,7 @@ module ActiveMerchant
   module Shipping
     
     class FedexNote
-      include Virtus
+      include Virtus.model
       
       attribute :severity, String
       attribute :code, String

@@ -4,7 +4,7 @@ module ActiveMerchant
   module Shipping
     
     class DhlNote
-      include Virtus
+      include Virtus.model
       
       attribute :code, String
       attribute :data, String

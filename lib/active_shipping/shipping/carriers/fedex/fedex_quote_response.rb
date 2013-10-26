@@ -4,7 +4,7 @@ module ActiveMerchant
   module Shipping
     
     class FedexQuote
-      include Virtus 
+      include Virtus.model
       
       attribute :product_name, String
       attribute :product_code, String                 
@@ -22,7 +22,7 @@ module ActiveMerchant
     end
 
     class FedexSurcharge
-      include Virtus 
+      include Virtus.model
 
       attribute :surcharge_type, String                 
       attribute :description, String           
@@ -30,7 +30,7 @@ module ActiveMerchant
     end
 
     class FedexTax
-      include Virtus 
+      include Virtus.model
       
       attribute :tax_type, String
       attribute :description, String           
@@ -38,7 +38,7 @@ module ActiveMerchant
     end
                 
     class FedexQuoteResponse
-      include Virtus
+      include Virtus.model
       
       attribute :success, Boolean
       attribute :notes, Array

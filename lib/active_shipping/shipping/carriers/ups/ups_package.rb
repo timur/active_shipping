@@ -4,7 +4,7 @@ module ActiveMerchant
   module Shipping
     
     class UpsPackage
-      include Virtus
+      include Virtus.model
       
       attribute :height, Integer
       attribute :width, Integer

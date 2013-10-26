@@ -5,7 +5,7 @@ module ActiveMerchant
   module Shipping
         
     class UpsQuoteRequest
-      include Virtus
+      include Virtus.model
       include ActiveModel::Validations    
       include ActiveMerchant::Shipping::UpsConstants
       include ActiveMerchant::Shipping::Constants              

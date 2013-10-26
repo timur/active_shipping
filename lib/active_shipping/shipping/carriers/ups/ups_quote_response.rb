@@ -5,7 +5,7 @@ module ActiveMerchant
   module Shipping
     
     class UpsQuoteResponse
-      include Virtus
+      include Virtus.model
       
       attribute :success, Boolean
       attribute :notes, Array

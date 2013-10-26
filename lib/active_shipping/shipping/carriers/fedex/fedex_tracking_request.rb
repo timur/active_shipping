@@ -4,7 +4,7 @@ module ActiveMerchant
   module Shipping
     
     class FedexTrackingRequest
-      include Virtus
+      include Virtus.model
 
       attribute :key, String
       attribute :password, String

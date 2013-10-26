@@ -5,14 +5,14 @@ module ActiveMerchant
   module Shipping
     
     class DhlNote
-      include Virtus
+      include Virtus.model
       
       attribute :code, String
       attribute :data, String
     end
 
     class DhlExtraCharge
-      include Virtus
+      include Virtus.model
       
       attribute :special_service_type, String
       attribute :local_service_type, String
@@ -25,7 +25,7 @@ module ActiveMerchant
     end    
 
     class DhlQuote
-      include Virtus 
+      include Virtus.model 
       
       attribute :global_product_code, String
       attribute :local_product_code, String           
@@ -68,7 +68,7 @@ module ActiveMerchant
     end
                 
     class DhlQuoteResponse
-      include Virtus
+      include Virtus.model
       
       attribute :success, Boolean
       attribute :notes, Array

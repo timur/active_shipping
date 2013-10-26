@@ -4,7 +4,7 @@ module ActiveMerchant
   module Shipping
     
     class FedexShipmentResponse
-      include Virtus
+      include Virtus.model
       
       SUCCESS = "Success"
 
