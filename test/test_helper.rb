@@ -33,7 +33,7 @@ module Test
         formatted_response, formatted_request = "", ""
         formatter.compact = true
 
-        puts "RESPONSE #{response.response}"
+        #puts "RESPONSE #{response.response}"
         resp = REXML::Document.new response.response
         
         begin
