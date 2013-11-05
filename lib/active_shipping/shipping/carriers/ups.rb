@@ -335,7 +335,6 @@ module ActiveMerchant
       end
 
       def commit(action, request, test = false)
-        puts "COMMIT #{action} #{request} #{test}"
         ssl_post("#{test ? TEST_URL : LIVE_URL}/#{action}", request)
       end
 

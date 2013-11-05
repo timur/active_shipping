@@ -47,7 +47,7 @@
         </Recipient>
         <RateRequestTypes>LIST</RateRequestTypes>
         <PackageCount><%= @package_count %></PackageCount>
-        <% if @packages %>
+        <% if @packages && @package_count > 0 %>
           <RequestedPackageLineItems>                    
             <% @packages.each do |package| -%>
               <GroupPackageCount><%= package.quantity %></GroupPackageCount>

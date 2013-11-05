@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+   <SOAP-ENV:Header />
+   <SOAP-ENV:Body>
+      <RateReply xmlns="http://fedex.com/ws/rate/v13">
+         <HighestSeverity>ERROR</HighestSeverity>
+         <Notifications>
+            <Severity>ERROR</Severity>
+            <Source>crs</Source>
+            <Code>711</Code>
+            <Message>Destination postal code is not serviced.</Message>
+            <LocalizedMessage>Destination postal code is not serviced.</LocalizedMessage>
+         </Notifications>
+         <Notifications>
+            <Severity>WARNING</Severity>
+            <Source>crs</Source>
+            <Code>556</Code>
+            <Message>There are no valid services available.</Message>
+            <LocalizedMessage>There are no valid services available.</LocalizedMessage>
+         </Notifications>
+         <Version>
+            <ServiceId>crs</ServiceId>
+            <Major>13</Major>
+            <Intermediate>0</Intermediate>
+            <Minor>0</Minor>
+         </Version>
+      </RateReply>
+   </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

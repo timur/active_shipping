@@ -19,7 +19,7 @@
             <ReadyTimeGMTOffset>+00:00</ReadyTimeGMTOffset>
             <DimensionUnit>CM</DimensionUnit>
             <WeightUnit>KG</WeightUnit>
-            <% if @pieces %>
+            <% if @pieces && @pieces.size > 0 %>
               <Pieces>
                 <% @pieces.each_with_index do |piece, i| -%>              
                   <Piece>

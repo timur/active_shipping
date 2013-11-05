@@ -1,0 +1,25 @@
+<SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/'>
+  <SOAP-ENV:Header/>
+  <SOAP-ENV:Body>
+    <RateReply xmlns='http://fedex.com/ws/rate/v13'>
+      <HighestSeverity>ERROR</HighestSeverity>
+      <Notifications>
+        <Severity>ERROR</Severity>
+        <Source>crs</Source>
+        <Code>300</Code>
+        <Message>Package 1 - Group package count must be at least a value of 1.</Message>
+        <LocalizedMessage>Package 1 - Group package count must be at least a value of 1.</LocalizedMessage>
+        <MessageParameters>
+          <Id>PACKAGE_INDEX</Id>
+          <Value>1</Value>
+        </MessageParameters>
+      </Notifications>
+      <Version>
+        <ServiceId>crs</ServiceId>
+        <Major>13</Major>
+        <Intermediate>0</Intermediate>
+        <Minor>0</Minor>
+      </Version>
+    </RateReply>
+  </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
