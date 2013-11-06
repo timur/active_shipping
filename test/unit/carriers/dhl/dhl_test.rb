@@ -83,7 +83,7 @@ class DhlTest < Test::Unit::TestCase
     
     shipment.calculate_attributes
     
-    assert shipment.shipment_details_currencyCode == 'MXN' 
+    assert shipment.shipment_details_currency_code == 'MXN' 
   end  
   
   def test_calculate_weight
@@ -144,7 +144,7 @@ class DhlTest < Test::Unit::TestCase
     assert response.class.to_s, ActiveMerchant::Shipping::DhlQuoteResponse.class.to_s     
     assert_equal response.notes.size, 0
     assert_operator response.quotes.size, :>, 0
-    assert_equal response.quotes[0].base_charge, 39 
+    assert_equal response.quotes[0].base_charge, 46.41
     assert_equal response.quotes[0].total_tax_amount, 8   
     assert_equal response.quotes[0].delivery_date_calculated.hour, 9       
     
@@ -154,6 +154,7 @@ class DhlTest < Test::Unit::TestCase
 
     assert_equal response.quotes[1].pickup_date, Date.parse('2013-08-15')
     assert_equal response.quotes[1].exchange_rate, 1.3612
+    assert_equal response.quotes[1].currency, "EUR"    
   end
   
   def test_parse_quote_response_corroup

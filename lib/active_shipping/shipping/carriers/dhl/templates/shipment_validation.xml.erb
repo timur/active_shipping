@@ -51,7 +51,7 @@
 	<% end %>	
 	<ShipmentDetails>
 		<NumberOfPieces><%= @shipment_details_number_of_pieces %></NumberOfPieces>		
-    <% if @pieces %>
+    <% if @pieces && @pieces.size > 0 %>
 		  <Pieces>    
         <% @pieces.each_with_index do |piece, i| -%>
           <Piece>
