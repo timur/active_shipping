@@ -128,7 +128,9 @@ module ActiveMerchant
           q.product_code = details.at('ServiceType').text if details.at('ServiceType')
           q.product_name = ServiceTypes[q.product_code]
           q.delivery_time = details.at('CommitTimestamp').text if details.at('CommitTimestamp')          
-          q.delivery_date = Time.parse(q.delivery_time)
+          if q && q.delivery_time
+            q.delivery_date = Time.parse(q.delivery_time)
+          end
           
           parse_rated_shipment_details(q, details.xpath("RatedShipmentDetails"))
           response.quotes << q
