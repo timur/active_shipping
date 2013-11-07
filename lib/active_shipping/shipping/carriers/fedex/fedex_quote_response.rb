@@ -15,8 +15,7 @@ module ActiveMerchant
       attribute :surcharge, Float
       attribute :taxes, Float
       attribute :tax_rate, Float
-      attribute :currency, Float
-      
+      attribute :currency, Float      
       attribute :extra_charges, Array      
       
     end
@@ -46,6 +45,9 @@ module ActiveMerchant
       attribute :request, String
       attribute :response, String      
       
+      def to_s
+        "Success: #{success} | Notes: #{notes.to_s}"
+      end
     end
   end
 end

@@ -156,8 +156,7 @@ module ActiveMerchant
           quote.currency = "MXN" if quote.currency == "NMP"
           quote.base_charge = current_detail.at('TotalBaseCharge//Amount').text          
           quote.total_charge = current_detail.at('TotalNetCharge//Amount').text                    
-          quote.surcharge = current_detail.at('TotalSurcharges//Amount').text                              
-          quote.taxes = current_detail.at('TotalTaxes//Amount').text    
+          quote.surcharge = current_detail.at('TotalSurcharges//Amount').text                                        
                                                         
           surcharges = current_detail.xpath("ShipmentRateDetail/Surcharges")
           surcharges.each do |surcharge|
@@ -167,6 +166,22 @@ module ActiveMerchant
             s.amount = surcharge.at('Amount/Amount').text                                                    
             quote.extra_charges << s
           end
+          
+          taxes = current_detail.xpath("ShipmentRateDetail/Taxes")
+          taxes.each do |tax|
+            tax_type = tax.xpath('TaxType')
+            if tax_type && tax_type.text == "VAT"
+              amount = taxes.xpath('Amount')
+              if amount
+                quote.taxes = amount.at('Amount/Amount').text          
+                c = amount.at('Amount/Currency').text                                          
+                if quote.total_charge && quote.taxes
+                  share = quote.taxes.to_f * 100 / quote.total_charge
+                  quote.tax_rate = share
+                end
+              end
+            end
+          end          
         end                
       end            
       
