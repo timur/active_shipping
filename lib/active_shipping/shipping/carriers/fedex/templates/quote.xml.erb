@@ -48,8 +48,8 @@
         <RateRequestTypes>LIST</RateRequestTypes>
         <PackageCount><%= @package_count %></PackageCount>
         <% if @packages && @package_count > 0 %>
-          <RequestedPackageLineItems>                    
-            <% @packages.each do |package| -%>
+          <% @packages.each do |package| -%>
+            <RequestedPackageLineItems>                    
               <GroupPackageCount><%= package.quantity %></GroupPackageCount>
               <% if @insured_value && @insured_currency %>            
                 <InsuredValue>
@@ -69,8 +69,8 @@
                   <Units>CM</Units>
                 </Dimensions>            
               <% end -%>              
-            <% end -%>
-          </RequestedPackageLineItems>
+            </RequestedPackageLineItems>
+          <% end -%>          
         <% end -%>                                  
       </RequestedShipment>
     </RateRequest>

@@ -6,15 +6,23 @@ class UPSTest < Test::Unit::TestCase
   def setup
   end
 
-  def test_quote_raw    
+  def test_quote_raw_ups    
     ups = UPS.new(test: true)
     response = ups.find_quotes(raw_xml: "testcases/request_test.xml")    
     
-    save_xml(response, "test_quote_raw")
+    save_xml(response, "test_quote_raw_ups")
+    assert_not_nil response
+  end
+
+  def test_quote_raw_ups_2    
+    ups = UPS.new(test: true)
+    response = ups.find_quotes(raw_xml: "testcases/quote_raw.xml")    
+    
+    save_xml(response, "test_quote_raw_ups_2")
     assert_not_nil response
   end
   
-  def test_quote_mexico
+  def test_quote_mexico_ups
     packages = []
     packages << ActiveMerchant::Shipping::UpsPackage.new(height: 10, width: 10, length: 10, weight: 1.5)
     

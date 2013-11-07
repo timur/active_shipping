@@ -13,8 +13,7 @@ module ActiveMerchant
       @@name = "DHL"
 
       TEST_URL = 'https://xmlpitest-ea.dhl.com/XMLShippingServlet'
-      LIVE_URL = 'https://xmlpi-ea.dhl.com/XMLShippingServlet'
-      
+      LIVE_URL = 'https://xmlpi-ea.dhl.com/XMLShippingServlet'      
       
       def find_quotes(options = {})
         xml = ""
