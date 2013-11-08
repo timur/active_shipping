@@ -22,6 +22,10 @@ class UpsParseQuoteResponseTest < Test::Unit::TestCase
     assert response.quotes[0].surcharge == 0
     assert response.quotes[0].total_charge == 240.99
     assert response.quotes[0].product_code.to_i == 100              
+    
+    assert response.quotes[2].product_code == "07"                  
+    assert response.quotes[2].product_name == "UPS Worldwide Express"
+    
   end
   
   #def test_quote_error

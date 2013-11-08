@@ -30,11 +30,11 @@ module ActiveMerchant
       attribute :extra_charges, Array      
       
       def set_product_name
-        if self product_code
-          name = UpsConstants[self.product_code.to_s]
+        if self.product_code
+          name = UpsConstants::DEFAULT_SERVICES[self.product_code.to_s]
           self.product_name = name if name
         end
-      end
+      end      
     end    
   end
 end
