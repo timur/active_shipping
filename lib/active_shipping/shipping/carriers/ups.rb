@@ -75,6 +75,7 @@ module ActiveMerchant
             tag_value(quote, "TotalCharges//MonetaryValue", q, "total_charge")                        
             tag_value(quote, "ServiceOptionsCharges//MonetaryValue", q, "surcharge")                                                
             
+            quote.set_product_name
             back << quote
           end
           back       
