@@ -67,6 +67,29 @@ module ActiveMerchant
         resp        
       end
       
+      def tracking(options = {})
+        xml = ""
+        if options[:raw_xml]
+          xml = File.open(Dir.pwd + "/test/fixtures/xml/fedex/#{options[:raw_xml]}").read
+        else
+          request = options[:request]
+
+          request.key = @options[:key]
+          request.password = @options[:password]        
+          request.accountNumber = @options[:accountNumber]        
+          request.meterNumber = @options[:meterNumber]                        
+          
+          xml = request.to_xml
+        end        
+
+        response_raw = commit(save_request(xml), true)             
+
+        resp = parse_tracking_response(Nokogiri::XML(response_raw))
+        resp.response = response_raw
+        resp.request = last_request
+        resp
+      end      
+      
       def self.service_name_for_code(service_code)
         ServiceTypes[service_code] || "FedEx #{service_code.titleize.sub(/Fedex /, '')}"
       end      
@@ -94,7 +117,17 @@ module ActiveMerchant
         parse_shipment(response, document)
 
         response
-      end      
+      end
+      
+      def parse_tracking_response(document)
+        document.remove_namespaces!
+        response = FedexTrackingResponse.new
+        parse_notes(response, document)
+        response_success(response, document, "//TrackReply/HighestSeverity")
+        parse_tracking(response, document)
+
+        response
+      end            
 
       protected
       
@@ -119,6 +152,28 @@ module ActiveMerchant
         parts = document.xpath("//Label//Parts")   
         response.label = parts.at('Image') if parts.at('Image')
       end
+      
+      def parse_tracking(response, document)
+        track_details = document.xpath("//TrackDetails")   
+        response.tracking_number_unique_identifier = track_details.at('TrackingNumberUniqueIdentifier').text if track_details.at('TrackingNumberUniqueIdentifier')
+        response.ship_timestamp = track_details.at('ShipTimestamp').text if track_details.at('ShipTimestamp')
+
+        events = document.xpath("//Events")        
+        
+        events.each do |event|
+          e = FedexTrackingEvent.new
+          tag_value(e, "Timestamp", event, "timestamp")
+          tag_value(e, "EventType", event, "event_type")
+          tag_value(e, "EventDescription", event, "event_description")          
+          tag_value(e, "ArrivalLocation", event, "arrival_location")                    
+          tag_value(e, "Address//City", event, "city")          
+          tag_value(e, "Address//PostalCode", event, "postal_code")          
+          tag_value(e, "Address//CountryCode", event, "country_code")          
+          tag_value(e, "Address//Residential", event, "residential")          
+                    
+          response.tracking_events << e
+        end        
+      end      
       
       def parse_quotes(response, document)
         rate_reply_details = document.xpath("//RateReplyDetails")   
@@ -185,11 +240,13 @@ module ActiveMerchant
         end                
       end            
       
-      def response_success(response, document)
-        highest = document.xpath("//HighestSeverity")
+      def response_success(response, document, xpath = "//HighestSeverity")        
+        highest = document.xpath(xpath)
         highest_text = highest.text
+        highest_text.strip!        
                 
-        a = %w{SUCCESS WARNING NOTE}
+        a = %w{SUCCESS WARNING NOTE success warning note}        
+        
         if a.include? highest_text
           response.success = true
         else

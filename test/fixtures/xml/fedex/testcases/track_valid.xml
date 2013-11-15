@@ -21,13 +21,14 @@
             <ns1:Intermediate>0</ns1:Intermediate>
             <ns1:Minor>0</ns1:Minor>
          </ns1:Version>
-         <ns1:SelectionDetails>
+         <ns1:SelectionDetails>            
             <ns1:CarrierCode>FDXE</ns1:CarrierCode>
             <ns1:PackageIdentifier>
                <ns1:Type>TRACKING_NUMBER_OR_DOORTAG</ns1:Type>
-               <ns1:Value>111111111111</ns1:Value>
+               <ns1:Value>578977864591</ns1:Value>
             </ns1:PackageIdentifier>
          </ns1:SelectionDetails>
+         <ns1:ProcessingOptions>INCLUDE_DETAILED_SCANS</ns1:ProcessingOptions>         
       </ns1:TrackRequest>
    </SOAP-ENV:Body>
 </SOAP-ENV:Envelope>

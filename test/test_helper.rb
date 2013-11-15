@@ -9,6 +9,7 @@ require 'test/unit'
 require 'active_shipping'
 require 'mocha/setup'
 require 'timecop'
+require 'awesome_print'
 
 XmlNode # trigger autorequire
 

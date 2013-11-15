@@ -49,7 +49,9 @@ module ActiveMerchant
       end
                 
       def to_xml
-        ERB.new(File.new(xml_template_path).read, nil,'%<>-').result(binding)
+        if xml_template_path
+          ERB.new(File.new(xml_template_path).read, nil,'%<>-').result(binding)
+        end
       end      
             
       private
