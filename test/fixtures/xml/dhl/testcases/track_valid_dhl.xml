@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<req:KnownTrackingRequest xmlns:req="http://www.dhl.com" 
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+            xsi:schemaLocation="http://www.dhl.com
+            TrackingRequestKnown.xsd">
+  <Request>
+    <ServiceHeader>
+      <SiteID>DHLMexico</SiteID>
+      <Password>hUv5E3nMjQz6</Password>
+    </ServiceHeader>
+  </Request>
+  <LanguageCode>en</LanguageCode>
+  <AWBNumber>8564385550</AWBNumber>
+  <LevelOfDetails>ALL_CHECK_POINTS</LevelOfDetails>
+</req:KnownTrackingRequest>

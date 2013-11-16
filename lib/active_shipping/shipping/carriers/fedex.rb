@@ -14,7 +14,7 @@ module ActiveMerchant
       
       attr_reader :key, :password, :accountNumber, :meterNumber          
 
-      #TEST_URL = 'https://gatewaybeta.fedex.com:443/xml'      
+      #TEST_URL = 'https://gatewaybeta.fedex.com:443/xml'cd      
       TEST_URL = 'https://wsbeta.fedex.com:443/web-services'            
       LIVE_URL = 'https://gateway.fedex.com:443/xml'
             

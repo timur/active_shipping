@@ -54,7 +54,28 @@ module ActiveMerchant
         resp.response = response_raw
         resp.request = last_request
         resp
-      end      
+      end  
+      
+      def tracking(options = {})
+        xml = ""
+        if options[:raw_xml]
+          xml = File.open(Dir.pwd + "/test/fixtures/xml/dhl/#{options[:raw_xml]}").read
+        else
+          pieces = options[:pieces]
+          request = options[:request]
+        
+          request.site_id = @options[:site_id]
+          request.password = @options[:password]        
+          xml = request.to_xml
+        end
+        
+        response_raw = commit(save_request(xml), (options[:test] || false))                     
+        resp = parse_tracking_response(Nokogiri::XML(response_raw))
+        
+        resp.response = response_raw
+        resp.request = last_request
+        resp
+      end          
 
       def parse_shipment_response(document)
         response = DhlShipmentResponse.new
@@ -63,6 +84,14 @@ module ActiveMerchant
         
         response
       end
+      
+      def parse_tracking_response(document)
+        response = DhlTrackingResponse.new
+        parse_tracking_status(response, document)
+        parse_tracking(response, document)
+        
+        response
+      end      
             
       def parse_quote_response(document)
         response = DhlQuoteResponse.new
@@ -111,6 +140,38 @@ module ActiveMerchant
           tag_value(response, "//Consignee//Contact//PhoneExtension", document, "contact_consignee_phoneext")                                                                                              
         end
         
+        def parse_tracking(response, document)
+          tag_value(response, "//ShipmentInfo/OriginServiceArea/ServiceAreaCode", document, "origin_service_area_code")
+          tag_value(response, "//ShipmentInfo/OriginServiceArea/Description", document, "origin_description")
+          tag_value(response, "//ShipmentInfo/DestinationServiceArea/ServiceAreaCode", document, "destination_service_area_code")
+          tag_value(response, "//ShipmentInfo/DestinationServiceArea/Description", document, "destination_description")
+          tag_value(response, "//ShipmentInfo/ShipperName", document, "shipper_name")
+          tag_value(response, "//ShipmentInfo/ShipperAccountNumber", document, "shipper_account_number")
+          tag_value(response, "//ShipmentInfo/ConsigneeName", document, "consignee_name")
+          tag_value(response, "//ShipmentInfo/ShipmentDate", document, "shipment_date")          
+          tag_value(response, "//ShipmentInfo/ShipmentDesc", document, "shipment_description")                    
+          tag_value(response, "//ShipmentInfo/Shipper/City", document, "shipper_city")                    
+          tag_value(response, "//ShipmentInfo/Shipper/CountryCode", document, "shipper_countrycode")                              
+          tag_value(response, "//ShipmentInfo/Consignee/City", document, "consignee_city")                    
+          tag_value(response, "//ShipmentInfo/Consignee/PostalCode", document, "consignee_postalcode")                              
+          tag_value(response, "//ShipmentInfo/Consignee/CountryCode", document, "consignee_countrycode")                                        
+          tag_value(response, "//ShipmentInfo/ShipperReference/ReferenceID", document, "shipper_referenceid")
+
+          events = document.xpath("//ShipmentEvent")          
+          
+          events.each do |event|
+             e = DhlTrackingEvent.new
+             tag_value_relative(e, "Date", event, "date")
+             tag_value_relative(e, "time", event, "time")
+             tag_value_relative(e, "ServiceEvent/EventCode", event, "event_code")          
+             tag_value_relative(e, "ServiceEvent/Description", event, "event_description")                    
+             tag_value_relative(e, "ServiceArea/ServiceAreaCode", event, "service_area_code")                    
+             tag_value_relative(e, "ServiceArea/Description", event, "service_area_description")                    
+                                       
+             response.tracking_events << e
+           end                                                                                                                                     
+        end        
+        
         def parse_quotes(response, document)
           quotes = document.xpath("//QtdShp")
           
@@ -147,6 +208,13 @@ module ActiveMerchant
             end
           end        
         end
+        
+        def parse_tracking_status(response, document)
+          status = document.xpath("//ActionStatus")          
+          if status && status.text == "success"          
+            response.success = true 
+          end
+        end        
         
         def parse_notes(response, document)
           notes = document.xpath("//Note")
@@ -202,6 +270,12 @@ module ActiveMerchant
           tag = document.xpath("//#{xml_tag}")          
           response.send("#{attribute}=", tag.text) if tag          
         end
+        
+        def tag_value_relative(object, xml_tag, document, attribute)
+          tag = document.xpath("#{xml_tag}")   
+          object.send("#{attribute}=", tag.text) if tag          
+        end
+        
     end
   end
 end
