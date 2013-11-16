@@ -5,7 +5,9 @@ module ActiveMerchant
 
     class Dhl < Carrier
       include ActiveMerchant::Shipping::DhlConstants
-      include ActiveMerchant::Shipping::Constants      
+      include ActiveMerchant::Shipping::Constants     
+      
+      attr_reader :site_id, :password
 
       self.retry_safe = true
 
