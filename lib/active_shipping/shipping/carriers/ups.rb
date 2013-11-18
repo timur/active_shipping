@@ -12,6 +12,8 @@ module ActiveMerchant
       cattr_reader :name
       @@name = "UPS"
       
+      attr_reader :user_id, :password, :access_license_number                
+      
       TEST_URL = 'https://wwwcie.ups.com'
       #https://wwwcie.ups.com/ups.app/xml/Track
       LIVE_URL = 'https://onlinetools.ups.com'
