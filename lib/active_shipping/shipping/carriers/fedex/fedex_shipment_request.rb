@@ -44,7 +44,7 @@ module ActiveMerchant
       attribute :recipient_countrycode, String # user input
       attribute :recipient_provincecode, String # user input           
 
-      attribute :package, FedexPackage
+      attribute :packages, FedexPackage
       attribute :package_count, Integer
       
       attribute :weight, Float                           
