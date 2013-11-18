@@ -31,7 +31,7 @@ module ActiveMerchant
           
           xml = request.to_xml
         end
-        response_raw = commit(UpsConstants::RESOURCES[:rates], save_request(xml), (options[:test] || false))             
+        response_raw = commit(UpsConstants::RESOURCES[:rates], save_request(xml), true)             
         resp = parse_quote_response(Nokogiri::XML(response_raw))
 
         resp.response = response_raw
@@ -54,7 +54,7 @@ module ActiveMerchant
           
           xml = request.to_xml
         end
-        response_raw = commit(UpsConstants::RESOURCES[:track], save_request(xml), (options[:test] || false))             
+        response_raw = commit(UpsConstants::RESOURCES[:track], save_request(xml), true)             
         resp = parse_tracking_response(Nokogiri::XML(response_raw))
         
         resp.response = response_raw
