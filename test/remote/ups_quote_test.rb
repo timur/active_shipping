@@ -8,7 +8,7 @@ class UPSTest < Test::Unit::TestCase
 
   def test_quote_raw_ups    
     ups = UPS.new(test: true)
-    response = ups.find_quotes(raw_xml: "testcases/request_test.xml")    
+    response = ups.find_quotes(raw_xml: "testcases/request_test.xml", test: true)    
     
     save_xml(response, "test_quote_raw_ups")
     assert_not_nil response
@@ -16,7 +16,7 @@ class UPSTest < Test::Unit::TestCase
 
   def test_quote_raw_ups_2    
     ups = UPS.new(test: true)
-    response = ups.find_quotes(raw_xml: "testcases/quote_raw.xml")    
+    response = ups.find_quotes(raw_xml: "testcases/quote_raw.xml", test: true)    
     
     save_xml(response, "test_quote_raw_ups_2")
     assert_not_nil response

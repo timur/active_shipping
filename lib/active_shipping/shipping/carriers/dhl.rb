@@ -18,80 +18,32 @@ module ActiveMerchant
       LIVE_URL = 'https://xmlpi-ea.dhl.com/XMLShippingServlet'      
       
       def find_quotes(options = {})
-        xml = ""
-        if options[:raw_xml]
-          xml = File.open(Dir.pwd + "/test/fixtures/xml/dhl/#{options[:raw_xml]}").read
-        else        
-          pieces = options[:pieces]
-          request = options[:request]
-          
-          request.site_id = @options[:site_id]
-          request.password = @options[:password]        
-          
-          xml = request.to_xml
-        end
-        response_raw = commit(save_request(xml), (options[:test] || false))             
-        resp = parse_quote_response(Nokogiri::XML(response_raw))
-        resp.response = response_raw
-        resp.request = last_request
-        resp
+        call_method(options, "parse_quote_response")
       end
       
       def shipment(options = {})
-        xml = ""
-        if options[:raw_xml]
-          xml = File.open(Dir.pwd + "/test/fixtures/xml/dhl/#{options[:raw_xml]}").read
-        else
-          pieces = options[:pieces]
-          request = options[:request]
-        
-          request.site_id = @options[:site_id]
-          request.password = @options[:password]        
-          xml = request.to_xml
-        end
-        
-        response_raw = commit(save_request(xml), (options[:test] || false))                     
-        resp = parse_shipment_response(Nokogiri::XML(response_raw))
-        
-        resp.response = response_raw
-        resp.request = last_request
-        resp
+        call_method(options, "parse_shipment_response")        
       end  
       
       def tracking(options = {})
-        xml = ""
-        if options[:raw_xml]
-          xml = File.open(Dir.pwd + "/test/fixtures/xml/dhl/#{options[:raw_xml]}").read
-        else
-          pieces = options[:pieces]
-          request = options[:request]
-        
-          request.site_id = @options[:site_id]
-          request.password = @options[:password]        
-          xml = request.to_xml
-        end
-        
-        response_raw = commit(save_request(xml), (options[:test] || false))                     
-        resp = parse_tracking_response(Nokogiri::XML(response_raw))
-        
-        resp.response = response_raw
-        resp.request = last_request
-        resp
-      end          
+        call_method(options, "parse_tracking_response")                
+      end    
+      
+      def book_pickup(options = {})
+        call_method(options, "parse_tracking_response")
+      end            
 
       def parse_shipment_response(document)
         response = DhlShipmentResponse.new
         parse_notes(response, document)
-        parse_shipment(response, document)
-        
+        parse_shipment(response, document)        
         response
       end
       
       def parse_tracking_response(document)
         response = DhlTrackingResponse.new
         parse_tracking_status(response, document)
-        parse_tracking(response, document)
-        
+        parse_tracking(response, document)        
         response
       end      
             
@@ -99,14 +51,33 @@ module ActiveMerchant
         response = DhlQuoteResponse.new
         response.success = parse_status(document)
         parse_notes(response, document)
-        parse_quotes(response, document)
-        
+        parse_quotes(response, document)        
         response
       end
 
       private
+        
+        def call_method(options, method)
+          xml = ""
+          if options[:raw_xml]
+            xml = File.open(Dir.pwd + "/test/fixtures/xml/dhl/#{options[:raw_xml]}").read
+          else
+            request = options[:request]        
+            request.site_id = @options[:site_id]
+            request.password = @options[:password]        
+            xml = request.to_xml
+          end
 
+          response_raw = commit(save_request(xml), (options[:test] || false))                     
+          resp = send(method, Nokogiri::XML(response_raw))
+
+          resp.response = response_raw
+          resp.request = last_request
+          resp          
+        end
+        
         def commit(request, test = false)
+          puts "TEST? #{test}"
           ssl_post(test ? TEST_URL : LIVE_URL, request.gsub("\n",''))
         end
         

@@ -1,0 +1,12 @@
+<AccessRequest>
+   <AccessLicenseNumber>BCBDB1BD667FDBFA</AccessLicenseNumber>
+   <UserId>svencrone</UserId>
+   <Password>Shipper7</Password>
+</AccessRequest>
+<TrackRequest>
+  <Request>
+    <RequestAction>Track</RequestAction>
+    <RequestOption>1</RequestOption>
+  </Request>
+  <TrackingNumber>1Z12345E0291980793</TrackingNumber>
+</TrackRequest>
