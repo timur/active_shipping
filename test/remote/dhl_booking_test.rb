@@ -13,7 +13,34 @@ class DhlBookingTest < Test::Unit::TestCase
     save_xml(response, "test_book_pickup_raw_dhl")
     assert_not_nil response
   end
-  
+
+  def test_cancel_raw    
+    dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6')
+    response = dhl.book_pickup(raw_xml: "testcases/test_cancel_pickup_valid_dhl.xml", test: true)    
+    
+    save_xml(response, "test_cancel_pickup_raw_dhl")
+    assert_not_nil response
+  end
+
+  def test_cancel
+    next_monday = 
+    dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6')    
+    
+    cancel = ActiveMerchant::Shipping::DhlCancelPickupRequest.new(
+      confirmation_number: 100642,
+      origin_area: "FMX",
+      requestor: "Joe",
+      reason: "001"
+    )
+    
+    response = dhl.cancel_pickup(test: true, request: cancel)   
+    
+    assert response != nil
+    
+    save_xml(response, "test_cancel_dhl")
+    assert_not_nil response
+  end  
+
   def test_booking
     next_monday = 
     dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6')    

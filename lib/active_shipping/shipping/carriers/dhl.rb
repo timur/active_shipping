@@ -31,7 +31,11 @@ module ActiveMerchant
       
       def book_pickup(options = {})
         call_method(options, "parse_book_pickup_response")
-      end            
+      end
+      
+      def cancel_pickup(options = {})
+        call_method(options, "parse_cancel_pickup_response")
+      end                  
 
       def parse_shipment_response(document)
         response = DhlShipmentResponse.new
@@ -57,10 +61,16 @@ module ActiveMerchant
       
       def parse_book_pickup_response(document)
         response = DhlBookPickupResponse.new
-        parse_book_pickup_status(response, document)
-        parse_book_pickup(response, document)        
+        parse_pickup_status(response, document)
+        parse_pickup(response, document)        
         response
-      end      
+      end
+      
+      def parse_cancel_pickup_response(document)
+        response = DhlCancelPickupResponse.new
+        parse_pickup_status(response, document)
+        response
+      end            
 
       private
         
@@ -151,10 +161,11 @@ module ActiveMerchant
            end                                                                                                                                     
         end  
         
-        def parse_book_pickup(response, document)
+        def parse_pickup(response, document)
           tag_value(response, "//ConfirmationNumber", document, "confirmation_number")
           tag_value(response, "//ReadyByTime", document, "ready_by_time")
           tag_value(response, "//NextPickupDate", document, "next_pickup_date")
+          tag_value(response, "//OriginSvcArea", document, "origin_area")          
           
           error_array = []
           errors = document.xpath("//Condition")          
@@ -211,7 +222,7 @@ module ActiveMerchant
           end
         end
         
-        def parse_book_pickup_status(response, document)
+        def parse_pickup_status(response, document)
           status = document.xpath("//Note/ActionNote")   
           if status && status.text.casecmp("success") == 0
             response.success = true 

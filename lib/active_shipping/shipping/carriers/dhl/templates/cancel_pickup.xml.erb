@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<req:CancelPickupRequest xmlns:req="http://www.dhl.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.dhl.com cancel-pickup-req.xsd">
+  <Request>
+    <ServiceHeader>
+      <SiteID><%= @site_id %></SiteID>
+      <Password><%= @password %></Password>
+    </ServiceHeader>
+  </Request>
+	<ConfirmationNumber><%= @confirmation_number %></ConfirmationNumber>
+	<% if @requestor %>
+	  <RequestorName><%= @requestor %></RequestorName>
+	<% end %>
+	<OriginSvcArea><%= @origin_area %></OriginSvcArea>	
+	<% if @reason %>
+	  <Reason><%= @reason %></Reason>
+	<% end %>
+</req:CancelPickupRequest>

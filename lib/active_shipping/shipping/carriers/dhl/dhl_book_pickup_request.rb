@@ -55,7 +55,7 @@ module ActiveMerchant
         def xml_template_path
           spec = Gem::Specification.find_by_name("active_shipping")
           gem_root = spec.gem_dir
-          gem_root + "/lib/active_shipping/shipping/carriers/dhl/templates/book_shipment.xml.erb"
+          gem_root + "/lib/active_shipping/shipping/carriers/dhl/templates/book_pickup.xml.erb"
         end
     end
   end

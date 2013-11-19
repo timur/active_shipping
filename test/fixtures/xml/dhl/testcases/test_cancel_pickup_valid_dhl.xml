@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<req:CancelPickupRequest xmlns:req="http://www.dhl.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.dhl.com cancel-pickup-req.xsd">
+  <Request>
+    <ServiceHeader>
+        <SiteID>DHLMexico</SiteID>
+        <Password>hUv5E3nMjQz6</Password>
+    </ServiceHeader>
+  </Request>
+	<ConfirmationNumber>100640</ConfirmationNumber>
+	<RequestorName>Rikhil</RequestorName>
+	<OriginSvcArea>FMX</OriginSvcArea>	
+	<Reason>001</Reason>
+</req:CancelPickupRequest>
