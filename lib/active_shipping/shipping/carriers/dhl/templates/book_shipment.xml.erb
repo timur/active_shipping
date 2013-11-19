@@ -12,12 +12,14 @@
         <AccountNumber><%= @account_number %></AccountNumber>
     </Requestor>
     <Place>
-        <LocationType><%= @location_type %></LocationType>
-        <% if @is_business_address? -%>
+        <LocationType><%= location_type %></LocationType>
+        <% if @is_business_address %>
           <CompanyName><%= @company %></CompanyName>
         <% end %>
         <Address1><%= @address %></Address1>
-        <PackageLocation><%= @packageLocation %></PackageLocation>
+        <% if @package_location %>
+          <PackageLocation><%= @package_location %></PackageLocation>
+        <% end %>
         <City><%= @city %></City>
         <CountryCode><%= @country %></CountryCode>
         <PostalCode><%= @postal_code %></PostalCode>
@@ -36,8 +38,8 @@
         <AccountNumber><%= @account_number %></AccountNumber>      
         <BillToAccountNumber><%= @account_number %></BillToAccountNumber>
         <Weight><%= @weight %></Weight>
-        <WeightUnit>KG</WeightUnit>
+        <WeightUnit>K</WeightUnit>
         <DoorTo>DD</DoorTo>
-        <DimensionUnit>CM</DimensionUnit>
+        <DimensionUnit>C</DimensionUnit>
     </ShipmentDetails> 
 </req:BookPickupRequest>

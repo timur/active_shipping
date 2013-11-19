@@ -10,6 +10,7 @@ require 'active_shipping'
 require 'mocha/setup'
 require 'timecop'
 require 'awesome_print'
+require 'date'
 
 XmlNode # trigger autorequire
 
@@ -25,6 +26,12 @@ module Test
 
       def all_fixtures
         @@fixtures ||= load_fixtures
+      end
+      
+      def date_of_next(day)
+        date  = Date.parse(day)
+        delta = date > Date.today ? 0 : 7
+        date + delta
       end
       
       def save_xml(response, name)

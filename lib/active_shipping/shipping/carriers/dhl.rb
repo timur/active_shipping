@@ -30,7 +30,7 @@ module ActiveMerchant
       end    
       
       def book_pickup(options = {})
-        call_method(options, "parse_tracking_response")
+        call_method(options, "parse_book_pickup_response")
       end            
 
       def parse_shipment_response(document)
@@ -54,6 +54,13 @@ module ActiveMerchant
         parse_quotes(response, document)        
         response
       end
+      
+      def parse_book_pickup_response(document)
+        response = DhlBookPickupResponse.new
+        parse_book_pickup_status(response, document)
+        parse_book_pickup(response, document)        
+        response
+      end      
 
       private
         
@@ -77,7 +84,6 @@ module ActiveMerchant
         end
         
         def commit(request, test = false)
-          puts "TEST? #{test}"
           ssl_post(test ? TEST_URL : LIVE_URL, request.gsub("\n",''))
         end
         
@@ -143,7 +149,23 @@ module ActiveMerchant
                                        
              response.tracking_events << e
            end                                                                                                                                     
-        end        
+        end  
+        
+        def parse_book_pickup(response, document)
+          tag_value(response, "//ConfirmationNumber", document, "confirmation_number")
+          tag_value(response, "//ReadyByTime", document, "ready_by_time")
+          tag_value(response, "//NextPickupDate", document, "next_pickup_date")
+          
+          error_array = []
+          errors = document.xpath("//Condition")          
+          
+          errors.each do |error|
+            tag = error.xpath("/ConditionData")
+            error_array << tag.text if tag
+          end                               
+          
+          response.error_messages = error_array                                                                                                      
+        end              
         
         def parse_quotes(response, document)
           quotes = document.xpath("//QtdShp")
@@ -187,7 +209,18 @@ module ActiveMerchant
           if status && status.text == "success"          
             response.success = true 
           end
-        end        
+        end
+        
+        def parse_book_pickup_status(response, document)
+          status = document.xpath("//Note/ActionNote")   
+          if status && status.text.casecmp("success") == 0
+            response.success = true 
+          end
+          status = document.xpath("//Status/ActionStatus")   
+          if status && status.text.casecmp("error") == 0
+            response.success = false 
+          end
+        end                
         
         def parse_notes(response, document)
           notes = document.xpath("//Note")

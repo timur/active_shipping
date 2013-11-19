@@ -18,7 +18,7 @@ module ActiveMerchant
       attribute :business, Boolean, default: false
       attribute :company, String                  
       attribute :address, String
-      attribute :packageLocation, String
+      attribute :package_location, String
       attribute :city, String
       attribute :country, String
       attribute :postal_code, String
@@ -36,13 +36,13 @@ module ActiveMerchant
         ERB.new(File.new(xml_template_path).read, nil,'%<>-').result(binding)
       end      
       
-      def is_business_address?
+      def is_business_address
         business
       end
       
       def location_type
         back = "R"
-        back = "B" if is_business_address?
+        back = "B" if is_business_address
         back
       end
             

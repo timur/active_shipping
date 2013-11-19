@@ -29,7 +29,13 @@ class FedExShipmentTest < Test::Unit::TestCase
     assert_not_nil response
   end
   
-  
+  def test_shipment_multiple_raw
+    fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
+    response = fedex.shipment(raw_xml: "testcases/test_multiple_raw.xml")     
+    save_xml(response, "test_shipment_multiple_raw")
+    assert_not_nil response
+  end
+    
   def test_shipment_declared_value_int
     package = ActiveMerchant::Shipping::FedexPackage.new(quantity: 1, height: 10, width: 10, length: 10, weight: 1.5)
     
@@ -63,6 +69,41 @@ class FedExShipmentTest < Test::Unit::TestCase
     assert response.success == true
     assert_not_nil response
   end
+  
+  def test_shipment_sequence
+    package = ActiveMerchant::Shipping::FedexPackage.new(quantity: 1, height: 10, width: 10, length: 10, weight: 1.5)
+    
+    shipment = ActiveMerchant::Shipping::FedexShipmentRequest.new(
+      service_type: "FEDEX_GROUND",      
+      shipper_countrycode: "US",
+      shipper_postalcode: "73301",
+      shipper_provincecode: "TX",      
+      shipper_city: "Austin",      
+      shipper_address_line: "Address Shipper",      
+      contact_shipper_fullname: "Hans Dampf",
+      contact_shipper_phonenumber: "12345",            
+      recipient_countrycode: "CA",        
+      recipient_postalcode: "V7C4V4",
+      recipient_city: "Richmond",     
+      recipient_address_line: "Address Recipient",  
+      recipient_provincecode: "BC",     
+      contact_recipient_fullname: "Hans Wurst",
+      contact_recipient_phonenumber: "12345",   
+      declared_currency: "USD",
+      declared_value: 430,   
+      sequence_number: "1",
+      package: package
+    )
+     
+    shipment.calculate_attributes
+    
+    fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
+    response = fedex.shipment(request: shipment)      
+    save_xml(response, "test_shipment_sequence")
+    assert response.notes.size == 1
+    assert response.success == true
+    assert_not_nil response
+  end  
   
   def test_shipment_insured_value
     package = ActiveMerchant::Shipping::FedexPackage.new(quantity: 1, height: 10, width: 10, length: 10, weight: 1.5)
