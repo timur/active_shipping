@@ -30,12 +30,16 @@ module ActiveMerchant
       end    
       
       def book_pickup(options = {})
-        call_method(options, "parse_book_pickup_response")
+        call_method(options, "parse_pickup_response")
       end
       
       def cancel_pickup(options = {})
         call_method(options, "parse_cancel_pickup_response")
-      end                  
+      end
+      
+      def modify_pickup(options = {})
+        call_method(options, "parse_pickup_response")
+      end                        
 
       def parse_shipment_response(document)
         response = DhlShipmentResponse.new
@@ -59,7 +63,7 @@ module ActiveMerchant
         response
       end
       
-      def parse_book_pickup_response(document)
+      def parse_pickup_response(document)
         response = DhlBookPickupResponse.new
         parse_pickup_status(response, document)
         parse_pickup(response, document)        

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<req:ModifyPickupRequest xmlns:req="http://www.dhl.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dhl.com
+ book-pickup-req.xsd">
+    <Request>
+      <ServiceHeader>
+        <SiteID>DHLMexico</SiteID>
+        <Password>hUv5E3nMjQz6</Password>
+      </ServiceHeader>
+    </Request>
+    <ConfirmationNumber>572467</ConfirmationNumber>    
+    <Requestor>
+      <AccountType>D</AccountType>
+      <AccountNumber>980526857</AccountNumber>
+    </Requestor>
+    <Place>
+      <LocationType>B</LocationType>
+      <CompanyName>String</CompanyName>
+      <Address1>String</Address1>
+      <Address2>norfolk+st</Address2>
+      <PackageLocation>String</PackageLocation>
+      <City>String</City>
+      <CountryCode>MX</CountryCode>
+      <PostalCode>11510</PostalCode>
+    </Place>
+    <Pickup>
+      <PickupDate>2013-11-26</PickupDate>
+      <ReadyByTime>09:00</ReadyByTime>
+      <CloseTime>12:00</CloseTime>
+		  <Pieces>1</Pieces>
+ 	    <weight>
+          <Weight>10</Weight>
+          <WeightUnit>L</WeightUnit>
+      </weight>
+    </Pickup>
+    <PickupContact>
+      <PersonName>Subhayu</PersonName>
+      <Phone>4801313131</Phone>
+      <PhoneExtention>5768</PhoneExtention>
+    </PickupContact>
+	  <OriginSvcArea>JFK</OriginSvcArea>
+</req:ModifyPickupRequest>
