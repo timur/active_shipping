@@ -37,7 +37,9 @@
         <AccountType>D</AccountType>
         <AccountNumber><%= @account_number %></AccountNumber>      
         <BillToAccountNumber><%= @account_number %></BillToAccountNumber>
-        <Weight><%= @weight %></Weight>
+        <% if @weight %>
+          <Weight><%= @weight %></Weight>
+        <% end %>
         <WeightUnit>K</WeightUnit>
         <DoorTo>DD</DoorTo>
         <DimensionUnit>C</DimensionUnit>
