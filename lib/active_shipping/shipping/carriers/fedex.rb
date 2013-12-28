@@ -52,20 +52,20 @@ module ActiveMerchant
         else
           request = options[:request]
 
-          debugger
           request.key = @options[:key]
           request.password = @options[:password]        
           request.accountNumber = @options[:accountNumber]        
           request.meterNumber = @options[:meterNumber]                        
-          
+
           xml = request.to_xml
         end        
-
+        
         response_raw = commit(save_request(xml), (@options[:test] || false))             
 
         resp = parse_shipment_response(Nokogiri::XML(response_raw))
         resp.response = response_raw
         resp.request = last_request
+        
         resp        
       end
       

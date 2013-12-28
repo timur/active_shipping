@@ -55,11 +55,13 @@ module ActiveMerchant
                              
       def calculate_attributes
         calculate_package
-        unless packaging_type
+        unless self.packaging_type
           self.packaging_type = "YOUR_PACKAGING"
         else
-          if packaging_type == "Document"
+          if self.packaging_type == "Document"
             self.packaging_type = "FEDEX_ENVELOPE"
+          else
+            self.packaging_type = "YOUR_PACKAGING"
           end
         end
                 
