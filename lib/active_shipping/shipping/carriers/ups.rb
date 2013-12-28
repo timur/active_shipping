@@ -50,8 +50,6 @@ module ActiveMerchant
           request.user_id = @options[:user_id]
           request.password = @options[:password]  
           
-          puts "WHAT IS #{options[:test]}"
-          
           xml = request.to_xml
         end
         response_raw = commit(UpsConstants::RESOURCES[:track], save_request(xml), true)             
@@ -171,7 +169,7 @@ module ActiveMerchant
         end                   
         
         def commit(action, request, test = false)
-          puts "URL #{test ? TEST_URL : LIVE_URL}/#{action}"
+          #puts "URL #{test ? TEST_URL : LIVE_URL}/#{action}"
           ssl_post("#{test ? TEST_URL : LIVE_URL}/#{action}", request)
         end
         

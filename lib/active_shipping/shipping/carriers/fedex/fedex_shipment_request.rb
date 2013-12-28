@@ -6,6 +6,8 @@ module ActiveMerchant
     
     class FedexShipmentRequest
       include Virtus.model
+      include ActiveModel::Validations    
+            
       include ActiveMerchant::Shipping::Constants                       
       
       attribute :key, String

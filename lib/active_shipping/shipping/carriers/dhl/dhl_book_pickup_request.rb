@@ -23,6 +23,8 @@ module ActiveMerchant
       attribute :country, String
       attribute :postal_code, String
       
+      attribute :awb_number, String      
+      
       attribute :pickup_date, Date     
       attribute :ready_by_time, String
       attribute :close_time, String     

@@ -52,6 +52,7 @@ module ActiveMerchant
         else
           request = options[:request]
 
+          debugger
           request.key = @options[:key]
           request.password = @options[:password]        
           request.accountNumber = @options[:accountNumber]        
@@ -96,7 +97,11 @@ module ActiveMerchant
       end      
 
       def commit(request, test = true)
-        res = ssl_post(test ? TEST_URL : LIVE_URL, request.gsub("\n",''))              
+        res = nil
+        begin
+          res = ssl_post(test ? TEST_URL : LIVE_URL, request.gsub("\n",''))                        
+        rescue Exception => e
+        end
         res
       end
       

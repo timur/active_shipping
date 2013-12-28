@@ -17,7 +17,6 @@ class ResponseQuoteTest < Test::Unit::TestCase
       assert message.class == ActiveMerchant::Shipping::DhlNote
     end
     
-    puts response.success
     assert response.notes[0].code == "3024"
     assert response.notes[0].data == "Postcode format wrong."    
     #assert response.success == true

@@ -76,7 +76,7 @@ class DhlBookingTest < Test::Unit::TestCase
     save_xml(response, "test_book_pickup_dhl")
     assert_not_nil response
   end
-  
+    
   def test_modify
     next_monday = 
     dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6')    

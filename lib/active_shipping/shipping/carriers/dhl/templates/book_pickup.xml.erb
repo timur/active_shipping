@@ -36,11 +36,14 @@
     <ShipmentDetails>
         <AccountType>D</AccountType>
         <AccountNumber><%= @account_number %></AccountNumber>      
-        <BillToAccountNumber><%= @account_number %></BillToAccountNumber>
+        <BillToAccountNumber><%= @account_number %></BillToAccountNumber>     
+        <% if @awb_number %>           
+          <AWBNumber><%= @awb_number %></AWBNumber>
+        <% end %>
         <% if @weight %>
           <Weight><%= @weight %></Weight>
+          <WeightUnit>K</WeightUnit>
         <% end %>
-        <WeightUnit>K</WeightUnit>
         <DoorTo>DD</DoorTo>
         <DimensionUnit>C</DimensionUnit>
     </ShipmentDetails> 
