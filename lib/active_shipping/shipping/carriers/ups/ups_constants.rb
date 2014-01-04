@@ -5,7 +5,8 @@ module ActiveMerchant
       
       RESOURCES = {
         :rates => 'ups.app/xml/Rate',
-        :track => 'ups.app/xml/Track'
+        :track => 'ups.app/xml/Track',
+        :ship_confirm => 'ups.app/xml/ShipConfirm'        
       }
       
       DAILY_PICKUP = "01"

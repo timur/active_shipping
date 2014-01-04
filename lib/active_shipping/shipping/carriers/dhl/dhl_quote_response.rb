@@ -54,7 +54,7 @@ module ActiveMerchant
       def calculate
         self.surcharge = 0
         extra_charges.each do |extra|
-          self.surcharge += extra.charge_value
+          self.surcharge += extra.charge_value if extra && extra.charge_value
         end
         self.base_charge = self.weight_charge
         

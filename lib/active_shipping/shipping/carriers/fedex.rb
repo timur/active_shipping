@@ -153,7 +153,13 @@ module ActiveMerchant
 
       def parse_shipment(response, document)
         tracking_ids = document.xpath("//TrackingIds")   
+        master_id = document.xpath("//MasterTrackingId")
+        
         response.trackingnumber = tracking_ids.at('TrackingNumber').text if tracking_ids.at('TrackingNumber')
+
+        response.master_trackingnumber = master_id.at('TrackingNumber').text if master_id.at('TrackingNumber')                
+        response.form_id = master_id.at('FormId').text if master_id.at('FormId')        
+        response.tracking_id_type = master_id.at('TrackingIdType').text if master_id.at('TrackingIdType')                
         
         parts = document.xpath("//Label//Parts")   
         response.label = parts.at('Image') if parts.at('Image')

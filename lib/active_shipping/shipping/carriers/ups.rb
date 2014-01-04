@@ -60,6 +60,27 @@ module ActiveMerchant
         resp
       end      
 
+      def ship_confirm(options = {})
+        xml = ""
+        if options[:raw_xml]
+          xml = File.open(Dir.pwd + "/test/fixtures/xml/ups/#{options[:raw_xml]}").read
+        else        
+          request = options[:request]
+          
+          request.access_license_number = @options[:access_license_number]
+          request.user_id = @options[:user_id]
+          request.password = @options[:password]  
+          
+          xml = request.to_xml
+        end
+        response_raw = commit(UpsConstants::RESOURCES[:ship_confirm], save_request(xml), true)             
+        #TODO
+        resp = parse_tracking_response(Nokogiri::XML(response_raw))
+        
+        resp.response = response_raw
+        resp.request = last_request
+        resp
+      end
 
       def parse_quote_response(document)
         response = UpsQuoteResponse.new

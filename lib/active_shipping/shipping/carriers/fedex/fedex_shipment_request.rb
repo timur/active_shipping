@@ -44,14 +44,20 @@ module ActiveMerchant
       attribute :recipient_city, String # user input                                 
       attribute :recipient_postalcode, String # user input                           
       attribute :recipient_countrycode, String # user input
-      attribute :recipient_provincecode, String # user input           
+      attribute :recipient_provincecode, String # user input     
       
-      attribute :sequence_number, String      
+      attribute :first_package, Boolean, default: false # user input                       
+      
+      attribute :sequence_number, String  
+      attribute :master_tracking_id, String            
+      attribute :tracking_id_type, String                  
+      attribute :form_id, String                        
 
       attribute :package, FedexPackage
       attribute :package_count, Integer
       
-      attribute :weight, Float                           
+      attribute :weight, Float
+      attribute :total_weight, Float                                 
                              
       def calculate_attributes
         calculate_package
@@ -63,11 +69,7 @@ module ActiveMerchant
           else
             self.packaging_type = "YOUR_PACKAGING"
           end
-        end
-                
-        if shipper_countrycode
-          #self.preferred_currency = CURRENCY_CODES[shipper_countrycode]
-        end
+        end                
       end
                 
       def to_xml

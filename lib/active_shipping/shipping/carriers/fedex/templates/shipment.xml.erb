@@ -27,6 +27,22 @@
         <DropoffType>REGULAR_PICKUP</DropoffType>
         <ServiceType><%= @service_type %></ServiceType>                
         <PackagingType><%= @packaging_type %></PackagingType>
+
+        <% if @master_tracking_id %>
+          <MasterTrackingId>
+            <TrackingIdType><%= @tracking_id_type %></TrackingIdType>
+            <FormId><%= @form_id %></FormId>
+            <TrackingNumber><%= @master_tracking_id %></TrackingNumber>
+          </MasterTrackingId>    
+        <% end %>    
+        
+        <% if @first_package && @total_weight %>
+          <TotalWeight>
+            <Units>KG</Units>
+            <Value><%= @total_weight %></Value>
+          </TotalWeight>        
+        <% end %>                
+        
         <% if @preferred_currency %>
           <PreferredCurrency><%= @preferred_currency %></PreferredCurrency>
         <% end %>
@@ -128,7 +144,7 @@
             <% if @sequence_number %>                             
               <SequenceNumber><%= @sequence_number %></SequenceNumber>
             <% end %>
-            <GroupPackageCount><%= @package.quantity %></GroupPackageCount>
+            <GroupPackageCount>1</GroupPackageCount>
             <% if @insured_value && @insured_currency %>            
               <InsuredValue>
                 <Currency><%= @insured_currency %></Currency>

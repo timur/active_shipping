@@ -1,0 +1,82 @@
+<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns='http://fedex.com/ws/ship/v13'>
+  <soapenv:Body>
+    <ProcessShipmentRequest>
+      <WebAuthenticationDetail>
+        <UserCredential>
+          <Key>rscqm75MLampLUuV</Key>
+          <Password>8rTZHQ6vbyOsGOgtwMXrZ1kIU</Password>
+        </UserCredential>
+      </WebAuthenticationDetail>
+      <ClientDetail>
+        <AccountNumber>510087267</AccountNumber>
+        <MeterNumber>118511895</MeterNumber>
+      </ClientDetail>
+      <Version>
+        <ServiceId>ship</ServiceId>
+        <Major>13</Major>
+        <Intermediate>0</Intermediate>
+        <Minor>0</Minor>
+      </Version>
+      <RequestedShipment>
+        <ShipTimestamp>2013-11-18T15:16:22.13Z</ShipTimestamp>
+        <DropoffType>REGULAR_PICKUP</DropoffType>
+        <ServiceType>STANDARD_OVERNIGHT</ServiceType>
+        <PackagingType>YOUR_PACKAGING</PackagingType>
+        <TotalWeight>
+          <Units>KG</Units>
+          <Value>2</Value>
+        </TotalWeight>        
+        <Shipper>
+          <Contact>
+            <PersonName>Hans Dampf</PersonName>
+            <PhoneNumber>12345</PhoneNumber>
+          </Contact>
+          <Address>
+            <StreetLines>Address Recipient</StreetLines>
+            <City>Mex City</City>
+            <PostalCode>16034</PostalCode>
+            <CountryCode>MX</CountryCode>
+            <Residential>false</Residential>
+          </Address>
+        </Shipper>
+        <Recipient>
+          <Contact>
+            <PersonName>Hans Wurst</PersonName>
+            <PhoneNumber>12345</PhoneNumber>
+          </Contact>
+          <Address>
+            <StreetLines>Address Recipient</StreetLines>
+            <City>Mex City</City>
+            <PostalCode>16034</PostalCode>
+            <CountryCode>MX</CountryCode>
+            <Residential>false</Residential>
+          </Address>
+        </Recipient>
+        <ShippingChargesPayment>
+          <PaymentType>SENDER</PaymentType>
+          <Payor>
+            <ResponsibleParty>
+              <AccountNumber>510087267</AccountNumber>
+              <Contact/>
+            </ResponsibleParty>
+          </Payor>
+        </ShippingChargesPayment>
+        <LabelSpecification>
+          <LabelFormatType>COMMON2D</LabelFormatType>
+          <ImageType>PDF</ImageType>
+          <LabelStockType>PAPER_LETTER</LabelStockType>
+        </LabelSpecification>
+        <RateRequestTypes>ACCOUNT</RateRequestTypes>
+        <PackageCount>3</PackageCount>
+        <RequestedPackageLineItems>
+          <SequenceNumber>1</SequenceNumber>
+          <GroupPackageCount>1</GroupPackageCount>
+          <Weight>
+            <Units>KG</Units>
+            <Value>2</Value>
+          </Weight>
+        </RequestedPackageLineItems>
+      </RequestedShipment>
+    </ProcessShipmentRequest>
+  </soapenv:Body>
+</soapenv:Envelope>

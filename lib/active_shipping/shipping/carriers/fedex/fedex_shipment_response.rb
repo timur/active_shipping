@@ -14,6 +14,9 @@ module ActiveMerchant
       attribute :response, String      
       attribute :label, String
       attribute :trackingnumber, String                  
+      attribute :master_trackingnumber, String                        
+      attribute :tracking_id_type, String                              
+      attribute :form_id, String                                    
       
     end
   end

@@ -40,10 +40,48 @@ class FedExShipmentTest < Test::Unit::TestCase
     assert_not_nil response
   end
   
+  def test_shipment_mexico_multiple
+    package = ActiveMerchant::Shipping::FedexPackage.new(quantity: 3, height: 10, width: 10, length: 10, weight: 1.5)
+    
+    shipment = ActiveMerchant::Shipping::FedexShipmentRequest.new(
+      service_type: "STANDARD_OVERNIGHT",      
+      shipper_countrycode: "MX",
+      shipper_postalcode: "11510",
+      recipient_countrycode: "MX",        
+      recipient_postalcode: "11510",
+      contact_shipper_fullname: "John Shipper",
+      contact_recipient_fullname: "Klaus Receiver",
+      shipper_countrycode: "MX",
+      shipper_postalcode: "11510",
+      shipper_city: "Mex City",      
+      shipper_address_line: "Address Shipper",      
+      contact_shipper_phonenumber: "12345",            
+      recipient_countrycode: "MX",      
+      sequence_number: "1",  
+      recipient_postalcode: "16034",
+      recipient_city: "Mex City",     
+      recipient_address_line: "Address Recipient",  
+      contact_recipient_phonenumber: "12345",         
+      packaging_type: "Package",
+      first_package: true,
+      total_weight: 3.5,
+      package: package       
+    )
+     
+    shipment.calculate_attributes
+    
+    fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
+    response = fedex.shipment(request: shipment)     
+    save_xml(response, "test_shipment_mexico_multiple")
+    assert response.success == true
+    assert response.master_trackingnumber != ""    
+    assert_not_nil response
+  end  
+  
   def test_shipment_multiple_raw
     fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
-    response = fedex.shipment(raw_xml: "testcases/test_multiple_raw.xml")     
-    save_xml(response, "test_shipment_multiple_raw")
+    response = fedex.shipment(raw_xml: "testcases/test_multiple_raw_mex.xml")     
+    save_xml(response, "test_shipment_multiple_raw_mex")
     assert_not_nil response
   end
     
