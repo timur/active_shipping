@@ -36,7 +36,7 @@
           </MasterTrackingId>    
         <% end %>    
         
-        <% if @first_package && @total_weight %>
+        <% if @total_weight %>
           <TotalWeight>
             <Units>KG</Units>
             <Value><%= @total_weight %></Value>
@@ -138,7 +138,24 @@
           <LabelStockType>PAPER_7X4.75</LabelStockType>
         </LabelSpecification>                               
         <RateRequestTypes>ACCOUNT</RateRequestTypes>
-        <PackageCount><%= @package_count %></PackageCount>
+        <PackageCount><%= @package_count %></PackageCount> 
+        
+        <% if @envelope %>
+          <RequestedPackageLineItems>   
+            <GroupPackageCount>1</GroupPackageCount>
+            <% if @insured_value && @insured_currency %>            
+              <InsuredValue>
+                <Currency><%= @insured_currency %></Currency>
+                <Amount><%= @insured_value %></Amount>
+              </InsuredValue>                         
+            <% end %>              
+            <Weight>
+              <Units>KG</Units>
+              <Value><%= @document_weight -%></Value>
+            </Weight>
+          </RequestedPackageLineItems>  
+        <% end -%>                                  
+              
         <% if @package && @package_count > 0 %>
           <RequestedPackageLineItems>   
             <% if @sequence_number %>                             

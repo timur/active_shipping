@@ -40,6 +40,38 @@ class FedExShipmentTest < Test::Unit::TestCase
     assert_not_nil response
   end
   
+  def test_shipment_mexico_document
+    shipment = ActiveMerchant::Shipping::FedexShipmentRequest.new(
+      service_type: "STANDARD_OVERNIGHT",      
+      shipper_countrycode: "MX",
+      shipper_postalcode: "11510",
+      recipient_countrycode: "MX",        
+      recipient_postalcode: "11510",
+      contact_shipper_fullname: "John Shipper",
+      contact_recipient_fullname: "Klaus Receiver",
+      shipper_countrycode: "MX",
+      shipper_postalcode: "11510",
+      shipper_city: "Mex City",      
+      shipper_address_line: "Address Shipper",      
+      contact_shipper_phonenumber: "12345",            
+      recipient_countrycode: "MX",        
+      recipient_postalcode: "16034",
+      recipient_city: "Mex City",     
+      recipient_address_line: "Address Recipient",  
+      contact_recipient_phonenumber: "12345",         
+      envelope: true,
+      document_weight: 0.4
+    )
+     
+    shipment.calculate_attributes
+    
+    fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
+    response = fedex.shipment(request: shipment)     
+    save_xml(response, "test_shipment_mexico_document")
+    assert response.success == true
+    assert_not_nil response
+  end  
+  
   def test_shipment_mexico_multiple
     package = ActiveMerchant::Shipping::FedexPackage.new(quantity: 3, height: 10, width: 10, length: 10, weight: 1.5)
     

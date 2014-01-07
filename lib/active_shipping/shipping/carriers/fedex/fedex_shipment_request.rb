@@ -56,20 +56,20 @@ module ActiveMerchant
       attribute :package, FedexPackage
       attribute :package_count, Integer
       
+      attribute :envelope, Boolean, default: false            
+      
       attribute :weight, Float
-      attribute :total_weight, Float                                 
+      attribute :total_weight, Float                  
+      attribute :document_weight, Float               
                              
       def calculate_attributes
-        calculate_package
-        unless self.packaging_type
+        if envelope
+          self.package_count = 1
+        end
+        
+        unless packaging_type
           self.packaging_type = "YOUR_PACKAGING"
-        else
-          if self.packaging_type == "Document"
-            self.packaging_type = "FEDEX_ENVELOPE"
-          else
-            self.packaging_type = "YOUR_PACKAGING"
-          end
-        end                
+        end                        
       end
                 
       def to_xml
@@ -78,21 +78,6 @@ module ActiveMerchant
             
       private
       
-        def calculate_package
-          if package
-            number_packages, weight = 0, 0
-            if package.quantity
-              number_packages += package.quantity 
-              weight += package.weight * package.quantity if package.weight
-            else
-              number_packages += 1
-              weight += package.weight * 1 if package.weight
-            end            
-            self.weight = weight
-            self.package_count = number_packages
-          end
-        end
-        
         def xml_template_path
           spec = Gem::Specification.find_by_name("active_shipping")
           gem_root = spec.gem_dir
