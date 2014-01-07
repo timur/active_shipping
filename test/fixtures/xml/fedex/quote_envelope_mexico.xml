@@ -1,0 +1,76 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v13="http://fedex.com/ws/rate/v13">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <v13:RateRequest>
+         <v13:WebAuthenticationDetail>
+            <v13:UserCredential>
+               <v13:Key>rscqm75MLampLUuV</v13:Key>
+               <v13:Password>8rTZHQ6vbyOsGOgtwMXrZ1kIU</v13:Password>
+            </v13:UserCredential>
+         </v13:WebAuthenticationDetail>
+         <v13:ClientDetail>
+            <v13:AccountNumber>510087267</v13:AccountNumber>
+            <v13:MeterNumber>118511895</v13:MeterNumber>
+         </v13:ClientDetail>
+         <v13:TransactionDetail>
+            <v13:CustomerTransactionId>PRIORITY_OVERNIGHT</v13:CustomerTransactionId>
+         </v13:TransactionDetail>
+         <v13:Version>
+            <v13:ServiceId>crs</v13:ServiceId>
+            <v13:Major>13</v13:Major>
+            <v13:Intermediate>0</v13:Intermediate>
+            <v13:Minor>0</v13:Minor>
+         </v13:Version>
+         <v13:RequestedShipment>
+            <v13:ShipTimestamp>2010-10-18T13:00:00-06:00</v13:ShipTimestamp>
+            <v13:DropoffType>REGULAR_PICKUP</v13:DropoffType>
+            <v13:PackagingType>YOUR_PACKAGING</v13:PackagingType>
+            <v13:TotalWeight>
+               <v13:Units>KG</v13:Units>
+               <v13:Value>0.1</v13:Value>
+            </v13:TotalWeight>
+            <v13:Shipper>
+               <v13:AccountNumber/>
+               <v13:Contact>
+                  <v13:PersonName>ROHIT BORSE</v13:PersonName>
+                  <v13:CompanyName>SYNTEL INTERNATIONAL</v13:CompanyName>
+               </v13:Contact>
+               <v13:Address>
+                  <v13:City>ETOBICOKE</v13:City>
+                  <v13:PostalCode>11510</v13:PostalCode>
+                  <v13:CountryCode>MX</v13:CountryCode>
+                  <v13:Residential>1</v13:Residential>
+               </v13:Address>
+            </v13:Shipper>
+            <v13:Recipient>
+               <v13:AccountNumber/>
+               <v13:Contact>
+                  <v13:PersonName>DEOYANEE BHADANE</v13:PersonName>
+                  <v13:CompanyName>SYNTEL INTERNATIONAL</v13:CompanyName>
+               </v13:Contact>
+               <v13:Address>
+                  <v13:City>ETOBICOKE</v13:City>
+                  <v13:PostalCode>11510</v13:PostalCode>
+                  <v13:CountryCode>MX</v13:CountryCode>
+                  <v13:Residential>1</v13:Residential>
+               </v13:Address>
+            </v13:Recipient>
+            <v13:RateRequestTypes>ACCOUNT</v13:RateRequestTypes>
+            <v13:PackageCount>1</v13:PackageCount>
+            <v13:RequestedPackageLineItems>
+               <v13:SequenceNumber>1</v13:SequenceNumber>
+               <v13:GroupPackageCount>1</v13:GroupPackageCount>
+               <v13:Weight>
+                  <v13:Units>KG</v13:Units>
+                  <v13:Value>0.1</v13:Value>
+               </v13:Weight>
+               <v13:PhysicalPackaging>ENVELOPE</v13:PhysicalPackaging>
+               <v13:CustomerReferences>
+                  <v13:CustomerReferenceType>CUSTOMER_REFERENCE</v13:CustomerReferenceType>
+                  <v13:Value>DRB0705</v13:Value>
+               </v13:CustomerReferences>
+            </v13:RequestedPackageLineItems>
+         </v13:RequestedShipment>
+      </v13:RateRequest>
+   </soapenv:Body>
+</soapenv:Envelope>

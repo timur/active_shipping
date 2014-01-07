@@ -83,7 +83,44 @@ class FedExQuoteTest < Test::Unit::TestCase
     
     save_xml(response, "test_quote_static")
     assert_not_nil response
-  end    
+  end
+  
+  def test_quote_envelope 
+    fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
+    response = fedex.find_quotes(raw_xml: "request1.xml")    
+    
+    save_xml(response, "test_quote_envelope")
+    assert_not_nil response
+  end      
+
+  def test_quote_envelope_mexico_static
+    fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
+    response = fedex.find_quotes(raw_xml: "quote_envelope_mexico.xml")    
+    
+    save_xml(response, "test_quote_envelope_mexico_static")
+    assert_not_nil response
+  end 
+  
+  def test_quote_envelope_mexico
+    quote = ActiveMerchant::Shipping::FedexQuoteRequest.new(
+      shipper_countrycode: "MX",
+      shipper_postalcode: "11510",
+      recipient_countrycode: "MX",        
+      recipient_postalcode: "11510",
+      document_weight: 0.5,
+      envelope: true
+    )
+     
+    quote.calculate_attributes
+        
+    fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
+    response = fedex.find_quotes(request: quote)    
+    
+    save_xml(response, "test_quote_envelope_mexico")
+    assert response.success == true
+
+    assert_not_nil response
+  end       
 
   def test_quote_insured_document_raw_xml 
     fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)

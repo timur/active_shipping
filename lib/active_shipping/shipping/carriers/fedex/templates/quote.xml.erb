@@ -45,33 +45,47 @@
             <CountryCode><%= @recipient_countrycode %></CountryCode>
           </Address>
         </Recipient>
-        <RateRequestTypes>LIST</RateRequestTypes>
-        <PackageCount><%= @package_count %></PackageCount>
-        <% if @packages && @package_count > 0 %>
-          <% @packages.each do |package| -%>
-            <RequestedPackageLineItems>                    
-              <GroupPackageCount><%= package.quantity %></GroupPackageCount>
-              <% if @insured_value && @insured_currency %>            
-                <InsuredValue>
-                  <Currency><%= @insured_currency %></Currency>
-                  <Amount><%= @insured_value %></Amount>
-                </InsuredValue>                         
-              <% end %>              
-              <Weight>
-                <Units>KG</Units>
-                <Value><%= package.weight -%></Value>
-              </Weight>
-              <% if @packaging_type == "YOUR_PACKAGING "%>
-                <Dimensions>
-                  <Length><%= package.length -%></Length>
-                  <Width><%= package.width -%></Width>
-                  <Height><%= package.height -%></Height>
-                  <Units>CM</Units>
-                </Dimensions>            
-              <% end -%>              
-            </RequestedPackageLineItems>
-          <% end -%>          
-        <% end -%>                                  
+        <% if @envelope %>
+          <RateRequestTypes>ACCOUNT</RateRequestTypes>
+          <PackageCount>1</PackageCount>        
+          <RequestedPackageLineItems>
+            <SequenceNumber>1</SequenceNumber>              
+            <GroupPackageCount>1</GroupPackageCount>  
+             <Weight>
+               <Units>KG</Units>
+               <Value><%= @document_weight -%></Value>
+             </Weight>                            
+             <PhysicalPackaging>ENVELOPE</PhysicalPackaging>
+          </RequestedPackageLineItems>        
+        <% else %>        
+          <RateRequestTypes>LIST</RateRequestTypes>
+          <PackageCount><%= @package_count %></PackageCount>
+          <% if @packages && @package_count > 0 %>
+            <% @packages.each do |package| -%>
+              <RequestedPackageLineItems>                    
+                <GroupPackageCount><%= package.quantity %></GroupPackageCount>
+                <% if @insured_value && @insured_currency %>            
+                  <InsuredValue>
+                    <Currency><%= @insured_currency %></Currency>
+                    <Amount><%= @insured_value %></Amount>
+                  </InsuredValue>                         
+                <% end %>              
+                <Weight>
+                  <Units>KG</Units>
+                  <Value><%= package.weight -%></Value>
+                </Weight>
+                <% if @packaging_type == "YOUR_PACKAGING "%>
+                  <Dimensions>
+                    <Length><%= package.length -%></Length>
+                    <Width><%= package.width -%></Width>
+                    <Height><%= package.height -%></Height>
+                    <Units>CM</Units>
+                  </Dimensions>            
+                <% end -%>                              
+              </RequestedPackageLineItems>
+            <% end -%>          
+          <% end -%>
+        <% end -%>                                            
       </RequestedShipment>
     </RateRequest>
   </soapenv:Body>
