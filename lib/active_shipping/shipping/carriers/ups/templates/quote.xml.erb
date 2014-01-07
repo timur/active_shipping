@@ -20,6 +20,26 @@
       <% if @package_type == UpsConstants::DOCUMENT %>
         <DocumentsOnly>true</DocumentsOnly>
       <% end %>
+      
+      <% if @declared_value || @insured_value %>      
+        <PackageServiceOptions>
+          <% if @declared_value %>      
+            <DeclaredValue>
+              <CurrencyCode><%= @declared_currency %></CurrencyCode>
+              <MonetaryValue><%= @declared_value %></MonetaryValue>
+            </DeclaredValue>      
+          <% end %>
+          <% if @insured_value %>      
+            <Insurance>
+              <BasicFlexibleParcelIndicator>
+                <CurrencyCode><%= @insured_currency %></CurrencyCode>
+                <MonetaryValue><%= @insured_value %></MonetaryValue>
+              </BasicFlexibleParcelIndicator>     
+            </Insurance>
+          <% end %>                
+        </PackageServiceOptions>
+      <% end %>
+            
       <Shipper>
          <% if @shipper_number %>
            <ShipperNumber><%= @shipper_number %></ShipperNumber>

@@ -52,6 +52,90 @@ class UPSTest < Test::Unit::TestCase
     assert_not_nil response
   end
   
+  def test_quote_mexico_usa_ups_declared
+    packages = []
+    packages << ActiveMerchant::Shipping::UpsPackage.new(height: 10, width: 10, length: 10, weight: 1.5)
+    
+    quote = ActiveMerchant::Shipping::UpsQuoteRequest.new(
+      origin_country_code: "MX",
+      destination_country_code: "US", 
+      origin_postal_code: "11510", 
+      destination_postal_code: "33434",
+      package_type: UpsConstants::PACKAGE,
+      declared_currency: "USD",
+      declared_value: 100.00,
+      packages: packages       
+    )
+    
+    ups = UPS.new(access_license_number: 'BCBDB1BD667FDBFA', password: 'Shipper7', user_id: 'svencrone', test: true)
+    response = ups.find_quotes(request: quote)    
+    
+    save_xml(response, "test_quote_mexico_usa_ups_declared")
+    assert_not_nil response
+  end  
+  
+  def test_quote_mexico_usa_ups_insured
+    packages = []
+    packages << ActiveMerchant::Shipping::UpsPackage.new(height: 10, width: 10, length: 10, weight: 1.5)
+    
+    quote = ActiveMerchant::Shipping::UpsQuoteRequest.new(
+      origin_country_code: "MX",
+      destination_country_code: "US", 
+      origin_postal_code: "11510", 
+      destination_postal_code: "33434",
+      package_type: UpsConstants::PACKAGE,
+      insured_currency: "USD",
+      insured_value: 100.00,
+      packages: packages       
+    )
+    
+    ups = UPS.new(access_license_number: 'BCBDB1BD667FDBFA', password: 'Shipper7', user_id: 'svencrone', test: true)
+    response = ups.find_quotes(request: quote)    
+    
+    save_xml(response, "test_quote_mexico_usa_ups_insured")
+    assert_not_nil response
+  end  
+
+  def test_quote_mexico_usa_ups_declared_document
+    quote = ActiveMerchant::Shipping::UpsQuoteRequest.new(
+      origin_country_code: "MX",
+      destination_country_code: "US", 
+      origin_postal_code: "11510", 
+      destination_postal_code: "33434",
+      package_type: UpsConstants::DOCUMENT,
+      declared_currency: "USD",
+      declared_value: 100.00,
+      envelope: true,
+      document_weight: 0.4
+    )
+    
+    ups = UPS.new(access_license_number: 'BCBDB1BD667FDBFA', password: 'Shipper7', user_id: 'svencrone', test: true)
+    response = ups.find_quotes(request: quote)    
+    
+    save_xml(response, "test_quote_mexico_usa_ups_declared_document")
+    assert_not_nil response
+  end  
+  
+  def test_quote_mexico_usa_ups_insured_document
+    quote = ActiveMerchant::Shipping::UpsQuoteRequest.new(
+      origin_country_code: "MX",
+      destination_country_code: "US", 
+      origin_postal_code: "11510", 
+      destination_postal_code: "33434",
+      package_type: UpsConstants::DOCUMENT,
+      insured_currency: "USD",
+      insured_value: 100.00,
+      envelope: true,
+      document_weight: 0.4
+    )
+    
+    ups = UPS.new(access_license_number: 'BCBDB1BD667FDBFA', password: 'Shipper7', user_id: 'svencrone', test: true)
+    response = ups.find_quotes(request: quote)    
+    
+    save_xml(response, "test_quote_mexico_usa_ups_insured_document")
+    assert_not_nil response
+  end  
+  
   def test_quote_mexico_multiple_ups
     packages = []
     packages << ActiveMerchant::Shipping::UpsPackage.new(height: 10, width: 10, length: 10, weight: 1.5)
