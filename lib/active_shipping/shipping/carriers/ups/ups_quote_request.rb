@@ -18,9 +18,11 @@ module ActiveMerchant
       attribute :package_type, String, default: UpsConstants::PACKAGE
       
       # Pickup 
-      attribute :pickup_type, String, default: UpsConstants::DAILY_PICKUP
+      attribute :pickup_type, String
       
       attribute :shipper_number, String
+      attribute :document_weight, Float
+      attribute :envelope, Boolean, default: false            
 
       attribute :customer_classification, String, default: UpsConstants::CLASSIFICATION_DAILY_RATES
       

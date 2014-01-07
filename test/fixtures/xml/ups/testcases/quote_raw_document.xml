@@ -1,0 +1,68 @@
+<AccessRequest>
+   <AccessLicenseNumber>BCBDB1BD667FDBFA</AccessLicenseNumber>
+   <UserId>svencrone</UserId>
+   <Password>Shipper7</Password>
+</AccessRequest>
+<RatingServiceSelectionRequest xml:lang="en-US">
+  <Request>
+    <TransactionReference>
+      <CustomerContext>Rating and Service</CustomerContext>
+      <XpciVersion>1.0</XpciVersion>
+    </TransactionReference>
+  <RequestAction>Rate</RequestAction>
+  <RequestOption>Shop</RequestOption>
+  </Request>
+  <Shipment>
+    <Description>Rate Description</Description>
+    <Shipper>
+      <Name>Name</Name>
+      <ShipperNumber>Ship Number</ShipperNumber>
+      <Address>
+        <AddressLine1>Address Line</AddressLine1>
+        <City>City</City>
+        <PostalCode>11510</PostalCode>
+        <CountryCode>MX</CountryCode>
+      </Address>
+    </Shipper>
+    <ShipTo>
+      <CompanyName>Company Name</CompanyName>
+      <Address>
+        <AddressLine1>Address Line</AddressLine1>
+        <City>Corado</City>
+        <PostalCode>11510</PostalCode> 
+        <CountryCode>MX</CountryCode>
+      </Address>
+    </ShipTo>
+    <ShipFrom>
+      <CompanyName>Company Name</CompanyName>
+      <AttentionName>Attention Name</AttentionName>
+      <Address>
+        <AddressLine1>Address Line</AddressLine1>
+        <City>Boca Raton</City>
+        <PostalCode>11510</PostalCode> 
+        <CountryCode>MX</CountryCode>
+      </Address>
+    </ShipFrom>
+    <Package>
+      <PackagingType>
+        <Code>02</Code>
+        <Description>Customer Supplied</Description>
+      </PackagingType>
+      <Description>Rate</Description>
+      <PackageWeight>
+        <UnitOfMeasurement>
+          <Code>KGS</Code>
+        </UnitOfMeasurement>
+        <Weight>0.2</Weight>
+      </PackageWeight>   
+    </Package>
+    <ShipmentServiceOptions>
+      <OnCallAir>
+    <Schedule> 
+      <PickupDay>02</PickupDay>
+      <Method>02</Method>
+    </Schedule>
+      </OnCallAir>
+    </ShipmentServiceOptions>
+  </Shipment>
+</RatingServiceSelectionRequest>

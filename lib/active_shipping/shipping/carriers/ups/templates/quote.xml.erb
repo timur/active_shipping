@@ -8,9 +8,11 @@
       <RequestAction>Rate</RequestAction>
       <RequestOption>Shop</RequestOption>
    </Request>
-   <PickupType>
-      <Code><%= @pickup_type %></Code>
-   </PickupType>
+   <% if @pickup_type %>
+     <PickupType>
+        <Code><%= @pickup_type %></Code>
+      </PickupType>
+   <% end %>
    <CustomerClassification>
       <Code><%= @customer_classification %></Code>
    </CustomerClassification>
@@ -35,11 +37,24 @@
             <ResidentialAddressIndicator>true</ResidentialAddressIndicator>
          </Address>
       </ShipTo>
+      <% if @envelope %>
+        <Package>
+           <PackagingType>
+              <Code><%= @package_type %></Code>
+           </PackagingType>
+           <PackageWeight>
+              <UnitOfMeasurement>
+                 <Code>KGS</Code>
+              </UnitOfMeasurement>
+              <Weight><%= @document_weight %></Weight>
+           </PackageWeight>
+        </Package>
+      <% end %>            
       <% if @packages && @packages.size > 0 %>
         <% @packages.each do |package| -%>
           <Package>
              <PackagingType>
-                <Code><%= @pickup_type %></Code>
+                <Code><%= @package_type %></Code>
              </PackagingType>
              <Dimensions>
                 <UnitOfMeasurement>
