@@ -27,14 +27,6 @@
         <DropoffType>REGULAR_PICKUP</DropoffType>
         <ServiceType><%= @service_type %></ServiceType>                
         <PackagingType><%= @packaging_type %></PackagingType>
-
-        <% if @master_tracking_id %>
-          <MasterTrackingId>
-            <TrackingIdType><%= @tracking_id_type %></TrackingIdType>
-            <FormId><%= @form_id %></FormId>
-            <TrackingNumber><%= @master_tracking_id %></TrackingNumber>
-          </MasterTrackingId>    
-        <% end %>    
         
         <% if @total_weight %>
           <TotalWeight>
@@ -138,6 +130,15 @@
           <LabelStockType>PAPER_7X4.75</LabelStockType>
         </LabelSpecification>                               
         <RateRequestTypes>ACCOUNT</RateRequestTypes>
+
+        <% if @master_tracking_id %>
+          <MasterTrackingId>
+            <TrackingIdType><%= @tracking_id_type %></TrackingIdType>
+            <FormId><%= @form_id %></FormId>
+            <TrackingNumber><%= @master_tracking_id %></TrackingNumber>
+          </MasterTrackingId>    
+        <% end %>    
+        
         <PackageCount><%= @package_count %></PackageCount> 
         
         <% if @envelope %>
