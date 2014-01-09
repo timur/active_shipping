@@ -66,7 +66,7 @@ module ActiveMerchant
       def parse_pickup_response(document)
         response = DhlBookPickupResponse.new
         parse_pickup_status(response, document)
-        parse_pickup(response, document)        
+        parse_pickup(response, document)    
         response
       end
       
@@ -175,7 +175,7 @@ module ActiveMerchant
           errors = document.xpath("//Condition")          
           
           errors.each do |error|
-            tag = error.xpath("/ConditionData")
+            tag = error.xpath("//ConditionData")
             error_array << tag.text if tag
           end                               
           
