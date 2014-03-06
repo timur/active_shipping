@@ -1,0 +1,77 @@
+<AccessRequest>
+  <AccessLicenseNumber><%= @access_license_number %></AccessLicenseNumber>
+  <UserId><%= @user_id %></UserId>
+  <Password><%= @password %></Password>
+</AccessRequest>
+<ShipmentConfirmRequest>
+  <Request>
+    <RequestAction>ShipConfirm</RequestAction>
+    <RequestOption>validate</RequestOption>
+  </Request>
+  <LabelSpecification>
+    <LabelPrintMethod>
+      <Code>EPL</Code>
+    </LabelPrintMethod>
+    <LabelStockSize>
+      <Height>4</Height>
+      <Width>6</Width>
+    </LabelStockSize>    
+  </LabelSpecification>
+  <Shipment>
+    <RateInformation>
+      <NegotiatedRatesIndicator/> 
+    </RateInformation> 
+    <Shipper>
+      <Name><%= @shipper_name %></Name>
+      <PhoneNumber><%= @shipper_phone %></PhoneNumber>
+      <ShipperNumber><%= @shipper_number %></ShipperNumber>
+      <Address>
+        <AddressLine1><%= @shipper_address %></AddressLine1>
+        <City><%= @shipper_city %></City>
+    	  <PostalCode><%= @shipper_postal_code %></PostalCode>
+    	  <CountryCode><%= @shipper_country %></CountryCode>
+     </Address>
+    </Shipper>
+	  <ShipTo>
+      <CompanyName><%= @ship_to_company %></CompanyName>
+      <AttentionName><%= @ship_to_name %></AttentionName>
+      <PhoneNumber><%= @ship_to_phone %></PhoneNumber>
+      <Address>
+        <AddressLine1><%= @ship_to_address %></AddressLine1>
+        <City><%= @ship_to_city %></City>
+    	  <PostalCode><%= @ship_to_postal_code %></PostalCode>
+    	  <CountryCode><%= @ship_to_country %></CountryCode>
+      </Address>
+    </ShipTo>
+    <ShipFrom>
+      <CompanyName><%= @ship_from_company %></CompanyName>
+      <AttentionName><%= @ship_from_name %></AttentionName>
+      <PhoneNumber><%= @ship_from_phone %></PhoneNumber>
+      <Address>
+        <AddressLine1><%= @ship_from_address %></AddressLine1>
+        <City><%= @ship_from_city %></City>
+    	  <PostalCode><%= @ship_from_postal_code %></PostalCode>
+    	  <CountryCode><%= @ship_from_country %></CountryCode>
+      </Address>
+    </ShipFrom>
+     <PaymentInformation>
+      <Prepaid>
+        <BillShipper>
+          <AccountNumber><%= @account_number %></AccountNumber>
+        </BillShipper>
+      </Prepaid>
+    </PaymentInformation>
+    <Service>
+      <Code><%= @product_code %></Code>
+    </Service>
+    <Package>
+      <PackagingType>
+        <Code><%= @package_type %></Code>
+      </PackagingType>
+      <PackageWeight>
+        <UnitOfMeasurement>KGS</UnitOfMeasurement>
+        <Weight>60.0</Weight>
+      </PackageWeight>
+    </Package>
+  </Shipment>
+</ShipmentConfirmRequest>

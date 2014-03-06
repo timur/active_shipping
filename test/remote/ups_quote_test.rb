@@ -45,7 +45,7 @@ class UPSTest < Test::Unit::TestCase
       packages: packages       
     )
     
-    ups = UPS.new(access_license_number: 'BCBDB1BD667FDBFA', password: 'Shipper7', user_id: 'svencrone', test: true)
+    ups = UPS.new(access_license_number: '0CCCCED94B9FB025', password: 'Holaups2014', user_id: 'sven.crone', test: true)
     response = ups.find_quotes(request: quote)    
     
     save_xml(response, "test_quote_mexico_ups")

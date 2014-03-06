@@ -13,6 +13,7 @@ class FedExTest < Test::Unit::TestCase
     request = ActiveMerchant::Shipping::FedexQuoteRequest.new(
       packages: packages
     )
+    request.calculate_attributes    
 
     assert_not_nil request.to_xml
   end  

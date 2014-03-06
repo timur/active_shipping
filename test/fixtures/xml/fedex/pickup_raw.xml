@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://fedex.com/ws/pickup/v6">
+   <SOAP-ENV:Body>
+      <ns1:CreatePickupRequest>
+         <ns1:WebAuthenticationDetail>
+            <ns1:UserCredential>
+               <ns1:Key>rscqm75MLampLUuV</ns1:Key>
+               <ns1:Password>8rTZHQ6vbyOsGOgtwMXrZ1kIU</ns1:Password>
+            </ns1:UserCredential>
+         </ns1:WebAuthenticationDetail>
+         <ns1:ClientDetail>
+            <ns1:AccountNumber>510087267</ns1:AccountNumber>
+            <ns1:MeterNumber>118511895</ns1:MeterNumber>
+         </ns1:ClientDetail>
+         <ns1:TransactionDetail>
+            <ns1:CustomerTransactionId>*** Create Pickup Request v6 ***</ns1:CustomerTransactionId>
+         </ns1:TransactionDetail>
+         <ns1:Version>
+            <ns1:ServiceId>disp</ns1:ServiceId>
+            <ns1:Major>6</ns1:Major>
+            <ns1:Intermediate>0</ns1:Intermediate>
+            <ns1:Minor>0</ns1:Minor>
+         </ns1:Version>
+         <ns1:OriginDetail>
+            <ns1:PickupLocation>
+               <ns1:Contact>
+                  <ns1:PersonName>Contact Name</ns1:PersonName>
+                  <ns1:CompanyName>Company Name</ns1:CompanyName>
+                  <ns1:PhoneNumber>1234567890</ns1:PhoneNumber>
+               </ns1:Contact>
+               <ns1:Address>
+                  <ns1:StreetLines>Address Line 1</ns1:StreetLines>
+                  <ns1:City>Foster City</ns1:City>
+                  <ns1:StateOrProvinceCode>CA</ns1:StateOrProvinceCode>
+                  <ns1:PostalCode>94404</ns1:PostalCode>
+                  <ns1:CountryCode>US</ns1:CountryCode>
+               </ns1:Address>
+            </ns1:PickupLocation>
+            <ns1:PackageLocation>FRONT</ns1:PackageLocation>
+            <ns1:BuildingPartDescription>3B</ns1:BuildingPartDescription>
+            <ns1:ReadyTimestamp>2014-03-05T13:30:00+05:30</ns1:ReadyTimestamp>
+            <ns1:CompanyCloseTime>20:00:00</ns1:CompanyCloseTime>
+         </ns1:OriginDetail>
+         <ns1:PackageCount>1</ns1:PackageCount>
+         <ns1:TotalWeight>
+            <ns1:Units>LB</ns1:Units>
+            <ns1:Value>1.0</ns1:Value>
+         </ns1:TotalWeight>
+         <ns1:CarrierCode>FDXE</ns1:CarrierCode>
+      </ns1:CreatePickupRequest>
+   </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

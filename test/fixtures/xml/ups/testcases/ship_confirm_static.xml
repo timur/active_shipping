@@ -1,115 +1,85 @@
 <AccessRequest>
-  <AccessLicenseNumber>BCBDB1BD667FDBFA</AccessLicenseNumber>
-  <UserId>svencrone</UserId>
-  <Password>Shipper7</Password>
-</AccessRequest> 
+  <AccessLicenseNumber>0CCCCED94B9FB025</AccessLicenseNumber>
+  <UserId>sven.crone</UserId>
+  <Password>Holaups2014</Password>
+</AccessRequest>
 <ShipmentConfirmRequest>
-   <Request>
-      <TransactionReference>
-         <CustomerContext>guidlikesubstance</CustomerContext>
-         <XpciVersion>1.0001</XpciVersion>
-      </TransactionReference>
-      <RequestAction>ShipConfirm</RequestAction>
-      <RequestOption>nonvalidate</RequestOption>
-   </Request>
-   <Shipment>
-      <Shipper>
-         <Name>Joe's Garage</Name>
-         <AttentionName>John Smith</AttentionName>
-         <PhoneNumber>9725551212</PhoneNumber>
-         <ShipperNumber>W69F84</ShipperNumber>
-         <Address>
-            <AddressLine1>1000 Preston Rd</AddressLine1>
-            <City>Plano</City>
-            <CountryCode>MX</CountryCode>
-            <PostalCode>11510</PostalCode>
-         </Address>
-      </Shipper>
-      <ShipTo>
-         <CompanyName>Pep Boys</CompanyName>
-         <AttentionName>Manny</AttentionName>
-         <Address>
-            <AddressLine1>201 York Rd</AddressLine1>
-            <City>Timonium</City>
-            <StateProvinceCode>MD</StateProvinceCode>
-            <CountryCode>US</CountryCode>
-            <PostalCode>21093</PostalCode>
-         </Address>
-      </ShipTo>
-      <Service>
-         <Code>14</Code>
-         <Description>Next Day Air Early AM</Description>
-      </Service>
-      <PaymentInformation>
-         <Prepaid>
-            <BillShipper>
-               <CreditCard>
-                  <Type>06</Type>
-                  <Number>4111111111111111</Number>
-                  <ExpirationDate>121999</ExpirationDate>
-               </CreditCard>
-            </BillShipper>
-         </Prepaid>
-      </PaymentInformation>
-      <Package>
-         <PackagingType>
-            <Code>02</Code>
-         </PackagingType>
-         <Dimensions>
-            <UnitOfMeasurement>
-               <Code>IN</Code>
-            </UnitOfMeasurement>
-            <Length>22</Length>
-            <Width>20</Width>
-            <Height>18</Height>
-         </Dimensions>
-         <PackageWeight>
-            <Weight>14.1</Weight>
-         </PackageWeight>
-         <ReferenceNumber>
-            <Code>02</Code>
-            <Value>1234567</Value>
-         </ReferenceNumber>
-         <PackageServiceOptions>
-            <InsuredValue>
-               <CurrencyCode>USD</CurrencyCode>
-               <MonetaryValue>149.99</MonetaryValue>
-            </InsuredValue>
-            <VerbalConfirmation>
-               <Name>Sidney Smith</Name>
-               <PhoneNumber>4105551234</PhoneNumber>
-            </VerbalConfirmation>
-         </PackageServiceOptions>
-      </Package>
-      <Package>
-         <PackagingType>
-            <Code>02</Code>
-         </PackagingType>
-         <PackageWeight>
-            <Weight>22.0</Weight>
-         </PackageWeight>
-         <ReferenceNumber>
-            <Code>PM</Code>
-            <Value>1234568</Value>
-         </ReferenceNumber>
-         <ReferenceNumber>
-            <Code>ST</Code>
-            <Value>Distributor</Value>
-         </ReferenceNumber>
-         <PackageServiceOptions>
-            <InsuredValue>
-               <MonetaryValue>299.99</MonetaryValue>
-            </InsuredValue>
-         </PackageServiceOptions>
-      </Package>
-   </Shipment>
-   <LabelSpecification>
-      <LabelPrintMethod>
-         <Code>GIF</Code>
-      </LabelPrintMethod>
-      <HTTPUserAgent>Mozilla/4.5</HTTPUserAgent>
-      <LabelImageFormat>
-         <Code>GIF</Code>
-      </LabelImageFormat>
-   </LabelSpecification>
+  <Request>
+    <TransactionReference>
+      <CustomerContext>Customer Comment</CustomerContext>
+    </TransactionReference>
+    <RequestAction>ShipConfirm</RequestAction>
+    <RequestOption>validate</RequestOption>
+  </Request>
+  <LabelSpecification>
+    <LabelPrintMethod>
+      <Code>EPL</Code>
+    </LabelPrintMethod>
+    <LabelStockSize>
+      <Height>4</Height>
+      <Width>6</Width>
+    </LabelStockSize>    
+  </LabelSpecification>
+  <Shipment>
+   <RateInformation>
+      <NegotiatedRatesIndicator/> 
+    </RateInformation> 
+	<Description/>
+    <Shipper>
+      <Name>Shipper Name</Name>
+      <PhoneNumber>1234567890</PhoneNumber>
+      <ShipperNumber>0VR893</ShipperNumber>
+      <Address>
+        <AddressLine1>Kepler 195</AddressLine1>
+        <City>México DF</City>
+    	  <PostalCode>11590</PostalCode>
+    	  <CountryCode>MX</CountryCode>
+     </Address>
+    </Shipper>
+	<ShipTo>
+     <CompanyName>Ship To Company Name</CompanyName>
+      <AttentionName>Ship To Attn Name</AttentionName>
+      <PhoneNumber>97225377171</PhoneNumber>
+      <Address>
+        <AddressLine1>Kepler 195</AddressLine1>
+        <City>México DF</City>
+    	  <PostalCode>11590</PostalCode>
+    	  <CountryCode>MX</CountryCode>
+      </Address>
+    </ShipTo>
+    <ShipFrom>
+      <CompanyName>Ship From Company Name</CompanyName>
+      <AttentionName>Ship From Attn Name</AttentionName>
+      <PhoneNumber>1234567890</PhoneNumber>
+      <Address>
+        <AddressLine1>Kepler 195</AddressLine1>
+        <City>México DF</City>
+    	  <PostalCode>11590</PostalCode>
+    	  <CountryCode>MX</CountryCode>
+      </Address>
+    </ShipFrom>
+     <PaymentInformation>
+      <Prepaid>
+        <BillShipper>
+          <AccountNumber>0VR893</AccountNumber>
+        </BillShipper>
+      </Prepaid>
+    </PaymentInformation>
+    <Service>
+      <Code>65</Code>
+    </Service>
+    <Package>
+      <PackagingType>
+        <Code>02</Code>
+        <Description>Customer Supplied</Description>
+      </PackagingType>
+      <Description>Package Description</Description>
+      <PackageWeight>
+        <UnitOfMeasurement/>
+        <Weight>60.0</Weight>
+      </PackageWeight>
+      <LargePackageIndicator/>
+      <AdditionalHandling>0</AdditionalHandling>
+    </Package>
+  </Shipment>
 </ShipmentConfirmRequest>

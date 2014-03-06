@@ -75,6 +75,28 @@ module ActiveMerchant
         end
         response_raw = commit(UpsConstants::RESOURCES[:ship_confirm], save_request(xml), true)             
         #TODO
+        resp = parse_shipment_confirm_response(Nokogiri::XML(response_raw))
+        
+        resp.response = response_raw
+        resp.request = last_request
+        resp
+      end
+
+      def ship_accept(options = {})
+        xml = ""
+        if options[:raw_xml]
+          xml = File.open(Dir.pwd + "/test/fixtures/xml/ups/#{options[:raw_xml]}").read
+        else        
+          request = options[:request]
+          
+          request.access_license_number = @options[:access_license_number]
+          request.user_id = @options[:user_id]
+          request.password = @options[:password]  
+          
+          xml = request.to_xml
+        end
+        response_raw = commit(UpsConstants::RESOURCES[:ship_accept], save_request(xml), true)             
+        #TODO
         resp = parse_tracking_response(Nokogiri::XML(response_raw))
         
         resp.response = response_raw
@@ -90,6 +112,29 @@ module ActiveMerchant
         
         response
       end
+      
+      def parse_shipment_confirm_response(document)
+        response = UpsShipmentResponse.new
+        response.success = parse_confirm_status(document)
+        response.errors = parse_notes(document)        
+        response.shipment = parse_shipment(document)
+        
+        response.digest = document.xpath("//ShipmentDigest")
+        
+        response
+      end      
+
+      def parse_shipment(document)
+        shipment = UpsShipment.new
+        
+        tag_value(shipment, "//ShipmentCharges/TransportationCharges/CurrencyCode", document, "currency")        
+        tag_value(shipment, "//ShipmentCharges/TransportationCharges/MonetaryValue", document, "transportation_charges")        
+        tag_value(shipment, "//ShipmentCharges/ServiceOptionsCharges/MonetaryValue", document, "service_options_charges")
+        tag_value(shipment, "//ShipmentCharges/TotalCharges/MonetaryValue", document, "total_charges")                        
+        tag_value(shipment, "//ShipmentIdentificationNumber", document, "trackingnumber")                                
+        
+        shipment
+      end      
       
       def parse_tracking_response(document)
         response = UpsTrackingResponse.new
@@ -141,7 +186,21 @@ module ActiveMerchant
              response.tracking_events << e
            end                                                                                                                                     
         end                    
+
+        def parse_confirm_status(document)
+          success = true
+          status = document.xpath("//ShipmentComfirmResponse/Response")
           
+          status.each do |s|
+            code = nil
+            code = s.at('ResponseStatusCode').text if s.at('ResponseStatusCode')
+            if code && code != "1"
+              success = false
+            end             
+          end
+          success        
+        end
+                  
         def parse_status(document)
           success = true
           status = document.xpath("//RatingServiceSelectionResponse/Response")
@@ -187,8 +246,8 @@ module ActiveMerchant
             back << note
           end
           back
-        end                   
-        
+        end   
+                
         def commit(action, request, test = false)
           #puts "URL #{test ? TEST_URL : LIVE_URL}/#{action}"
           ssl_post("#{test ? TEST_URL : LIVE_URL}/#{action}", request)
