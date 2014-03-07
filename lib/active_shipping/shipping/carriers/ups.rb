@@ -74,7 +74,6 @@ module ActiveMerchant
           xml = request.to_xml
         end
         response_raw = commit(UpsConstants::RESOURCES[:ship_confirm], save_request(xml), true)             
-        #TODO
         resp = parse_shipment_confirm_response(Nokogiri::XML(response_raw))
         
         resp.response = response_raw
@@ -95,13 +94,15 @@ module ActiveMerchant
           
           xml = request.to_xml
         end
-        response_raw = commit(UpsConstants::RESOURCES[:ship_accept], save_request(xml), true)             
-        #TODO
-        resp = parse_tracking_response(Nokogiri::XML(response_raw))
         
-        resp.response = response_raw
-        resp.request = last_request
-        resp
+        shipment = options[:shipment]
+        
+        response_raw = commit(UpsConstants::RESOURCES[:ship_accept], save_request(xml), true)             
+        shipment = parse_accept_response(Nokogiri::XML(response_raw), shipment)
+        
+        shipment.response = response_raw
+        shipment.request = last_request
+        shipment
       end
 
       def parse_quote_response(document)
@@ -118,21 +119,21 @@ module ActiveMerchant
         response.success = parse_confirm_status(document)
         response.errors = parse_notes(document)        
         response.shipment = parse_shipment(document)
-        
+                
         response.digest = document.xpath("//ShipmentDigest")
         
         response
       end      
 
       def parse_shipment(document)
-        shipment = UpsShipment.new
+        shipment = UpsShipment.new                
         
         tag_value(shipment, "//ShipmentCharges/TransportationCharges/CurrencyCode", document, "currency")        
         tag_value(shipment, "//ShipmentCharges/TransportationCharges/MonetaryValue", document, "transportation_charges")        
         tag_value(shipment, "//ShipmentCharges/ServiceOptionsCharges/MonetaryValue", document, "service_options_charges")
         tag_value(shipment, "//ShipmentCharges/TotalCharges/MonetaryValue", document, "total_charges")                        
-        tag_value(shipment, "//ShipmentIdentificationNumber", document, "trackingnumber")                                
-        
+        tag_value(shipment, "//ShipmentIdentificationNumber", document, "shipment_identification_number")                                
+
         shipment
       end      
       
@@ -141,7 +142,16 @@ module ActiveMerchant
         parse_tracking_status(response, document)        
         parse_tracking(response, document)                
         response
-      end      
+      end
+      
+      def parse_accept_response(document, shipment)
+        tag_value(shipment, "//TrackingNumber", document, "tracking_number")    
+        pdf_label = document.xpath("//LabelImage/GraphicImage")
+          
+        shipment.success = parse_accept_status(document)                                  
+        shipment.label = pdf_label.text
+        shipment
+      end            
       
       protected
 
@@ -200,6 +210,20 @@ module ActiveMerchant
           end
           success        
         end
+        
+        def parse_accept_status(document)
+          success = true
+          status = document.xpath("//ShipmentAcceptResponse/Response")
+          
+          status.each do |s|
+            code = nil
+            code = s.at('ResponseStatusCode').text if s.at('ResponseStatusCode')
+            if code && code != "1"
+              success = false
+            end             
+          end
+          success        
+        end        
                   
         def parse_status(document)
           success = true

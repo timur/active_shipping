@@ -43,14 +43,25 @@ class UpsShipConfirmTest < Test::Unit::TestCase
     )
         
     ups = UPS.new(access_license_number: '0CCCCED94B9FB025', password: 'Holaups2014', user_id: 'sven.crone', test: true)
-    response = ups.ship_confirm(request: shipment)    
+    response_confirm = ups.ship_confirm(request: shipment)    
     
-    save_xml(response, "test_shipment_confirm_mexico_ups")
+    save_xml(response_confirm, "test_shipment_confirm_mexico_ups")
     
-    assert_not_nil response    
-    assert_not_nil response.digest
+    assert_not_nil response_confirm    
+    assert_not_nil response_confirm.digest
     
-    ap response.success
+    ap response_confirm.success
+    
+    r = ActiveMerchant::Shipping::UpsShipmentConfirmRequest.new(
+      digest: response_confirm.digest
+    )
+        
+    shipment = ups.ship_accept(request: r, shipment: response_confirm.shipment) 
+    assert_not_nil shipment
+    assert_not_nil shipment.tracking_number
+    assert_not_nil shipment.label
+    puts shipment.label
+    puts shipment.tracking_number               
   end  
       
   def test_shipment_confirm_raw    

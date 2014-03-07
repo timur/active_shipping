@@ -19,7 +19,12 @@ module ActiveMerchant
       attribute :transportation_charges, Float                 
       attribute :service_options_charges, Float
       attribute :total_charges, Float      
-      attribute :trackingnumber, String      
+      attribute :shipment_identification_number, String      
+      attribute :tracking_number, String
+      attribute :label, String          
+      attribute :request, String
+      attribute :response, String     
+      attribute :success, Boolean               
     end    
     
     class UpsShipmentResponse
@@ -30,7 +35,7 @@ module ActiveMerchant
       attribute :request, String
       attribute :response, String
       attribute :digest, String      
-      attribute :shipment, UpsError                  
+      attribute :shipment, UpsShipment               
     end
     
   end

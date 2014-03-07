@@ -1,0 +1,15 @@
+<AccessRequest>
+  <AccessLicenseNumber><%= @access_license_number %></AccessLicenseNumber>
+  <UserId><%= @user_id %></UserId>
+  <Password><%= @password %></Password>
+</AccessRequest>
+<ShipmentAcceptRequest>
+    <Request>
+        <TransactionReference>
+            <CustomerContext><%= @customer_context %></CustomerContext>
+        </TransactionReference>
+        <RequestAction>ShipAccept</RequestAction>
+        <RequestOption>1</RequestOption>
+    </Request>
+    <ShipmentDigest><%= @digest %></ShipmentDigest>
+</ShipmentAcceptRequest>
