@@ -44,14 +44,14 @@ module ActiveMerchant
           "Y"	=> "EXPRESS 12:00",
           "Z"	=> "Destination Charges"
         }
-        
-        
+                
         DoorTo = {
           'DD' => "Door to Door",
           'DA' => "Door to Airport",
           'AA' => 'Door to Dor non-compliant',
           'AA' => 'Door to Dor non-compliant'
         }      
+        
         PackageTypes = {
           "EE" => "DHL Express Envelope",
           "OD" => "Other DHL Packaging",
