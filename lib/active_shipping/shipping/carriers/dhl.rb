@@ -7,9 +7,8 @@ module ActiveMerchant
       include ActiveMerchant::Shipping::DhlConstants
       include ActiveMerchant::Shipping::Constants     
       
-      attr_reader :site_id, :password
-      
-      attr_writer :url
+      attr_reader :site_id, :password      
+      attr_accessor :url
 
       self.retry_safe = true
 
@@ -100,7 +99,7 @@ module ActiveMerchant
         end
         
         def commit(request, test = false)
-          url = test ? TEST_URL : LIVE_URL
+          url = self.test_mode ? TEST_URL : LIVE_URL
           self.url = url
           ssl_post(url, request.gsub("\n",''))
         end

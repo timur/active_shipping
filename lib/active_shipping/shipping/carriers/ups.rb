@@ -12,7 +12,8 @@ module ActiveMerchant
       cattr_reader :name
       @@name = "UPS"
       
-      attr_reader :user_id, :password, :access_license_number                
+      attr_reader :user_id, :password, :access_license_number           
+      attr_accessor :url           
       
       TEST_URL = 'https://wwwcie.ups.com'
       #https://wwwcie.ups.com/ups.app/xml/Track
@@ -273,8 +274,9 @@ module ActiveMerchant
         end   
                 
         def commit(action, request, test = false)
-          #puts "URL #{test ? TEST_URL : LIVE_URL}/#{action}"
-          ssl_post("#{test ? TEST_URL : LIVE_URL}/#{action}", request)
+          url = test ? TEST_URL : LIVE_URL
+          self.url = url
+          ssl_post("#{url}/#{action}", request)
         end
         
         def tag_value(object, xml_tag, document, attribute, float = false)

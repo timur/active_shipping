@@ -13,7 +13,10 @@ module ActiveMerchant
       
       # authorization
       attribute :site_id, String
-      attribute :password, String      
+      attribute :password, String
+      
+      # the dhl account
+      attribute :payment_account_number, String            
       
       # Package or Document
       attribute :package_type, String, default: DhlConstants::PACKAGE

@@ -12,7 +12,9 @@ module ActiveMerchant
       include ActiveMerchant::Shipping::FedexConstants   
       include ActiveMerchant::Shipping::Constants       
       
-      attr_reader :key, :password, :accountNumber, :meterNumber          
+      attr_reader :key, :password, :accountNumber, :meterNumber      
+      
+      attr_accessor :url          
 
       #TEST_URL = 'https://gatewaybeta.fedex.com:443/xml'cd      
       TEST_URL = 'https://wsbeta.fedex.com:443/web-services'            
@@ -99,7 +101,10 @@ module ActiveMerchant
       def commit(request, test = true)
         res = nil
         begin
-          res = ssl_post(test ? TEST_URL : LIVE_URL, request.gsub("\n",''))                        
+          url = test ? TEST_URL : LIVE_URL
+          self.url = url
+          
+          res = ssl_post(url, request.gsub("\n",''))                        
         rescue Exception => e
         end
         res
