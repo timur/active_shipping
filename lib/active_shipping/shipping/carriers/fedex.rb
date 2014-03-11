@@ -16,9 +16,11 @@ module ActiveMerchant
       
       attr_accessor :url          
 
-      #TEST_URL = 'https://gatewaybeta.fedex.com:443/xml'cd      
+      #TEST_URL = 'https://gatewaybeta.fedex.com:443/xml'      
       TEST_URL = 'https://wsbeta.fedex.com:443/web-services'            
-      LIVE_URL = 'https://gateway.fedex.com:443/xml'
+      #LIVE_URL = 'https://gateway.fedex.com:443/xml'
+      LIVE_URL = 'https://ws.fedex.com:443/web-services'      
+      
             
       def requirements
         [:key, :password, :accountNumber, :meterNumber]
@@ -39,7 +41,7 @@ module ActiveMerchant
           xml = request.to_xml
         end        
 
-        response_raw = commit(save_request(xml), true)             
+        response_raw = commit(save_request(xml), (@options[:test] || false))             
 
         resp = parse_quote_response(Nokogiri::XML(response_raw))
         resp.response = response_raw
@@ -86,7 +88,7 @@ module ActiveMerchant
           xml = request.to_xml
         end        
 
-        response_raw = commit(save_request(xml), true)             
+        response_raw = commit(save_request(xml), (@options[:test] || false))             
 
         resp = parse_tracking_response(Nokogiri::XML(response_raw))
         resp.response = response_raw
@@ -104,8 +106,10 @@ module ActiveMerchant
           url = test ? TEST_URL : LIVE_URL
           self.url = url
           
-          res = ssl_post(url, request.gsub("\n",''))                        
+          puts url
+          res = ssl_post(url, request.gsub("\n",''))                                  
         rescue Exception => e
+          puts "EXCEPTION #{e}"
         end
         res
       end

@@ -20,7 +20,7 @@ class FedExQuoteTest < Test::Unit::TestCase
      
     quote.calculate_attributes
     
-    fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
+    fedex = FedEx.new(key: 'THMNl2nJQBc0U41y', password: 'Fj7tkfla7Hpou1JUNTbKSO6aF', accountNumber: '342914012', meterNumber: '106259821', test: false)
     response = fedex.find_quotes(request: quote)    
     
     save_xml(response, "test_quote_mexico_fedex")
