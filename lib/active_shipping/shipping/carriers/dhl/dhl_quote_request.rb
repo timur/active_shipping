@@ -35,7 +35,9 @@ module ActiveMerchant
       validates :destination_postal_code, presence: { message: "(destination_postal_code) can't be blank" }      
       
       attribute :declared_value, String
-      attribute :time_zone, String, default: "Mexico City"            
+      attribute :time_zone, String, default: "Mexico City"
+      attribute :ready_time, Time      
+      
       attribute :declared_currency, String            
 
       attribute :insured_value, String      
@@ -65,6 +67,8 @@ module ActiveMerchant
             
       # ready times are only 8a-5p(17h)
       def ready_time(time = Time.now)
+        time = @ready_time unless @ready_time.nil?
+        
         if time.hour >= 17 || time.hour < 8
           time.strftime("PT08H00M")
         else
