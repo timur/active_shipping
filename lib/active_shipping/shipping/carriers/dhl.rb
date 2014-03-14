@@ -101,7 +101,6 @@ module ActiveMerchant
         def commit(request, test = false)
           url = self.test_mode ? TEST_URL : LIVE_URL
           self.url = url
-          puts "HERE I AM #{url} #{self.test_mode}"
           ssl_post(url, request.gsub("\n",''))
         end
         
