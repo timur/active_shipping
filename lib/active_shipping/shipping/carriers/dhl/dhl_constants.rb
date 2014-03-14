@@ -5,6 +5,8 @@ module ActiveMerchant
       
         PACKAGE = "package"
         DOCUMENT = "document"
+        
+        DisabledProducts = ["C", "G", "U"]
 
         GlobalProductCodes = {
           "0"	=> "LOGISTICS SERVICES",
