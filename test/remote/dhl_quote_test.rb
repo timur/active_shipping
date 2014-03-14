@@ -15,10 +15,11 @@ class DhlTest < Test::Unit::TestCase
       destination_country_code: "MX", 
       origin_postal_code: "11510", 
       destination_postal_code: "11510",
+      payment_account_number: "988191844",
       pieces: pieces       
     )
 
-    dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6', test: true)
+    dhl = Dhl.new(site_id: 'ZURICATA', password: 'Rln8_VCH3r', test: false)
     response = dhl.find_quotes(request: quote)    
     
     save_xml(response, "test_quote_mexico_dhl")

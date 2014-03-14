@@ -15,8 +15,8 @@
         <BkgDetails>
             <PaymentCountryCode><%= @origin_country_code %></PaymentCountryCode>
             <Date><%= ready_date %></Date>
-            <ReadyTime><%= ready_time %></ReadyTime>
-            <ReadyTimeGMTOffset>+00:00</ReadyTimeGMTOffset>
+            <ReadyTime><%= ready_time(Time.now.in_time_zone(@time_zone)) %></ReadyTime>
+            <ReadyTimeGMTOffset><%= time_offset %></ReadyTimeGMTOffset>
             <DimensionUnit>CM</DimensionUnit>
             <WeightUnit>KG</WeightUnit>
             <% if @pieces && @pieces.size > 0 %>

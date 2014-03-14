@@ -106,7 +106,6 @@ module ActiveMerchant
           url = test ? TEST_URL : LIVE_URL
           self.url = url
           
-          puts url
           res = ssl_post(url, request.gsub("\n",''))                                  
         rescue Exception => e
           puts "EXCEPTION #{e}"

@@ -1,5 +1,6 @@
 require 'erb'
 require 'virtus'
+require 'time'
 
 module ActiveMerchant
   module Shipping
@@ -33,7 +34,8 @@ module ActiveMerchant
       validates :destination_country_code, presence: { message: "(destination_country_code) can't be blank" }
       validates :destination_postal_code, presence: { message: "(destination_postal_code) can't be blank" }      
       
-      attribute :declared_value, String      
+      attribute :declared_value, String
+      attribute :time_zone, String, default: "Mexico City"            
       attribute :declared_currency, String            
 
       attribute :insured_value, String      
@@ -68,6 +70,22 @@ module ActiveMerchant
         else
           time.strftime("PT%HH%MM")
         end
+      end
+      
+      def time_offset
+        off = ""
+        utc_time = Time.now.utc
+        local_time = utc_time.in_time_zone(@time_zone)                
+        offset = local_time.utc_offset
+        o = offset.div(60).div(60)
+        
+        negative = o < 0 ? "-" : "+"
+        if o < 0
+          off = "#{negative}0#{o.abs}:00"
+        else
+          off = "#{negative}#{o.abs}:00"
+        end
+        off
       end
 
       # ready dates are only mon-fri
