@@ -22,6 +22,7 @@ class DhlTest < Test::Unit::TestCase
     dhl = Dhl.new(site_id: 'ZURICATA', password: 'Rln8_VCH3r', test: false)
     response = dhl.find_quotes(request: quote)    
     
+    puts "#{ap response.quotes}"
     save_xml(response, "test_quote_mexico_dhl")
     assert_not_nil response
   end

@@ -7,8 +7,8 @@ class DhlBookingTest < Test::Unit::TestCase
   end
       
   def test_booking_raw    
-    dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6')
-    response = dhl.book_pickup(raw_xml: "testcases/test_book_pickup_valid_dhl.xml", test: true)    
+    dhl = Dhl.new(site_id: 'ZURICATA', password: 'Rln8_VCH3r', test: false)
+    response = dhl.book_pickup(raw_xml: "testcases/test_book_pickup_valid_dhl.xml")    
     
     save_xml(response, "test_book_pickup_raw_dhl")
     assert_not_nil response
@@ -32,16 +32,16 @@ class DhlBookingTest < Test::Unit::TestCase
 
   def test_cancel
     next_monday = 
-    dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6')    
+    dhl = Dhl.new(site_id: 'ZURICATA', password: 'Rln8_VCH3r', test: false)
     
     cancel = ActiveMerchant::Shipping::DhlCancelPickupRequest.new(
-      confirmation_number: 100642,
+      confirmation_number: 168117,
       origin_area: "FMX",
-      requestor: "Joe",
+      requestor: "John Doe",
       reason: "001"
     )
     
-    response = dhl.cancel_pickup(test: true, request: cancel)   
+    response = dhl.cancel_pickup(request: cancel)   
     
     assert response != nil
     
@@ -51,29 +51,32 @@ class DhlBookingTest < Test::Unit::TestCase
 
   def test_booking
     next_monday = 
-    dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6')    
+    dhl = Dhl.new(site_id: 'ZURICATA', password: 'Rln8_VCH3r', test: false)
     
     pickup = ActiveMerchant::Shipping::DhlBookPickupRequest.new(
       account_number: 980526857,
       country: "MX",
-      pickup_date: date_of_next("Monday"),
-      ready_by_time: "09:00",
-      close_time: "12:00",  
+      #pickup_date: date_of_next("tuesday"),
+      pickup_date: "2014-03-24",      
+      ready_by_time: "12:00",
+      close_time: "15:00",  
       weight: 4,
       contact_name: "John Doe",
       contact_phone: "1151sda",
       city: "City",
       postal_code: "11510",
       package_location: "Hinter der Tür",
-      address: "citystreet 22"        
+      address: "TEST TEST TEST"        
     )
     
-    response = dhl.book_pickup(test: true, request: pickup)   
+    response = dhl.book_pickup(request: pickup)   
+    save_xml(response, "test_book_pickup_dhl")
+    
+    puts response.success
     
     assert response.success == true
     assert response.confirmation_number != nil     
     
-    save_xml(response, "test_book_pickup_dhl")
     assert_not_nil response
   end
     

@@ -38,6 +38,8 @@ module ActiveMerchant
       attribute :weight_charge, Float            
       attribute :weight_charge_tax, Float                  
       attribute :total_tax_amount, Float
+      attribute :tax_percent, Float     
+      attribute :discount, Float 
       attribute :surcharge, Float
       attribute :delivery_date, String      
       attribute :delivery_time, String              
@@ -53,10 +55,16 @@ module ActiveMerchant
       
       def calculate
         self.surcharge = 0
+
         extra_charges.each do |extra|
-          self.surcharge += extra.charge_value if extra && extra.charge_value
+          if extra.global_service_name == "Discount"
+            self.discount = extra.charge_value if extra && extra.charge_value            
+          else
+            self.surcharge += extra.charge_value if extra && extra.charge_value            
+          end
         end
-        self.base_charge = self.weight_charge
+        
+        self.base_charge = self.total_charge - self.total_tax_amount
         
         if self.delivery_time
           d = Time.parse(self.delivery_time)

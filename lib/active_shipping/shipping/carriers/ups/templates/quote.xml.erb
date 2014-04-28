@@ -21,7 +21,7 @@
         <DocumentsOnly>true</DocumentsOnly>
       <% end %>
       
-      <% if @declared_value || @insured_value %>      
+      <% if @declared_value || insured? %>      
         <PackageServiceOptions>
           <% if @declared_value %>      
             <DeclaredValue>
@@ -29,7 +29,7 @@
               <MonetaryValue><%= @declared_value %></MonetaryValue>
             </DeclaredValue>      
           <% end %>
-          <% if @insured_value %>      
+          <% if insured? %>      
             <Insurance>
               <BasicFlexibleParcelIndicator>
                 <CurrencyCode><%= @insured_currency %></CurrencyCode>
@@ -57,6 +57,15 @@
             <ResidentialAddressIndicator>true</ResidentialAddressIndicator>
          </Address>
       </ShipTo>
+      <ShipFrom>
+        <Address>
+          <PostalCode><%= @origin_postal_code %></PostalCode>
+          <CountryCode><%= @origin_country_code %></CountryCode>
+        </Address>
+      </ShipFrom>      
+      <RateInformation>
+        <NegotiatedRatesIndicator/>
+      </RateInformation>      
       <% if @envelope %>
         <Package>
            <PackagingType>
