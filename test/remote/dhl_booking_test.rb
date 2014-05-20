@@ -72,8 +72,6 @@ class DhlBookingTest < Test::Unit::TestCase
     response = dhl.book_pickup(request: pickup)   
     save_xml(response, "test_book_pickup_dhl")
     
-    puts response.success
-    
     assert response.success == true
     assert response.confirmation_number != nil     
     

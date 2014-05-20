@@ -85,14 +85,16 @@
              <PackagingType>
                 <Code><%= @package_type %></Code>
              </PackagingType>
-             <Dimensions>
-                <UnitOfMeasurement>
-                   <Code>CM</Code>
-                </UnitOfMeasurement>
-                <Length><%= package.length %></Length>
-                <Width><%= package.width %></Width>
-                <Height><%= package.height %></Height>
-             </Dimensions>
+             <% if package.length && package.width && package.height %>
+               <Dimensions>
+                  <UnitOfMeasurement>
+                     <Code>CM</Code>
+                  </UnitOfMeasurement>
+                  <Length><%= package.length %></Length>
+                  <Width><%= package.width %></Width>
+                  <Height><%= package.height %></Height>
+               </Dimensions>
+             <% end %>
              <PackageWeight>
                 <UnitOfMeasurement>
                    <Code>KGS</Code>

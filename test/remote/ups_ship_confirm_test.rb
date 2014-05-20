@@ -60,8 +60,6 @@ class UpsShipConfirmTest < Test::Unit::TestCase
     assert_not_nil shipment
     assert_not_nil shipment.tracking_number
     assert_not_nil shipment.label
-    puts shipment.label
-    puts shipment.tracking_number               
   end  
       
   def test_shipment_confirm_raw    

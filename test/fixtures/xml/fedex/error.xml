@@ -1,91 +1,51 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://fedex.com/ws/ship/v13">
-   <soapenv:Body>
-      <ProcessShipmentRequest>
-         <WebAuthenticationDetail>
-            <UserCredential>
-               <Key>rscqm75MLampLUuV</Key>
-               <Password>8rTZHQ6vbyOsGOgtwMXrZ1kIU</Password>
-            </UserCredential>
-         </WebAuthenticationDetail>
-         <ClientDetail>
-            <AccountNumber>510087267</AccountNumber>
-            <MeterNumber>118511895</MeterNumber>
-         </ClientDetail>
-         <Version>
-            <ServiceId>ship</ServiceId>
-            <Major>13</Major>
-            <Intermediate>0</Intermediate>
-            <Minor>0</Minor>
-         </Version>
-         <RequestedShipment>
-            <ShipTimestamp>2014-01-08T09:45:14.68Z</ShipTimestamp>
-            <DropoffType>REGULAR_PICKUP</DropoffType>
-            <ServiceType>STANDARD_OVERNIGHT</ServiceType>
-            <PackagingType>YOUR_PACKAGING</PackagingType>
-            <TotalWeight>
-               <Units>KG</Units>
-               <Value>6.0</Value>
-            </TotalWeight>
-            <Shipper>
-               <Contact>
-                  <PersonName>John Origin</PersonName>
-                  <CompanyName>Origin Company</CompanyName>
-                  <PhoneNumber>123 124</PhoneNumber>
-                  <PhoneExtension>124</PhoneExtension>
-               </Contact>
-               <Address>
-                  <StreetLines>Origin Street 124 1</StreetLines>
-                  <City>Origin</City>
-                  <PostalCode>11510</PostalCode>
-                  <CountryCode>MX</CountryCode>
-               </Address>
-            </Shipper>
-            <Recipient>
-               <Contact>
-                  <PersonName>Klaus destination</PersonName>
-                  <CompanyName>Destination Company</CompanyName>
-                  <PhoneNumber>124 12</PhoneNumber>
-                  <PhoneExtension>12</PhoneExtension>
-               </Contact>
-               <Address>
-                  <StreetLines>Destination Street 124 1</StreetLines>
-                  <City>Destination</City>
-                  <PostalCode>11510</PostalCode>
-                  <CountryCode>MX</CountryCode>
-                  <Residential>false</Residential>
-               </Address>
-            </Recipient>
-            <ShippingChargesPayment>
-               <PaymentType>SENDER</PaymentType>
-               <Payor>
-                  <ResponsibleParty>
-                     <AccountNumber>510087267</AccountNumber>
-                     <Contact />
-                  </ResponsibleParty>
-               </Payor>
-            </ShippingChargesPayment>
-            <LabelSpecification>
-               <LabelFormatType>COMMON2D</LabelFormatType>
-               <ImageType>PDF</ImageType>
-               <LabelStockType>PAPER_7X4.75</LabelStockType>
-            </LabelSpecification>
-            <RateRequestTypes>ACCOUNT</RateRequestTypes>
-            <MasterTrackingId>
-               <TrackingIdType>FEDEX</TrackingIdType>
-               <FormId>0455</FormId>
-               <TrackingNumber>794828339131</TrackingNumber>
-            </MasterTrackingId>            
-            <PackageCount>4</PackageCount>
-            <RequestedPackageLineItems>
-               <SequenceNumber>2</SequenceNumber>
-               <GroupPackageCount>1</GroupPackageCount>
-               <Weight>
-                  <Units>KG</Units>
-                  <Value>1.5</Value>
-               </Weight>
-            </RequestedPackageLineItems>
-         </RequestedShipment>
-      </ProcessShipmentRequest>
-   </soapenv:Body>
+<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns='http://fedex.com/ws/rate/v13'>
+  <soapenv:Header/>
+  <soapenv:Body>
+    <RateRequest>
+      <WebAuthenticationDetail>
+        <UserCredential>
+          <Key>rscqm75MLampLUuV</Key>
+          <Password>8rTZHQ6vbyOsGOgtwMXrZ1kIU</Password>
+        </UserCredential>
+      </WebAuthenticationDetail>
+      <ClientDetail>
+        <AccountNumber>510087267</AccountNumber>
+        <MeterNumber>118511895</MeterNumber>
+      </ClientDetail>
+      <Version>
+        <ServiceId>crs</ServiceId>
+        <Major>13</Major>
+        <Intermediate>0</Intermediate>
+        <Minor>0</Minor>
+      </Version>
+      <ReturnTransitAndCommit>true</ReturnTransitAndCommit>
+      <VariableOptions>SATURDAY_DELIVERY</VariableOptions>
+      <RequestedShipment>
+        <ShipTimestamp>2014-05-20T20:33:45.78Z</ShipTimestamp>
+        <DropoffType>REGULAR_PICKUP</DropoffType>
+        <PackagingType>YOUR_PACKAGING</PackagingType>
+        <Shipper>
+          <Address>
+            <PostalCode>11510</PostalCode>
+            <CountryCode>mx</CountryCode>
+          </Address>
+        </Shipper>
+        <Recipient>
+          <Address>
+            <PostalCode>11510</PostalCode>
+            <CountryCode>mx</CountryCode>
+          </Address>
+        </Recipient>
+        <RateRequestTypes>LIST</RateRequestTypes>
+        <PackageCount>1</PackageCount>
+        <RequestedPackageLineItems>
+          <GroupPackageCount>1</GroupPackageCount>
+          <Weight>
+            <Units>KG</Units>
+            <Value>2.0</Value>
+          </Weight>
+        </RequestedPackageLineItems>
+      </RequestedShipment>
+    </RateRequest>
+  </soapenv:Body>
 </soapenv:Envelope>

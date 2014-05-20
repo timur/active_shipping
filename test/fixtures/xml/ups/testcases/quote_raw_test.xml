@@ -1,0 +1,51 @@
+<AccessRequest>
+  <AccessLicenseNumber>0CCCCED94B9FB025</AccessLicenseNumber>
+  <UserId>sven.crone</UserId>
+  <Password>Holaups2014</Password>
+</AccessRequest>
+<RatingServiceSelectionRequest>
+   <Request>
+      <RequestAction>Rate</RequestAction>
+      <RequestOption>Shop</RequestOption>
+   </Request>
+   <CustomerClassification>
+      <Code>00</Code>
+   </CustomerClassification>
+   <Shipment>
+      <Shipper>
+         <ShipperNumber>0VR893</ShipperNumber>
+         <Address>
+            <PostalCode>11510</PostalCode>
+            <CountryCode>MX</CountryCode>
+            <ResidentialAddressIndicator>true</ResidentialAddressIndicator>
+         </Address>
+      </Shipper>
+      <ShipTo>
+         <Address>
+            <PostalCode>11510</PostalCode>
+            <CountryCode>MX</CountryCode>
+            <ResidentialAddressIndicator>true</ResidentialAddressIndicator>
+         </Address>
+      </ShipTo>
+      <ShipFrom>
+         <Address>
+            <PostalCode>11510</PostalCode>
+            <CountryCode>MX</CountryCode>
+         </Address>
+      </ShipFrom>
+      <RateInformation>
+         <NegotiatedRatesIndicator />
+      </RateInformation>
+      <Package>
+         <PackagingType>
+            <Code>02</Code>
+         </PackagingType>
+         <PackageWeight>
+            <UnitOfMeasurement>
+               <Code>KGS</Code>
+            </UnitOfMeasurement>
+            <Weight>2.0</Weight>
+         </PackageWeight>
+      </Package>
+   </Shipment>
+</RatingServiceSelectionRequest>
