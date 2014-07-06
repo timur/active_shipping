@@ -56,8 +56,8 @@ class DhlBookingTest < Test::Unit::TestCase
     pickup = ActiveMerchant::Shipping::DhlBookPickupRequest.new(
       account_number: 980526857,
       country: "MX",
-      #pickup_date: date_of_next("tuesday"),
-      pickup_date: "2014-03-24",      
+      pickup_date: date_of_next("tuesday"),
+      #pickup_date: "2014-03-24",      
       ready_by_time: "12:00",
       close_time: "15:00",  
       weight: 4,

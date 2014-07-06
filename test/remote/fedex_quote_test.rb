@@ -29,6 +29,52 @@ class FedExQuoteTest < Test::Unit::TestCase
     assert_not_nil response
   end
   
+  def test_quote_international_germany
+    packages = []
+    packages << ActiveMerchant::Shipping::FedexPackage.new(quantity: 1, height: 10, width: 10, length: 10, weight: 1.5)
+
+    quote = ActiveMerchant::Shipping::FedexQuoteRequest.new(
+      shipper_countrycode: "MX",
+      shipper_postalcode: "11510",
+      recipient_countrycode: "DE",        
+      recipient_postalcode: "53859",
+      packages: packages       
+    )
+     
+    quote.calculate_attributes
+    
+    fedex = FedEx.new(key: 'THMNl2nJQBc0U41y', password: 'Fj7tkfla7Hpou1JUNTbKSO6aF', accountNumber: '342914012', meterNumber: '106259821', test: false)
+    response = fedex.find_quotes(request: quote)    
+    
+    save_xml(response, "test_quote_international_germany")
+    assert response.notes.size == 1
+    assert response.success == true
+    assert_not_nil response
+  end  
+    
+
+  def test_quote_international_us
+    packages = []
+    packages << ActiveMerchant::Shipping::FedexPackage.new(quantity: 1, height: 10, width: 10, length: 10, weight: 1.5)
+
+    quote = ActiveMerchant::Shipping::FedexQuoteRequest.new(
+      shipper_countrycode: "MX",
+      shipper_postalcode: "11510",
+      recipient_countrycode: "US",        
+      recipient_postalcode: "10036-6518",
+      packages: packages       
+    )
+     
+    quote.calculate_attributes
+    
+    fedex = FedEx.new(key: 'THMNl2nJQBc0U41y', password: 'Fj7tkfla7Hpou1JUNTbKSO6aF', accountNumber: '342914012', meterNumber: '106259821', test: false)
+    response = fedex.find_quotes(request: quote)    
+    
+    save_xml(response, "test_quote_international_us")
+    assert response.success == true
+    assert_not_nil response
+  end  
+  
   def test_quote_mexico_multiple_fedex
     packages = []
     packages << ActiveMerchant::Shipping::FedexPackage.new(quantity: 1, height: 10, width: 10, length: 10, weight: 1.5)
@@ -72,7 +118,6 @@ class FedExQuoteTest < Test::Unit::TestCase
     response = fedex.find_quotes(request: quote)    
     
     save_xml(response, "test_quote_mexico_usa_fedex")
-    assert response.notes.size == 1
     assert response.success == true
     assert_not_nil response
   end    
@@ -140,7 +185,7 @@ class FedExQuoteTest < Test::Unit::TestCase
       shipper_postalcode: "11510",
       recipient_countrycode: "MX",        
       recipient_postalcode: "11510",
-      packaging_type: "Document",
+      packaging_type: "FEDEX_ENVELOPE",
       insured_value: 100,
       insured_currency: "NMP",
       packages: packages       
@@ -152,7 +197,6 @@ class FedExQuoteTest < Test::Unit::TestCase
     response = fedex.find_quotes(request: quote)    
     
     save_xml(response, "test_quote_insured_document")
-    #assert response.notes.size == 1
     assert response.success == true
     assert_not_nil response
   end    

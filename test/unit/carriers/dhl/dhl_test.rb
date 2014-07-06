@@ -144,7 +144,7 @@ class DhlTest < Test::Unit::TestCase
     assert response.class.to_s, ActiveMerchant::Shipping::DhlQuoteResponse.class.to_s     
     assert_equal response.notes.size, 0
     assert_operator response.quotes.size, :>, 0
-    assert_equal response.quotes[0].base_charge, 46.41
+    assert_equal response.quotes[0].base_charge, 42.12
     assert_equal response.quotes[0].total_tax_amount, 8   
     assert_equal response.quotes[0].delivery_date_calculated.hour, 9       
     

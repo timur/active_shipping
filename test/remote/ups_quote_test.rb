@@ -61,6 +61,50 @@ class UPSTest < Test::Unit::TestCase
     assert_not_nil response
   end
   
+  def test_quote_international_germany
+    packages = []
+    packages << ActiveMerchant::Shipping::UpsPackage.new(height: 10, width: 10, length: 10, weight: 1.5)
+    
+    quote = ActiveMerchant::Shipping::UpsQuoteRequest.new(
+      origin_country_code: "MX",
+      destination_country_code: "DE", 
+      origin_postal_code: "11510", 
+      destination_postal_code: "53859",
+      package_type: UpsConstants::PACKAGE,
+      pickup_type: UpsConstants::DAILY_PICKUP,
+      customer_classification: UpsConstants::CLASSIFICATION_DAILY_RATES,
+      packages: packages       
+    )
+    
+    ups = UPS.new(access_license_number: '0CCCCED94B9FB025', password: 'Holaups2014', user_id: 'sven.crone', test: true)
+    response = ups.find_quotes(request: quote)    
+    
+    save_xml(response, "test_quote_international_germany")
+    assert_not_nil response
+  end
+  
+  def test_quote_international_us
+    packages = []
+    packages << ActiveMerchant::Shipping::UpsPackage.new(height: 10, width: 10, length: 10, weight: 1.5)
+    
+    quote = ActiveMerchant::Shipping::UpsQuoteRequest.new(
+      origin_country_code: "MX",
+      destination_country_code: "US", 
+      origin_postal_code: "11510", 
+      destination_postal_code: "10036-6518",
+      package_type: UpsConstants::PACKAGE,
+      pickup_type: UpsConstants::DAILY_PICKUP,
+      customer_classification: UpsConstants::CLASSIFICATION_DAILY_RATES,
+      packages: packages       
+    )
+    
+    ups = UPS.new(access_license_number: '0CCCCED94B9FB025', password: 'Holaups2014', user_id: 'sven.crone', test: true)
+    response = ups.find_quotes(request: quote)    
+    
+    save_xml(response, "test_quote_international_us")
+    assert_not_nil response
+  end    
+  
   def test_quote_mexico_usa_ups_declared
     packages = []
     packages << ActiveMerchant::Shipping::UpsPackage.new(height: 10, width: 10, length: 10, weight: 1.5)

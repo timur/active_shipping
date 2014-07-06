@@ -25,6 +25,46 @@ class DhlTest < Test::Unit::TestCase
     save_xml(response, "test_quote_mexico_dhl")
     assert_not_nil response
   end
+  
+  def test_quote_international_germany
+    pieces = []
+    pieces << ActiveMerchant::Shipping::DhlPiece.new(height: 10, width: 10, depth: 10, weight: 1.5)
+
+    quote = ActiveMerchant::Shipping::DhlQuoteRequest.new(
+      origin_country_code: "MX",
+      destination_country_code: "DE", 
+      origin_postal_code: "11510", 
+      destination_postal_code: "53859",
+      payment_account_number: "988191844",
+      pieces: pieces       
+    )
+
+    dhl = Dhl.new(site_id: 'ZURICATA', password: 'Rln8_VCH3r', test: false)
+    response = dhl.find_quotes(request: quote)    
+    
+    save_xml(response, "test_quote_international_germany")
+    assert_not_nil response
+  end  
+
+  def test_quote_international_us
+    pieces = []
+    pieces << ActiveMerchant::Shipping::DhlPiece.new(height: 10, width: 10, depth: 10, weight: 1.5)
+
+    quote = ActiveMerchant::Shipping::DhlQuoteRequest.new(
+      origin_country_code: "MX",
+      destination_country_code: "US", 
+      origin_postal_code: "11510", 
+      destination_postal_code: "10036-6518",
+      payment_account_number: "988191844",
+      pieces: pieces       
+    )
+
+    dhl = Dhl.new(site_id: 'ZURICATA', password: 'Rln8_VCH3r', test: false)
+    response = dhl.find_quotes(request: quote)    
+    
+    save_xml(response, "test_quote_international_us")
+    assert_not_nil response
+  end  
 
   def test_quote_multiple_packages
     pieces = []

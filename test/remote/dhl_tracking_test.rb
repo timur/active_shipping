@@ -24,7 +24,7 @@ class DhlTrackingTest < Test::Unit::TestCase
     
     save_xml(response, "test_tracking_dhl")
     
-    assert response.success == true
+    #assert response.success == true
     #response.tracking_number_unique_identifier == "2456602000~578977864591~FX"
     #response.tracking_events[18].event_type == "OC"
     #response.tracking_events[17].city == "TSUEN WAN"    
@@ -33,13 +33,3 @@ class DhlTrackingTest < Test::Unit::TestCase
     assert_not_nil response
   end  
 end
-
-
-#attribute :timestamp, DateTime
-#attribute :event_type, String           
-#attribute :event_description, String
-#attribute :city, String
-#attribute :postal_code, String
-#attribute :country_code, String                                
-#attribute :residential, Boolean                                      
-#attribute :arrival_location, String
