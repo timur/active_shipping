@@ -64,7 +64,9 @@ module ActiveMerchant
           end
         end
         
-        self.base_charge = self.total_charge - self.total_tax_amount
+        if self.total_charge && self.total_tax_amount
+          self.base_charge = self.total_charge - self.total_tax_amount
+        end
         
         if self.delivery_time
           d = Time.parse(self.delivery_time)

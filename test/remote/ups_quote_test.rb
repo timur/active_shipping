@@ -142,7 +142,7 @@ class UPSTest < Test::Unit::TestCase
       destination_postal_code: "33434",
       shipper_number: "0VR893",      
       package_type: UpsConstants::PACKAGE,
-      insured_currency: "USD",
+      insured_currency: "NMP",
       insured_value: 100.00,
       packages: packages       
     )
@@ -152,7 +152,30 @@ class UPSTest < Test::Unit::TestCase
     
     save_xml(response, "test_quote_mexico_usa_ups_insured")
     assert_not_nil response
-  end  
+  end 
+  
+  def test_quote_mexico_usa_ups_insured_500
+    packages = []
+    packages << ActiveMerchant::Shipping::UpsPackage.new(height: 10, width: 10, length: 10, weight: 1.5)
+    
+    quote = ActiveMerchant::Shipping::UpsQuoteRequest.new(
+      origin_country_code: "MX",
+      destination_country_code: "US", 
+      origin_postal_code: "11510", 
+      destination_postal_code: "33434",
+      shipper_number: "0VR893",      
+      package_type: UpsConstants::PACKAGE,
+      insured_currency: "NNP",
+      insured_value: 500.00,
+      packages: packages       
+    )
+    
+    ups = UPS.new(access_license_number: 'BCBDB1BD667FDBFA', password: 'Shipper7', user_id: 'svencrone', test: true)
+    response = ups.find_quotes(request: quote)    
+    
+    save_xml(response, "test_quote_mexico_usa_ups_insured_500")
+    assert_not_nil response
+  end   
 
   def test_quote_mexico_usa_ups_declared_document
     quote = ActiveMerchant::Shipping::UpsQuoteRequest.new(

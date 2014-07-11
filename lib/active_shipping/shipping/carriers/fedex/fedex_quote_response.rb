@@ -16,8 +16,7 @@ module ActiveMerchant
       attribute :taxes, Float
       attribute :tax_rate, Float
       attribute :currency, Float      
-      attribute :extra_charges, Array      
-      
+      attribute :extra_charges, Array
     end
 
     class FedexSurcharge
