@@ -54,7 +54,7 @@ module ActiveMerchant
       attribute :form_id, String                        
 
       attribute :package, FedexPackage
-      attribute :package_count, Integer
+      attribute :package_count, Integer, default: 0
       
       attribute :envelope, Boolean, default: false            
       

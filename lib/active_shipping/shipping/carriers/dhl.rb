@@ -216,9 +216,9 @@ module ActiveMerchant
             
             q.calculate 
             
-            if q.total_charge > 0
+            #if q.total_charge > 0
               response.quotes << q
-            end
+            #end
           end        
         end
         
