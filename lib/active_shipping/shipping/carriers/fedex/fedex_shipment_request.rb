@@ -65,6 +65,8 @@ module ActiveMerchant
       def calculate_attributes
         if envelope
           self.package_count = 1
+        else
+          self.package_count = @package.quantity
         end
         
         unless packaging_type

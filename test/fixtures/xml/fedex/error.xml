@@ -1,51 +1,86 @@
-<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns='http://fedex.com/ws/rate/v13'>
-  <soapenv:Header/>
-  <soapenv:Body>
-    <RateRequest>
-      <WebAuthenticationDetail>
-        <UserCredential>
-          <Key>rscqm75MLampLUuV</Key>
-          <Password>8rTZHQ6vbyOsGOgtwMXrZ1kIU</Password>
-        </UserCredential>
-      </WebAuthenticationDetail>
-      <ClientDetail>
-        <AccountNumber>510087267</AccountNumber>
-        <MeterNumber>118511895</MeterNumber>
-      </ClientDetail>
-      <Version>
-        <ServiceId>crs</ServiceId>
-        <Major>13</Major>
-        <Intermediate>0</Intermediate>
-        <Minor>0</Minor>
-      </Version>
-      <ReturnTransitAndCommit>true</ReturnTransitAndCommit>
-      <VariableOptions>SATURDAY_DELIVERY</VariableOptions>
-      <RequestedShipment>
-        <ShipTimestamp>2014-05-20T20:33:45.78Z</ShipTimestamp>
-        <DropoffType>REGULAR_PICKUP</DropoffType>
-        <PackagingType>YOUR_PACKAGING</PackagingType>
-        <Shipper>
-          <Address>
-            <PostalCode>11510</PostalCode>
-            <CountryCode>mx</CountryCode>
-          </Address>
-        </Shipper>
-        <Recipient>
-          <Address>
-            <PostalCode>11510</PostalCode>
-            <CountryCode>mx</CountryCode>
-          </Address>
-        </Recipient>
-        <RateRequestTypes>LIST</RateRequestTypes>
-        <PackageCount>1</PackageCount>
-        <RequestedPackageLineItems>
-          <GroupPackageCount>1</GroupPackageCount>
-          <Weight>
-            <Units>KG</Units>
-            <Value>2.0</Value>
-          </Weight>
-        </RequestedPackageLineItems>
-      </RequestedShipment>
-    </RateRequest>
-  </soapenv:Body>
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://fedex.com/ws/ship/v13">
+   <soapenv:Body>
+      <ProcessShipmentRequest>
+         <WebAuthenticationDetail>
+            <UserCredential>
+               <Key>rscqm75MLampLUuV</Key>
+               <Password>8rTZHQ6vbyOsGOgtwMXrZ1kIU</Password>
+            </UserCredential>
+         </WebAuthenticationDetail>
+         <ClientDetail>
+            <AccountNumber>510087267</AccountNumber>
+            <MeterNumber>118511895</MeterNumber>
+         </ClientDetail>
+         <Version>
+            <ServiceId>ship</ServiceId>
+            <Major>13</Major>
+            <Intermediate>0</Intermediate>
+            <Minor>0</Minor>
+         </Version>
+         <RequestedShipment>
+            <ShipTimestamp>2014-09-18T14:34:24.96Z</ShipTimestamp>
+            <DropoffType>REGULAR_PICKUP</DropoffType>
+            <ServiceType>FedEx First Overnight</ServiceType>
+            <PackagingType>YOUR_PACKAGING</PackagingType>
+            <TotalWeight>
+               <Units>KG</Units>
+               <Value>2.0</Value>
+            </TotalWeight>
+            <Shipper>
+               <Contact>
+                  <PersonName>Amalia Sanford</PersonName>
+                  <CompanyName>Schmitt, Toy and Yost</CompanyName>
+                  <PhoneNumber>123123</PhoneNumber>
+                  <PhoneExtension />
+               </Contact>
+               <Address>
+                  <StreetLines>Rodriguez Ford 466</StreetLines>
+                  <City>Ciudad de México</City>
+                  <PostalCode>11510</PostalCode>
+                  <CountryCode>MX</CountryCode>
+               </Address>
+            </Shipper>
+            <Recipient>
+               <Contact>
+                  <PersonName>Angie Oberbrunner</PersonName>
+                  <CompanyName>Casper-Bashirian</CompanyName>
+                  <PhoneNumber>123123</PhoneNumber>
+                  <PhoneExtension />
+               </Contact>
+               <Address>
+                  <StreetLines>Reynold Route 494</StreetLines>
+                  <City>Ciudad de México</City>
+                  <PostalCode>11510</PostalCode>
+                  <CountryCode>MX</CountryCode>
+                  <Residential>false</Residential>
+               </Address>
+            </Recipient>
+            <ShippingChargesPayment>
+               <PaymentType>SENDER</PaymentType>
+               <Payor>
+                  <ResponsibleParty>
+                     <AccountNumber>510087267</AccountNumber>
+                     <Contact />
+                  </ResponsibleParty>
+               </Payor>
+            </ShippingChargesPayment>
+            <LabelSpecification>
+               <LabelFormatType>COMMON2D</LabelFormatType>
+               <ImageType>PDF</ImageType>
+               <LabelStockType>PAPER_7X4.75</LabelStockType>
+            </LabelSpecification>
+            <RateRequestTypes>ACCOUNT</RateRequestTypes>
+            <PackageCount>1</PackageCount>
+            <RequestedPackageLineItems>
+               <SequenceNumber>1</SequenceNumber>
+               <GroupPackageCount>1</GroupPackageCount>
+               <Weight>
+                  <Units>KG</Units>
+                  <Value>2.0</Value>
+               </Weight>
+            </RequestedPackageLineItems>
+         </RequestedShipment>
+      </ProcessShipmentRequest>
+   </soapenv:Body>
 </soapenv:Envelope>

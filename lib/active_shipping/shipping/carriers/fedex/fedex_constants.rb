@@ -33,6 +33,32 @@ module ActiveMerchant
         "FEDEX_GROUND" => "FedEx Ground",
         "INTERNATIONAL_GROUND" => "FedEx International Ground"
       }
+      
+      ServiceTypesTextToCode = {
+        "FedEx Priority Overnight" => "PRIORITY_OVERNIGHT",
+        "FedEx Priority Overnight Saturday Delivery" => "PRIORITY_OVERNIGHT_SATURDAY_DELIVERY",
+        "FedEx 2 Day" => "FEDEX_2_DAY",
+        "FedEx 2 Day Saturday Delivery" => "FEDEX_2_DAY_SATURDAY_DELIVERY",
+        "FedEx Standard Overnight" => "STANDARD_OVERNIGHT",
+        "FedEx First Overnight" => "FIRST_OVERNIGHT",
+        "FedEx First Overnight Saturday Delivery" => "FIRST_OVERNIGHT_SATURDAY_DELIVERY",
+        "FedEx Express Saver" => "FEDEX_EXPRESS_SAVER",
+        "FedEx 1 Day Freight" => "FEDEX_1_DAY_FREIGHT",
+        "FedEx 1 Day Freight Saturday Delivery" => "FEDEX_1_DAY_FREIGHT_SATURDAY_DELIVERY",
+        "FedEx 2 Day Freight" => "FEDEX_2_DAY_FREIGHT",
+        "FedEx 2 Day Freight Saturday Delivery" => "FEDEX_2_DAY_FREIGHT_SATURDAY_DELIVERY",
+        "FedEx 3 Day Freight" => "FEDEX_3_DAY_FREIGHT",
+        "FedEx 3 Day Freight Saturday Delivery" => "FEDEX_3_DAY_FREIGHT_SATURDAY_DELIVERY",
+        "FedEx International Priority" => "INTERNATIONAL_PRIORITY",
+        "FedEx International Priority Saturday Delivery" => "INTERNATIONAL_PRIORITY_SATURDAY_DELIVERY",
+        "FedEx International Economy" => "INTERNATIONAL_ECONOMY",
+        "FedEx International First" => "INTERNATIONAL_FIRST",
+        "FedEx International Priority Freight" => "INTERNATIONAL_PRIORITY_FREIGHT",
+        "FedEx International Economy Freight" => "INTERNATIONAL_ECONOMY_FREIGHT",
+        "FedEx Ground Home Delivery" => "GROUND_HOME_DELIVERY",
+        "FedEx Ground" => "FEDEX_GROUND",
+        "FedEx International Ground" => "INTERNATIONAL_GROUND"
+      }      
 
       PackageTypes = {
         "fedex_envelope" => "FEDEX_ENVELOPE",

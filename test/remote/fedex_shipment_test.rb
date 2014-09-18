@@ -27,7 +27,7 @@ class FedExShipmentTest < Test::Unit::TestCase
       recipient_city: "Mex City",     
       recipient_address_line: "Address Recipient",  
       contact_recipient_phonenumber: "12345",         
-      packaging_type: "Package",
+      packaging_type: "YOUR_PACKAGING",
       package: package       
     )
      
@@ -94,7 +94,7 @@ class FedExShipmentTest < Test::Unit::TestCase
       recipient_city: "Mex City",     
       recipient_address_line: "Address Recipient",  
       contact_recipient_phonenumber: "12345",         
-      packaging_type: "Package",
+      packaging_type: "YOUR_PACKAGING",
       first_package: true,
       total_weight: 3.5,
       package: package       
