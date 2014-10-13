@@ -44,6 +44,7 @@ module ActiveMerchant
 
       def parse_shipment_response(document)
         response = DhlShipmentResponse.new
+        parse_status_notes(response, document)        
         parse_notes(response, document)
         parse_shipment(response, document)        
         response
@@ -83,6 +84,8 @@ module ActiveMerchant
           xml = ""
           if options[:raw_xml]
             xml = File.open(Dir.pwd + "/test/fixtures/xml/dhl/#{options[:raw_xml]}").read
+          elsif options[:raw_string]
+            xml = options[:raw_string]
           else
             request = options[:request]        
             request.site_id = @options[:site_id]
@@ -256,7 +259,19 @@ module ActiveMerchant
             response.notes << n
           end        
         end
-        
+
+        def parse_status_notes(response, document)
+          status = document.xpath("//Status")
+          
+          condition = status.xpath("Condition")
+          if condition
+            n = DhlNote.new            
+            n.code = condition.at('ConditionCode').text if condition.at('ConditionCode')
+            n.data = condition.at('ConditionData').text if condition.at('ConditionData')    
+            response.notes << n
+          end            
+        end
+                
         def parse_status(document)
           success = true
           status = document.xpath("//Status")

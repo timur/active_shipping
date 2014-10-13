@@ -264,7 +264,10 @@ class DhlTest < Test::Unit::TestCase
     shipment.calculate_attributes
     
     dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6', test: true)
-    response = dhl.shipment(request: shipment)    
+    response = dhl.shipment(request: shipment)   
+    
+    puts "SUCCESS #{response.is_success?}" 
+    puts "NOTES #{response.notes}"     
     
     save_xml(response, "test_shipment_insured_dhl")
     assert_not_nil response

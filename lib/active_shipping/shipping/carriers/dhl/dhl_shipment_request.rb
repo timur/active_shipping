@@ -127,7 +127,7 @@ module ActiveMerchant
       end  
             
       def isDutiable
-        if self.dutiable
+        if @dutiable
           return "Y"
         else
           return "N"

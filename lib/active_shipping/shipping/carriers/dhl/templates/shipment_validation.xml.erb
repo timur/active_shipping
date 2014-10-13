@@ -38,7 +38,7 @@
 		  </Contact>
 		<% end -%>
 	</Consignee>
-	<%- if dutiable? %>
+	<% if dutiable %>
 	  <Dutiable>
 		  <DeclaredValue><%= @declared_value %></DeclaredValue>
 		  <DeclaredCurrency><%= @declared_currency %></DeclaredCurrency>

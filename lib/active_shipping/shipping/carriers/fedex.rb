@@ -30,6 +30,8 @@ module ActiveMerchant
         xml = ""
         if options[:raw_xml]
           xml = File.open(Dir.pwd + "/test/fixtures/xml/fedex/#{options[:raw_xml]}").read
+        elsif options[:raw_string]
+          xml = options[:raw_string]          
         else
           request = options[:request]
 
