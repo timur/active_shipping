@@ -25,6 +25,7 @@ module ActiveMerchant
       # 2a = Small Express Box; 2b = Medium Express Box; 2c = Large Express Box
       PACKAGE = "02"
       DOCUMENT = "01"
+      UNKNOWN = "00"      
       
       CLASSIFICATION_DAILY_RATES = "01"
       CLASSIFICATION_ACCOUNT_RATES = "00"
