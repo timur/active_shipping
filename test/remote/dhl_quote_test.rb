@@ -42,7 +42,7 @@ class DhlTest < Test::Unit::TestCase
     dhl = Dhl.new(site_id: 'ZURICATA', password: 'Rln8_VCH3r', test: false)
     response = dhl.find_quotes(request: quote)    
     
-    save_xml(response, "test_quote_international_germany")
+    save_xml(response, "test_quote_international_germany_dhl")
     assert_not_nil response
   end  
 
@@ -62,7 +62,7 @@ class DhlTest < Test::Unit::TestCase
     dhl = Dhl.new(site_id: 'ZURICATA', password: 'Rln8_VCH3r', test: false)
     response = dhl.find_quotes(request: quote)    
     
-    save_xml(response, "test_quote_international_us")
+    save_xml(response, "test_quote_international_us_dhl")
     assert_not_nil response
   end  
 
@@ -85,7 +85,7 @@ class DhlTest < Test::Unit::TestCase
     dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6', test: true)
     response = dhl.find_quotes(request: quote)    
     
-    save_xml(response, "test_quote_multiple_packages")
+    save_xml(response, "test_quote_multiple_packages_dhl")
     assert_not_nil response
   end
   
@@ -133,7 +133,7 @@ class DhlTest < Test::Unit::TestCase
     dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6', test: true)
     response = dhl.find_quotes(raw_xml: "testcases/test_quote_declared_value_document_raw.xml")    
     
-    save_xml(response, "test_quote_declared_value_document_raw_xml")
+    save_xml(response, "test_quote_declared_value_document_raw_xml_dhl")
     assert_not_nil response
   end
   
@@ -155,7 +155,7 @@ class DhlTest < Test::Unit::TestCase
     dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6', test: true)
     response = dhl.find_quotes(request: quote)    
     
-    save_xml(response, "test_quote_declared_document")
+    save_xml(response, "test_quote_declared_document_dhl")
     assert_not_nil response
   end     
   
@@ -164,7 +164,7 @@ class DhlTest < Test::Unit::TestCase
     dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6', test: true)
     response = dhl.find_quotes(raw_xml: "testcases/test_quote_insured_value_document_raw.xml")    
     
-    save_xml(response, "test_quote_insured_value_document_raw_xml")
+    save_xml(response, "test_quote_insured_value_document_raw_xml_dhl")
     assert_not_nil response
   end      
   
@@ -186,7 +186,7 @@ class DhlTest < Test::Unit::TestCase
     dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6', test: true)
     response = dhl.find_quotes(request: quote)    
     
-    save_xml(response, "test_quote_insured_document")
+    save_xml(response, "test_quote_insured_document_dhl")
     assert_not_nil response
   end     
   
@@ -195,7 +195,7 @@ class DhlTest < Test::Unit::TestCase
     dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6', test: true)
     response = dhl.find_quotes(raw_xml: "testcases/test_quote_insured_raw.xml")    
     
-    save_xml(response, "test_quote_insured_raw_xml")
+    save_xml(response, "test_quote_insured_raw_xml_dhl")
     assert_not_nil response
   end      
   

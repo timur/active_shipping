@@ -1,4 +1,4 @@
-<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns='http://fedex.com/ws/rate/v13'>
+<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns='http://fedex.com/ws/rate/v16'>
   <soapenv:Header/>
   <soapenv:Body>
     <RateRequest>
@@ -14,7 +14,7 @@
       </ClientDetail>
       <Version>
         <ServiceId>crs</ServiceId>
-        <Major>13</Major>
+        <Major>16</Major>
         <Intermediate>0</Intermediate>
         <Minor>0</Minor>
       </Version>
@@ -46,7 +46,7 @@
           </Address>
         </Recipient>
         <% if @envelope %>
-          <RateRequestTypes>ACCOUNT</RateRequestTypes>
+          <RateRequestTypes>LIST</RateRequestTypes>
           <PackageCount>1</PackageCount>        
           <RequestedPackageLineItems>
             <SequenceNumber>1</SequenceNumber>              

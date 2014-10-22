@@ -46,7 +46,7 @@ class FedExQuoteTest < Test::Unit::TestCase
     fedex = FedEx.new(key: 'THMNl2nJQBc0U41y', password: 'Fj7tkfla7Hpou1JUNTbKSO6aF', accountNumber: '342914012', meterNumber: '106259821', test: false)
     response = fedex.find_quotes(request: quote)    
     
-    save_xml(response, "test_quote_international_germany")
+    save_xml(response, "test_quote_international_germany_fede")
     assert response.notes.size == 1
     assert response.success == true
     assert_not_nil response
@@ -70,7 +70,7 @@ class FedExQuoteTest < Test::Unit::TestCase
     fedex = FedEx.new(key: 'THMNl2nJQBc0U41y', password: 'Fj7tkfla7Hpou1JUNTbKSO6aF', accountNumber: '342914012', meterNumber: '106259821', test: false)
     response = fedex.find_quotes(request: quote)    
     
-    save_xml(response, "test_quote_international_us")
+    save_xml(response, "test_quote_international_us_fedex")
     assert response.success == true
     assert_not_nil response
   end  
@@ -127,7 +127,7 @@ class FedExQuoteTest < Test::Unit::TestCase
     #response = fedex.find_quotes(raw_xml: "test_quote_mexico_working.xml")    
     response = fedex.find_quotes(raw_xml: "error.xml")        
     
-    save_xml(response, "test_quote_static")
+    save_xml(response, "test_quote_static_fedex")
     assert_not_nil response
   end
   
@@ -135,7 +135,7 @@ class FedExQuoteTest < Test::Unit::TestCase
     fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
     response = fedex.find_quotes(raw_xml: "request1.xml")    
     
-    save_xml(response, "test_quote_envelope")
+    save_xml(response, "test_quote_envelope_fedex")
     assert_not_nil response
   end      
 
@@ -143,7 +143,7 @@ class FedExQuoteTest < Test::Unit::TestCase
     fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
     response = fedex.find_quotes(raw_xml: "quote_envelope_mexico.xml")    
     
-    save_xml(response, "test_quote_envelope_mexico_static")
+    save_xml(response, "test_quote_envelope_mexico_static_fedex")
     assert_not_nil response
   end 
   
@@ -162,7 +162,7 @@ class FedExQuoteTest < Test::Unit::TestCase
     fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
     response = fedex.find_quotes(request: quote)    
     
-    save_xml(response, "test_quote_envelope_mexico")
+    save_xml(response, "test_quote_envelope_mexico_fedex")
     assert response.success == true
 
     assert_not_nil response
@@ -172,7 +172,7 @@ class FedExQuoteTest < Test::Unit::TestCase
     fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
     response = fedex.find_quotes(raw_xml: "/testcases/quote_insured_value_document.xml")    
     
-    save_xml(response, "test_quote_insured_document_raw_xml")
+    save_xml(response, "test_quote_insured_document_raw_xml_fedex")
     assert_not_nil response
   end    
   
@@ -196,7 +196,7 @@ class FedExQuoteTest < Test::Unit::TestCase
     fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
     response = fedex.find_quotes(request: quote)    
     
-    save_xml(response, "test_quote_insured_document")
+    save_xml(response, "test_quote_insured_document_fedex")
     assert response.success == true
     assert_not_nil response
   end    
@@ -206,7 +206,7 @@ class FedExQuoteTest < Test::Unit::TestCase
     fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
     response = fedex.find_quotes(raw_xml: "/testcases/quote_insured_value.xml")    
     
-    save_xml(response, "test_quote_insured_raw_xml")
+    save_xml(response, "test_quote_insured_raw_xml_fedex")
     assert_not_nil response
   end    
 
@@ -229,7 +229,7 @@ class FedExQuoteTest < Test::Unit::TestCase
     fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
     response = fedex.find_quotes(request: quote)    
     
-    save_xml(response, "test_quote_insured_fedex_500")
+    save_xml(response, "test_quote_insured_fedex_500_fedex")
     assert response.notes.size == 1
     assert response.success == true
     assert_not_nil response
