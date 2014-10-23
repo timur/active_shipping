@@ -31,5 +31,19 @@ class UpsTrackingTest < Test::Unit::TestCase
     #response.tracking_events[17].postal_code == "230"        
     #response.tracking_events[17].country_code == "HK"            
     assert_not_nil response
-  end  
+  end
+  
+  def test_tracking_ups_shoes
+    track_request = ActiveMerchant::Shipping::UpsTrackingRequest.new(
+      trackingnumber: "1Z95152V6863803543"
+    )
+     
+    ups = UPS.new(access_license_number: '0CCCCED94B9FB025', password: 'Holaups2014', user_id: 'sven.crone', test: false)
+    response = ups.tracking(request: track_request, test: false)    
+    
+    save_xml(response, "test_tracking_ups_shoes")
+    
+    assert response.success == true
+    assert_not_nil response
+  end    
 end

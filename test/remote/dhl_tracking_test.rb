@@ -14,6 +14,18 @@ class DhlTrackingTest < Test::Unit::TestCase
     assert_not_nil response
   end    
   
+  def test_tracking_amazon
+    track_request = ActiveMerchant::Shipping::DhlTrackingRequest.new(
+      trackingnumber: "JJD000390003207576932"
+    )
+     
+    dhl = Dhl.new(site_id: 'ZURICATA', password: 'Rln8_VCH3r', test: false)
+    response = dhl.tracking(request: track_request)    
+    
+    save_xml(response, "test_tracking_amazon")    
+    assert_not_nil response    
+  end  
+  
   def test_tracking
     track_request = ActiveMerchant::Shipping::DhlTrackingRequest.new(
       trackingnumber: "8564385550"
