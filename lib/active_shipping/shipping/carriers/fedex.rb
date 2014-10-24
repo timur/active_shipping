@@ -235,8 +235,8 @@ module ActiveMerchant
         if current_detail
           quote.currency = current_detail.at('TotalBaseCharge//Currency').text
           quote.currency = "MXN" if quote.currency == "NMP"
-          quote.base_charge = current_detail.at('TotalBaseCharge//Amount').text          
-          quote.total_charge = current_detail.at('TotalNetCharge//Amount').text                    
+          quote.base_charge = current_detail.at('TotalNetFreight//Amount').text          
+          quote.total_charge = current_detail.at('TotalNetFedExCharge//Amount').text                    
           quote.surcharge = current_detail.at('TotalSurcharges//Amount').text                                        
                                                         
           surcharges = current_detail.xpath("ShipmentRateDetail/Surcharges")

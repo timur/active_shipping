@@ -5,23 +5,41 @@ class FedExParseQuoteResponseTest < Test::Unit::TestCase
   
   def setup
   end
-  
+
   def test_parse_quote_response
-    xml_string = File.read(Dir.pwd + "/test/fixtures/xml/fedex/response_quote_mexico.xml")
+    xml_string = File.read(Dir.pwd + "/test/fixtures/xml/fedex/response_quote_unit.xml")
     xml = Nokogiri::XML(xml_string)
     
     fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
     response = fedex.parse_quote_response(xml)
     
     assert response.notes.size == 1
-    assert response.quotes.size == 4      
-    assert response.quotes[0].extra_charges.size == 2                
-    assert response.quotes[0].currency == "MXN"        
-    assert response.quotes[0].taxes == 48.22  
+    assert response.quotes.size == 4 
     
-    assert response.quotes[0].base_charge == 274.0       
-    assert response.quotes[0].surcharge == 27.4    
+    first = response.quotes[0]
+    assert first.product_code == "FIRST_OVERNIGHT"
+    assert first.currency == "MXN"
+    assert first.base_charge == 141.62
+    assert first.surcharge == 5.89                   
+    assert first.extra_charges.size == 1                
   end
+    
+  #def test_parse_quote_response
+  #  xml_string = File.read(Dir.pwd + "/test/fixtures/xml/fedex/response_quote_mexico.xml")
+  #  xml = Nokogiri::XML(xml_string)
+  #  
+  #  fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
+  #  response = fedex.parse_quote_response(xml)
+  #  
+  #  assert response.notes.size == 1
+  #  assert response.quotes.size == 4      
+  #  assert response.quotes[0].extra_charges.size == 2                
+  #  assert response.quotes[0].currency == "MXN"        
+  #  assert response.quotes[0].taxes == 48.22  
+  #  
+  #  assert response.quotes[0].base_charge == 274.0       
+  #  assert response.quotes[0].surcharge == 27.4    
+  #end
   
   def test_quote_error
     xml_string = File.read(Dir.pwd + "/test/fixtures/xml/fedex/quote_error.xml")
