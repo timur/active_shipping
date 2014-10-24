@@ -12,6 +12,9 @@
         <AccountNumber><%= @accountNumber %></AccountNumber>
         <MeterNumber><%= @meterNumber %></MeterNumber>
       </ClientDetail>
+      <TransactionDetail>
+         <CustomerTransactionId>Intra_MX_Express_saver</CustomerTransactionId>
+      </TransactionDetail>      
       <Version>
         <ServiceId>crs</ServiceId>
         <Major>16</Major>
@@ -19,11 +22,16 @@
         <Minor>0</Minor>
       </Version>
       <ReturnTransitAndCommit>true</ReturnTransitAndCommit>
-      <VariableOptions>SATURDAY_DELIVERY</VariableOptions>
       <RequestedShipment>
         <ShipTimestamp><%= Time.now.utc.iso8601(2) %></ShipTimestamp>
         <DropoffType>REGULAR_PICKUP</DropoffType>
         <PackagingType><%= @packaging_type %></PackagingType>
+        <% if @envelope %>
+          <TotalWeight>
+             <Units>KG</Units>
+             <Value><%= @document_weight -%></Value>
+          </TotalWeight>        
+        <% end %>        
         <% if @insured_value && @insured_currency %>
           <TotalInsuredValue>
             <Currency><%= @insured_currency %></Currency>
@@ -49,13 +57,13 @@
           <RateRequestTypes>LIST</RateRequestTypes>
           <PackageCount>1</PackageCount>        
           <RequestedPackageLineItems>
-            <SequenceNumber>1</SequenceNumber>              
+            <SequenceNumber>1</SequenceNumber>       
+            <GroupNumber>1</GroupNumber>                   
             <GroupPackageCount>1</GroupPackageCount>  
              <Weight>
                <Units>KG</Units>
                <Value><%= @document_weight -%></Value>
              </Weight>                            
-             <PhysicalPackaging>ENVELOPE</PhysicalPackaging>
           </RequestedPackageLineItems>        
         <% else %>        
           <RateRequestTypes>LIST</RateRequestTypes>
