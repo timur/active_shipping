@@ -19,6 +19,15 @@
             <ReadyTimeGMTOffset><%= time_offset %></ReadyTimeGMTOffset>
             <DimensionUnit>CM</DimensionUnit>
             <WeightUnit>KG</WeightUnit>
+            <% if @package_type == "document" %>
+              <Pieces>
+                <Piece>
+                  <PieceID>1</PieceID>
+                  <PackageTypeCode>FLY</PackageTypeCode>
+                  <Weight><%= @document_weight %></Weight>
+                </Piece>
+              </Pieces>                        
+            <% end %>
             <% if @pieces && @pieces.size > 0 %>
               <Pieces>
                 <% @pieces.each_with_index do |piece, i| -%>              

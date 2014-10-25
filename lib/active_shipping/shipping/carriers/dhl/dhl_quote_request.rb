@@ -35,6 +35,7 @@ module ActiveMerchant
       validates :destination_postal_code, presence: { message: "(destination_postal_code) can't be blank" }      
       
       attribute :declared_value, String
+      attribute :document_weight, Float      
       attribute :time_zone, String, default: "Mexico City"
       attribute :ready_time, Time      
       
