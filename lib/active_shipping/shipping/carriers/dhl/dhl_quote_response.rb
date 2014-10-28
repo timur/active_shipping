@@ -55,8 +55,6 @@ module ActiveMerchant
       
       def calculate
         self.surcharge = 0
-        self.total_charge ||= 0
-        self.total_tax_amount ||= 0        
 
         extra_charges.each do |extra|
           if extra.global_service_name == "Discount"
@@ -65,11 +63,7 @@ module ActiveMerchant
             self.surcharge += extra.charge_value if extra && extra.charge_value            
           end
         end
-        
-        if self.total_charge && self.total_tax_amount
-          self.base_charge = self.total_charge - self.total_tax_amount
-        end
-        
+                
         if self.delivery_time
           d = Time.parse(self.delivery_time)
           if d

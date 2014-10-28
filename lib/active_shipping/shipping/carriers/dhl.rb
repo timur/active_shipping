@@ -211,7 +211,7 @@ module ActiveMerchant
             q.exchange_rate = qtdshp.at('ExchangeRate').text if qtdshp.at('ExchangeRate')
             q.pricing_date = qtdshp.at('PricingDate').text if qtdshp.at('PricingDate')   
             q.total_charge = qtdshp.at('ShippingCharge').text if qtdshp.at('ShippingCharge')   
-            q.weight_charge = qtdshp.at('WeightCharge').text if qtdshp.at('WeightCharge')               
+            q.weight_charge = qtdshp.at('WeightChargeTaxDet//BaseAmt').text if qtdshp.at('WeightChargeTaxDet//BaseAmt')               
             q.weight_charge_tax = qtdshp.at('WeightChargeTax').text if qtdshp.at('WeightChargeTax')                                       
             q.total_tax_amount = qtdshp.at('TotalTaxAmount').text if qtdshp.at('TotalTaxAmount')  
                         
@@ -219,9 +219,9 @@ module ActiveMerchant
             
             q.calculate 
             
-            #if q.total_charge > 0
+            if q.total_charge > 0
               response.quotes << q
-            #end
+            end
           end        
         end
         
@@ -298,10 +298,12 @@ module ActiveMerchant
             
             e.local_service_name = extra.at('LocalServiceTypeName').text if extra.at('LocalServiceTypeName')                              
             e.currency = extra.at('CurrencyCode').text if extra.at('CurrencyCode')                              
-            e.charge_value = extra.at('ChargeValue').text if extra.at('ChargeValue')                              
+            e.charge_value = extra.at('ChargeTaxAmountDet//BaseAmount').text if extra.at('ChargeTaxAmountDet//BaseAmount')                              
             e.charge_tax_amount = extra.at('ChargeTaxAmount').text if extra.at('ChargeTaxAmount')                                        
             
-            dhl_quote.extra_charges << e                  
+            if e.charge_value
+              dhl_quote.extra_charges << e                  
+            end
           end        
         end
         
