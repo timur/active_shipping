@@ -23,7 +23,7 @@
       </Version>
       <ReturnTransitAndCommit>true</ReturnTransitAndCommit>
       <RequestedShipment>
-        <ShipTimestamp><%= Time.now.utc.iso8601(2) %></ShipTimestamp>
+        <ShipTimestamp><%= @ship_timestamp %></ShipTimestamp>
         <DropoffType>REGULAR_PICKUP</DropoffType>
         <PackagingType><%= @packaging_type %></PackagingType>
         <% if @envelope %>

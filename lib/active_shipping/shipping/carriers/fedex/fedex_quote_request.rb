@@ -12,6 +12,8 @@ module ActiveMerchant
       attribute :password, String
       attribute :accountNumber, String      
       attribute :meterNumber, String
+      
+      attribute :ship_timestamp, String
 
       attribute :transactionId, String
       attribute :packaging_type, String, default: "YOUR_PACKAGING"      
@@ -35,6 +37,16 @@ module ActiveMerchant
                              
       def calculate_attributes
         calculate_pieces
+        
+        country = TZInfo::Country.get(@shipper_countrycode.upcase)
+        if country
+          zone = country.zone_info.first        
+          if zone
+            @ship_timestamp = zone.timezone.now.iso8601(2).to_s
+          end          
+        end
+        
+        @ship_timestamp = Time.now.utc.iso8601(2) unless @ship_timestamp 
         
         unless packaging_type
           self.packaging_type = "YOUR_PACKAGING"
