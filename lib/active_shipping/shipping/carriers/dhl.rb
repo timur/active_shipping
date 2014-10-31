@@ -195,8 +195,6 @@ module ActiveMerchant
             international = options[:international]
           end
           
-          puts "BUMMS #{international}"
-          
           quotes = document.xpath("//QtdShp")
           
           quotes.each do |qtdshp|
@@ -218,6 +216,7 @@ module ActiveMerchant
             q.exchange_rate = qtdshp.at('ExchangeRate').text if qtdshp.at('ExchangeRate')
             q.pricing_date = qtdshp.at('PricingDate').text if qtdshp.at('PricingDate')   
             q.total_charge = qtdshp.at('ShippingCharge').text if qtdshp.at('ShippingCharge') 
+            q.currency = qtdshp.at('CurrencyCode').text if qtdshp.at('CurrencyCode')                       
             
             if international
               qs = qtdshp.xpath("QtdSInAdCur")              
@@ -228,10 +227,11 @@ module ActiveMerchant
                   q.weight_charge = v.at('WeightChargeTaxDet//BaseAmt').text if v.at('WeightChargeTaxDet//BaseAmt')                                 
                 end
               end
-            else  
+            else                                                                 
               q.weight_charge = qtdshp.at('WeightChargeTaxDet//BaseAmt').text if qtdshp.at('WeightChargeTaxDet//BaseAmt')               
             end
             
+            #puts "FIGGE #{q.currency} #{international} #{qtdshp}"
             q.weight_charge_tax = qtdshp.at('WeightChargeTax').text if qtdshp.at('WeightChargeTax')                                       
             q.total_tax_amount = qtdshp.at('TotalTaxAmount').text if qtdshp.at('TotalTaxAmount')  
                         
