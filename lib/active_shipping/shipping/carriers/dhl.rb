@@ -42,7 +42,7 @@ module ActiveMerchant
         call_method(options, "parse_pickup_response")
       end                        
 
-      def parse_shipment_response(document)
+      def parse_shipment_response(document, options)
         response = DhlShipmentResponse.new
         parse_status_notes(response, document)        
         parse_notes(response, document)
@@ -50,29 +50,29 @@ module ActiveMerchant
         response
       end
       
-      def parse_tracking_response(document)
+      def parse_tracking_response(document, options)
         response = DhlTrackingResponse.new
         parse_tracking_status(response, document)
         parse_tracking(response, document)        
         response
       end      
             
-      def parse_quote_response(document)
+      def parse_quote_response(document, options)
         response = DhlQuoteResponse.new
         response.success = parse_status(document)
         parse_notes(response, document)
-        parse_quotes(response, document)        
+        parse_quotes(response, document, options)        
         response
       end
       
-      def parse_pickup_response(document)
+      def parse_pickup_response(document, options)
         response = DhlBookPickupResponse.new
         parse_pickup_status(response, document)
         parse_pickup(response, document)    
         response
       end
       
-      def parse_cancel_pickup_response(document)
+      def parse_cancel_pickup_response(document, options)
         response = DhlCancelPickupResponse.new
         parse_pickup_status(response, document)
         response
@@ -94,7 +94,7 @@ module ActiveMerchant
           end
 
           response_raw = commit(save_request(xml), (options[:test] || false))                     
-          resp = send(method, Nokogiri::XML(response_raw))
+          resp = send(method, Nokogiri::XML(response_raw), options)
 
           resp.response = response_raw
           resp.request = last_request
@@ -188,7 +188,13 @@ module ActiveMerchant
           response.error_messages = error_array                                                                                                      
         end              
         
-        def parse_quotes(response, document)
+        def parse_quotes(response, document, options)
+          international = false
+          
+          if options.has_key? :international
+            international = options[:international]
+          end
+          
           quotes = document.xpath("//QtdShp")
           
           quotes.each do |qtdshp|
@@ -210,8 +216,12 @@ module ActiveMerchant
             q.currency = qtdshp.at('CurrencyCode').text if qtdshp.at('CurrencyCode')          
             q.exchange_rate = qtdshp.at('ExchangeRate').text if qtdshp.at('ExchangeRate')
             q.pricing_date = qtdshp.at('PricingDate').text if qtdshp.at('PricingDate')   
-            q.total_charge = qtdshp.at('ShippingCharge').text if qtdshp.at('ShippingCharge')   
-            q.weight_charge = qtdshp.at('WeightChargeTaxDet//BaseAmt').text if qtdshp.at('WeightChargeTaxDet//BaseAmt')               
+            q.total_charge = qtdshp.at('ShippingCharge').text if qtdshp.at('ShippingCharge') 
+            if international
+              q.weight_charge = qtdshp.at('WeightChargeTaxDet//BaseAmt').text if qtdshp.at('WeightChargeTaxDet//BaseAmt')               
+            else  
+              q.weight_charge = qtdshp.at('WeightChargeTaxDet//BaseAmt').text if qtdshp.at('WeightChargeTaxDet//BaseAmt')               
+            end
             q.weight_charge_tax = qtdshp.at('WeightChargeTax').text if qtdshp.at('WeightChargeTax')                                       
             q.total_tax_amount = qtdshp.at('TotalTaxAmount').text if qtdshp.at('TotalTaxAmount')  
                         

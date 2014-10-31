@@ -157,7 +157,7 @@ class DhlTest < Test::Unit::TestCase
     assert_equal response.quotes[1].currency, "EUR"    
   end
   
-  def test_parse_quote_response_corroup
+  def test_parse_quote_response_corrupt
     f = File.open(MODEL_FIXTURES + "xml/dhl/response_note_corrupt.xml")
     doc = Nokogiri::XML(f)
     f.close
@@ -166,4 +166,21 @@ class DhlTest < Test::Unit::TestCase
     
     assert response.class.to_s, ActiveMerchant::Shipping::DhlQuoteResponse.class.to_s     
   end  
+
+  def test_parse_quote_response_product_g
+    f = File.open(MODEL_FIXTURES + "xml/dhl/response_product_g.xml")
+    doc = Nokogiri::XML(f)
+    f.close
+    dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6', test: true)
+    response = dhl.parse_quote_response(doc, {})
+    
+    assert response.class.to_s, ActiveMerchant::Shipping::DhlQuoteResponse.class.to_s 
+    
+    puts "COUNT #{response.quotes.size}"    
+    
+    response.quotes.each do |q|
+      puts "QUOTE #{q.global_product_code} #{q.local_product_code}"
+    end
+  end  
+
 end
