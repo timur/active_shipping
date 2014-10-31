@@ -3,7 +3,7 @@
   <GetQuoteResponse>
     <Response>
       <ServiceHeader>
-        <MessageTime>2014-10-28T09:17:46.089+01:00</MessageTime>
+        <MessageTime>2014-10-31T08:19:31.782+01:00</MessageTime>
         <SiteID>ZURICATA</SiteID>
       </ServiceHeader>
     </Response>
@@ -13,35 +13,63 @@
         <ServiceAreaCode>MXL</ServiceAreaCode>
       </OriginServiceArea>
       <DestinationServiceArea>
-        <FacilityCode>ALB</FacilityCode>
-        <ServiceAreaCode>ALB</ServiceAreaCode>
+        <FacilityCode>DSM</FacilityCode>
+        <ServiceAreaCode>CID</ServiceAreaCode>
       </DestinationServiceArea>
       <QtdShp>
-        <GlobalProductCode>D</GlobalProductCode>
-        <LocalProductCode>D</LocalProductCode>
-        <ProductShortName>EXPRESS WORLDWIDE</ProductShortName>
-        <LocalProductName>EXPRESS WORLDWIDE DOC</LocalProductName>
+        <GlobalProductCode>L</GlobalProductCode>
+        <LocalProductCode>L</LocalProductCode>
+        <ProductShortName>EXPRESS 10:30</ProductShortName>
+        <LocalProductName>EXPRESS 10:30 DOC</LocalProductName>
         <NetworkTypeCode>TD</NetworkTypeCode>
         <POfferedCustAgreement>N</POfferedCustAgreement>
         <TransInd>Y</TransInd>
-        <PickupDate>2014-10-28</PickupDate>
+        <PickupDate>2014-10-31</PickupDate>
         <PickupCutoffTime>PT14H</PickupCutoffTime>
         <BookingTime>PT12H30M</BookingTime>
         <CurrencyCode>USD</CurrencyCode>
         <ExchangeRate>1.000000</ExchangeRate>
-        <WeightCharge>36.460</WeightCharge>
-        <WeightChargeTax>0.710</WeightChargeTax>
-        <TotalTransitDays>2</TotalTransitDays>
+        <WeightCharge>44.100</WeightCharge>
+        <WeightChargeTax>1.200</WeightChargeTax>
+        <TotalTransitDays>4</TotalTransitDays>
         <PickupPostalLocAddDays>0</PickupPostalLocAddDays>
-        <DeliveryPostalLocAddDays>1</DeliveryPostalLocAddDays>
+        <DeliveryPostalLocAddDays>0</DeliveryPostalLocAddDays>
         <PickupNonDHLCourierCode> </PickupNonDHLCourierCode>
         <DeliveryNonDHLCourierCode> </DeliveryNonDHLCourierCode>
-        <DeliveryDate>2014-10-31</DeliveryDate>
-        <DeliveryTime>PT23H59M</DeliveryTime>
+        <DeliveryDate>2014-11-04</DeliveryDate>
+        <DeliveryTime>PT10H30M</DeliveryTime>
         <DimensionalWeight>1.000</DimensionalWeight>
         <WeightUnit>KG</WeightUnit>
-        <PickupDayOfWeekNum>2</PickupDayOfWeekNum>
-        <DestinationDayOfWeekNum>5</DestinationDayOfWeekNum>
+        <PickupDayOfWeekNum>5</PickupDayOfWeekNum>
+        <DestinationDayOfWeekNum>2</DestinationDayOfWeekNum>
+        <QtdShpExChrg>
+          <SpecialServiceType/>
+          <LocalServiceType/>
+          <GlobalServiceName>Discount</GlobalServiceName>
+          <LocalServiceTypeName>Discount</LocalServiceTypeName>
+          <ChargeCodeType/>
+          <CurrencyCode>USD</CurrencyCode>
+          <ChargeValue>-14.350</ChargeValue>
+          <ChargeTaxAmount>0.000</ChargeTaxAmount>
+          <QtdSExtrChrgInAdCur>
+            <ChargeValue>-14.350</ChargeValue>
+            <ChargeTaxAmount>0.000</ChargeTaxAmount>
+            <CurrencyCode>USD</CurrencyCode>
+            <CurrencyRoleTypeCode>BILLC</CurrencyRoleTypeCode>
+          </QtdSExtrChrgInAdCur>
+          <QtdSExtrChrgInAdCur>
+            <ChargeValue>-193.440</ChargeValue>
+            <ChargeTaxAmount>0.000</ChargeTaxAmount>
+            <CurrencyCode>MXN</CurrencyCode>
+            <CurrencyRoleTypeCode>PULCL</CurrencyRoleTypeCode>
+          </QtdSExtrChrgInAdCur>
+          <QtdSExtrChrgInAdCur>
+            <ChargeValue>-14.350</ChargeValue>
+            <ChargeTaxAmount>0.000</ChargeTaxAmount>
+            <CurrencyCode>USD</CurrencyCode>
+            <CurrencyRoleTypeCode>BASEC</CurrencyRoleTypeCode>
+          </QtdSExtrChrgInAdCur>
+        </QtdShpExChrg>
         <QtdShpExChrg>
           <SpecialServiceType>II</SpecialServiceType>
           <LocalServiceType>II</LocalServiceType>
@@ -71,15 +99,15 @@
             </ChargeTaxAmountDet>
           </QtdSExtrChrgInAdCur>
           <QtdSExtrChrgInAdCur>
-            <ChargeValue>162.300</ChargeValue>
-            <ChargeTaxAmount>6.240</ChargeTaxAmount>
+            <ChargeValue>161.220</ChargeValue>
+            <ChargeTaxAmount>6.200</ChargeTaxAmount>
             <CurrencyCode>MXN</CurrencyCode>
             <CurrencyRoleTypeCode>PULCL</CurrencyRoleTypeCode>
             <ChargeTaxAmountDet>
               <TaxTypeRate>4.000</TaxTypeRate>
               <TaxTypeCode>IVA1</TaxTypeCode>
-              <TaxAmount>6.240</TaxAmount>
-              <BaseAmount>156.060</BaseAmount>
+              <TaxAmount>6.200</TaxAmount>
+              <BaseAmount>155.020</BaseAmount>
             </ChargeTaxAmountDet>
           </QtdSExtrChrgInAdCur>
           <QtdSExtrChrgInAdCur>
@@ -95,6 +123,347 @@
             </ChargeTaxAmountDet>
           </QtdSExtrChrgInAdCur>
         </QtdShpExChrg>
+        <QtdShpExChrg>
+          <SpecialServiceType>FF</SpecialServiceType>
+          <LocalServiceType>FF</LocalServiceType>
+          <GlobalServiceName>FUEL SURCHARGE</GlobalServiceName>
+          <LocalServiceTypeName>FUEL SURCHARGE</LocalServiceTypeName>
+          <ChargeCodeType>SCH</ChargeCodeType>
+          <CurrencyCode>USD</CurrencyCode>
+          <ChargeValue>5.070</ChargeValue>
+          <ChargeTaxAmount>0.140</ChargeTaxAmount>
+          <ChargeTaxAmountDet>
+            <TaxTypeRate>4.000</TaxTypeRate>
+            <TaxTypeCode>IVA1</TaxTypeCode>
+            <TaxAmount>0.140</TaxAmount>
+            <BaseAmount>3.450</BaseAmount>
+          </ChargeTaxAmountDet>
+          <QtdSExtrChrgInAdCur>
+            <ChargeValue>5.070</ChargeValue>
+            <ChargeTaxAmount>0.140</ChargeTaxAmount>
+            <CurrencyCode>USD</CurrencyCode>
+            <CurrencyRoleTypeCode>BILLC</CurrencyRoleTypeCode>
+            <ChargeTaxAmountDet>
+              <TaxTypeRate>4.000</TaxTypeRate>
+              <TaxTypeCode>IVA1</TaxTypeCode>
+              <TaxAmount>0.140</TaxAmount>
+              <BaseAmount>3.450</BaseAmount>
+            </ChargeTaxAmountDet>
+          </QtdSExtrChrgInAdCur>
+          <QtdSExtrChrgInAdCur>
+            <ChargeValue>68.340</ChargeValue>
+            <ChargeTaxAmount>1.890</ChargeTaxAmount>
+            <CurrencyCode>MXN</CurrencyCode>
+            <CurrencyRoleTypeCode>PULCL</CurrencyRoleTypeCode>
+            <ChargeTaxAmountDet>
+              <TaxTypeRate>4.000</TaxTypeRate>
+              <TaxTypeCode>IVA1</TaxTypeCode>
+              <TaxAmount>1.890</TaxAmount>
+              <BaseAmount>46.510</BaseAmount>
+            </ChargeTaxAmountDet>
+          </QtdSExtrChrgInAdCur>
+          <QtdSExtrChrgInAdCur>
+            <ChargeValue>5.070</ChargeValue>
+            <ChargeTaxAmount>0.140</ChargeTaxAmount>
+            <CurrencyCode>USD</CurrencyCode>
+            <CurrencyRoleTypeCode>BASEC</CurrencyRoleTypeCode>
+            <ChargeTaxAmountDet>
+              <TaxTypeRate>4.000</TaxTypeRate>
+              <TaxTypeCode>IVA1</TaxTypeCode>
+              <TaxAmount>0.140</TaxAmount>
+              <BaseAmount>3.450</BaseAmount>
+            </ChargeTaxAmountDet>
+          </QtdSExtrChrgInAdCur>
+        </QtdShpExChrg>
+        <PricingDate>2014-10-31</PricingDate>
+        <ShippingCharge>46.780</ShippingCharge>
+        <TotalTaxAmount>1.800</TotalTaxAmount>
+        <QtdSInAdCur>
+          <CurrencyCode>USD</CurrencyCode>
+          <CurrencyRoleTypeCode>BILLC</CurrencyRoleTypeCode>
+          <WeightCharge>44.100</WeightCharge>
+          <TotalAmount>46.780</TotalAmount>
+          <TotalTaxAmount>1.800</TotalTaxAmount>
+          <WeightChargeTax>1.200</WeightChargeTax>
+          <WeightChargeTaxDet>
+            <TaxTypeRate>4.000</TaxTypeRate>
+            <TaxTypeCode>IVA1</TaxTypeCode>
+            <WeightChargeTax>1.200</WeightChargeTax>
+            <BaseAmt>30.030</BaseAmt>
+          </WeightChargeTaxDet>
+        </QtdSInAdCur>
+        <QtdSInAdCur>
+          <CurrencyCode>MXN</CurrencyCode>
+          <CurrencyRoleTypeCode>PULCL</CurrencyRoleTypeCode>
+          <WeightCharge>594.470</WeightCharge>
+          <TotalAmount>630.590</TotalAmount>
+          <TotalTaxAmount>24.260</TotalTaxAmount>
+          <WeightChargeTax>16.180</WeightChargeTax>
+          <WeightChargeTaxDet>
+            <TaxTypeRate>4.000</TaxTypeRate>
+            <TaxTypeCode>IVA1</TaxTypeCode>
+            <WeightChargeTax>16.180</WeightChargeTax>
+            <BaseAmt>404.800</BaseAmt>
+          </WeightChargeTaxDet>
+        </QtdSInAdCur>
+        <QtdSInAdCur>
+          <CurrencyCode>USD</CurrencyCode>
+          <CurrencyRoleTypeCode>BASEC</CurrencyRoleTypeCode>
+          <WeightCharge>44.100</WeightCharge>
+          <TotalAmount>46.780</TotalAmount>
+          <TotalTaxAmount>1.800</TotalTaxAmount>
+          <WeightChargeTax>1.200</WeightChargeTax>
+          <WeightChargeTaxDet>
+            <TaxTypeRate>4.000</TaxTypeRate>
+            <TaxTypeCode>IVA1</TaxTypeCode>
+            <WeightChargeTax>1.200</WeightChargeTax>
+            <BaseAmt>30.030</BaseAmt>
+          </WeightChargeTaxDet>
+        </QtdSInAdCur>
+        <WeightChargeTaxDet>
+          <TaxTypeRate>4.000</TaxTypeRate>
+          <TaxTypeCode>IVA1</TaxTypeCode>
+          <WeightChargeTax>1.200</WeightChargeTax>
+          <BaseAmt>30.030</BaseAmt>
+        </WeightChargeTaxDet>
+      </QtdShp>
+      <QtdShp>
+        <GlobalProductCode>T</GlobalProductCode>
+        <LocalProductCode>T</LocalProductCode>
+        <ProductShortName>EXPRESS 12:00</ProductShortName>
+        <LocalProductName>EXPRESS 12:00 DOC</LocalProductName>
+        <NetworkTypeCode>TD</NetworkTypeCode>
+        <POfferedCustAgreement>N</POfferedCustAgreement>
+        <TransInd>Y</TransInd>
+        <PickupDate>2014-10-31</PickupDate>
+        <PickupCutoffTime>PT14H</PickupCutoffTime>
+        <BookingTime>PT12H30M</BookingTime>
+        <CurrencyCode>USD</CurrencyCode>
+        <ExchangeRate>1.000000</ExchangeRate>
+        <WeightCharge>40.430</WeightCharge>
+        <WeightChargeTax>1.100</WeightChargeTax>
+        <TotalTransitDays>4</TotalTransitDays>
+        <PickupPostalLocAddDays>0</PickupPostalLocAddDays>
+        <DeliveryPostalLocAddDays>0</DeliveryPostalLocAddDays>
+        <PickupNonDHLCourierCode> </PickupNonDHLCourierCode>
+        <DeliveryNonDHLCourierCode> </DeliveryNonDHLCourierCode>
+        <DeliveryDate>2014-11-04</DeliveryDate>
+        <DeliveryTime>PT12H</DeliveryTime>
+        <DimensionalWeight>1.000</DimensionalWeight>
+        <WeightUnit>KG</WeightUnit>
+        <PickupDayOfWeekNum>5</PickupDayOfWeekNum>
+        <DestinationDayOfWeekNum>2</DestinationDayOfWeekNum>
+        <QtdShpExChrg>
+          <SpecialServiceType/>
+          <LocalServiceType/>
+          <GlobalServiceName>Discount</GlobalServiceName>
+          <LocalServiceTypeName>Discount</LocalServiceTypeName>
+          <ChargeCodeType/>
+          <CurrencyCode>USD</CurrencyCode>
+          <ChargeValue>-13.160</ChargeValue>
+          <ChargeTaxAmount>0.000</ChargeTaxAmount>
+          <QtdSExtrChrgInAdCur>
+            <ChargeValue>-13.160</ChargeValue>
+            <ChargeTaxAmount>0.000</ChargeTaxAmount>
+            <CurrencyCode>USD</CurrencyCode>
+            <CurrencyRoleTypeCode>BILLC</CurrencyRoleTypeCode>
+          </QtdSExtrChrgInAdCur>
+          <QtdSExtrChrgInAdCur>
+            <ChargeValue>-177.400</ChargeValue>
+            <ChargeTaxAmount>0.000</ChargeTaxAmount>
+            <CurrencyCode>MXN</CurrencyCode>
+            <CurrencyRoleTypeCode>PULCL</CurrencyRoleTypeCode>
+          </QtdSExtrChrgInAdCur>
+          <QtdSExtrChrgInAdCur>
+            <ChargeValue>-13.160</ChargeValue>
+            <ChargeTaxAmount>0.000</ChargeTaxAmount>
+            <CurrencyCode>USD</CurrencyCode>
+            <CurrencyRoleTypeCode>BASEC</CurrencyRoleTypeCode>
+          </QtdSExtrChrgInAdCur>
+        </QtdShpExChrg>
+        <QtdShpExChrg>
+          <SpecialServiceType>FF</SpecialServiceType>
+          <LocalServiceType>FF</LocalServiceType>
+          <GlobalServiceName>FUEL SURCHARGE</GlobalServiceName>
+          <LocalServiceTypeName>FUEL SURCHARGE</LocalServiceTypeName>
+          <ChargeCodeType>SCH</ChargeCodeType>
+          <CurrencyCode>USD</CurrencyCode>
+          <ChargeValue>4.650</ChargeValue>
+          <ChargeTaxAmount>0.130</ChargeTaxAmount>
+          <ChargeTaxAmountDet>
+            <TaxTypeRate>4.000</TaxTypeRate>
+            <TaxTypeCode>IVA1</TaxTypeCode>
+            <TaxAmount>0.130</TaxAmount>
+            <BaseAmount>3.160</BaseAmount>
+          </ChargeTaxAmountDet>
+          <QtdSExtrChrgInAdCur>
+            <ChargeValue>4.650</ChargeValue>
+            <ChargeTaxAmount>0.130</ChargeTaxAmount>
+            <CurrencyCode>USD</CurrencyCode>
+            <CurrencyRoleTypeCode>BILLC</CurrencyRoleTypeCode>
+            <ChargeTaxAmountDet>
+              <TaxTypeRate>4.000</TaxTypeRate>
+              <TaxTypeCode>IVA1</TaxTypeCode>
+              <TaxAmount>0.130</TaxAmount>
+              <BaseAmount>3.160</BaseAmount>
+            </ChargeTaxAmountDet>
+          </QtdSExtrChrgInAdCur>
+          <QtdSExtrChrgInAdCur>
+            <ChargeValue>62.680</ChargeValue>
+            <ChargeTaxAmount>1.750</ChargeTaxAmount>
+            <CurrencyCode>MXN</CurrencyCode>
+            <CurrencyRoleTypeCode>PULCL</CurrencyRoleTypeCode>
+            <ChargeTaxAmountDet>
+              <TaxTypeRate>4.000</TaxTypeRate>
+              <TaxTypeCode>IVA1</TaxTypeCode>
+              <TaxAmount>1.750</TaxAmount>
+              <BaseAmount>42.600</BaseAmount>
+            </ChargeTaxAmountDet>
+          </QtdSExtrChrgInAdCur>
+          <QtdSExtrChrgInAdCur>
+            <ChargeValue>4.650</ChargeValue>
+            <ChargeTaxAmount>0.130</ChargeTaxAmount>
+            <CurrencyCode>USD</CurrencyCode>
+            <CurrencyRoleTypeCode>BASEC</CurrencyRoleTypeCode>
+            <ChargeTaxAmountDet>
+              <TaxTypeRate>4.000</TaxTypeRate>
+              <TaxTypeCode>IVA1</TaxTypeCode>
+              <TaxAmount>0.130</TaxAmount>
+              <BaseAmount>3.160</BaseAmount>
+            </ChargeTaxAmountDet>
+          </QtdSExtrChrgInAdCur>
+        </QtdShpExChrg>
+        <QtdShpExChrg>
+          <SpecialServiceType>II</SpecialServiceType>
+          <LocalServiceType>II</LocalServiceType>
+          <GlobalServiceName>SHIPMENT INSURANCE</GlobalServiceName>
+          <LocalServiceTypeName>SHIPMENT INSURANCE</LocalServiceTypeName>
+          <ChargeCodeType>XCH</ChargeCodeType>
+          <InsPrmRateInPercentage>1.0000</InsPrmRateInPercentage>
+          <CurrencyCode>USD</CurrencyCode>
+          <ChargeValue>11.960</ChargeValue>
+          <ChargeTaxAmount>0.460</ChargeTaxAmount>
+          <ChargeTaxAmountDet>
+            <TaxTypeRate>4.000</TaxTypeRate>
+            <TaxTypeCode>IVA1</TaxTypeCode>
+            <TaxAmount>0.460</TaxAmount>
+            <BaseAmount>11.500</BaseAmount>
+          </ChargeTaxAmountDet>
+          <QtdSExtrChrgInAdCur>
+            <ChargeValue>11.960</ChargeValue>
+            <ChargeTaxAmount>0.460</ChargeTaxAmount>
+            <CurrencyCode>USD</CurrencyCode>
+            <CurrencyRoleTypeCode>BILLC</CurrencyRoleTypeCode>
+            <ChargeTaxAmountDet>
+              <TaxTypeRate>4.000</TaxTypeRate>
+              <TaxTypeCode>IVA1</TaxTypeCode>
+              <TaxAmount>0.460</TaxAmount>
+              <BaseAmount>11.500</BaseAmount>
+            </ChargeTaxAmountDet>
+          </QtdSExtrChrgInAdCur>
+          <QtdSExtrChrgInAdCur>
+            <ChargeValue>161.220</ChargeValue>
+            <ChargeTaxAmount>6.200</ChargeTaxAmount>
+            <CurrencyCode>MXN</CurrencyCode>
+            <CurrencyRoleTypeCode>PULCL</CurrencyRoleTypeCode>
+            <ChargeTaxAmountDet>
+              <TaxTypeRate>4.000</TaxTypeRate>
+              <TaxTypeCode>IVA1</TaxTypeCode>
+              <TaxAmount>6.200</TaxAmount>
+              <BaseAmount>155.020</BaseAmount>
+            </ChargeTaxAmountDet>
+          </QtdSExtrChrgInAdCur>
+          <QtdSExtrChrgInAdCur>
+            <ChargeValue>11.960</ChargeValue>
+            <ChargeTaxAmount>0.460</ChargeTaxAmount>
+            <CurrencyCode>USD</CurrencyCode>
+            <CurrencyRoleTypeCode>BASEC</CurrencyRoleTypeCode>
+            <ChargeTaxAmountDet>
+              <TaxTypeRate>4.000</TaxTypeRate>
+              <TaxTypeCode>IVA1</TaxTypeCode>
+              <TaxAmount>0.460</TaxAmount>
+              <BaseAmount>11.500</BaseAmount>
+            </ChargeTaxAmountDet>
+          </QtdSExtrChrgInAdCur>
+        </QtdShpExChrg>
+        <PricingDate>2014-10-31</PricingDate>
+        <ShippingCharge>43.880</ShippingCharge>
+        <TotalTaxAmount>1.690</TotalTaxAmount>
+        <QtdSInAdCur>
+          <CurrencyCode>USD</CurrencyCode>
+          <CurrencyRoleTypeCode>BILLC</CurrencyRoleTypeCode>
+          <WeightCharge>40.430</WeightCharge>
+          <TotalAmount>43.880</TotalAmount>
+          <TotalTaxAmount>1.690</TotalTaxAmount>
+          <WeightChargeTax>1.100</WeightChargeTax>
+          <WeightChargeTaxDet>
+            <TaxTypeRate>4.000</TaxTypeRate>
+            <TaxTypeCode>IVA1</TaxTypeCode>
+            <WeightChargeTax>1.100</WeightChargeTax>
+            <BaseAmt>27.530</BaseAmt>
+          </WeightChargeTaxDet>
+        </QtdSInAdCur>
+        <QtdSInAdCur>
+          <CurrencyCode>MXN</CurrencyCode>
+          <CurrencyRoleTypeCode>PULCL</CurrencyRoleTypeCode>
+          <WeightCharge>545.000</WeightCharge>
+          <TotalAmount>591.500</TotalAmount>
+          <TotalTaxAmount>22.780</TotalTaxAmount>
+          <WeightChargeTax>14.830</WeightChargeTax>
+          <WeightChargeTaxDet>
+            <TaxTypeRate>4.000</TaxTypeRate>
+            <TaxTypeCode>IVA1</TaxTypeCode>
+            <WeightChargeTax>14.830</WeightChargeTax>
+            <BaseAmt>371.100</BaseAmt>
+          </WeightChargeTaxDet>
+        </QtdSInAdCur>
+        <QtdSInAdCur>
+          <CurrencyCode>USD</CurrencyCode>
+          <CurrencyRoleTypeCode>BASEC</CurrencyRoleTypeCode>
+          <WeightCharge>40.430</WeightCharge>
+          <TotalAmount>43.880</TotalAmount>
+          <TotalTaxAmount>1.690</TotalTaxAmount>
+          <WeightChargeTax>1.100</WeightChargeTax>
+          <WeightChargeTaxDet>
+            <TaxTypeRate>4.000</TaxTypeRate>
+            <TaxTypeCode>IVA1</TaxTypeCode>
+            <WeightChargeTax>1.100</WeightChargeTax>
+            <BaseAmt>27.530</BaseAmt>
+          </WeightChargeTaxDet>
+        </QtdSInAdCur>
+        <WeightChargeTaxDet>
+          <TaxTypeRate>4.000</TaxTypeRate>
+          <TaxTypeCode>IVA1</TaxTypeCode>
+          <WeightChargeTax>1.100</WeightChargeTax>
+          <BaseAmt>27.530</BaseAmt>
+        </WeightChargeTaxDet>
+      </QtdShp>
+      <QtdShp>
+        <GlobalProductCode>D</GlobalProductCode>
+        <LocalProductCode>D</LocalProductCode>
+        <ProductShortName>EXPRESS WORLDWIDE</ProductShortName>
+        <LocalProductName>EXPRESS WORLDWIDE DOC</LocalProductName>
+        <NetworkTypeCode>TD</NetworkTypeCode>
+        <POfferedCustAgreement>N</POfferedCustAgreement>
+        <TransInd>Y</TransInd>
+        <PickupDate>2014-10-31</PickupDate>
+        <PickupCutoffTime>PT14H</PickupCutoffTime>
+        <BookingTime>PT12H30M</BookingTime>
+        <CurrencyCode>USD</CurrencyCode>
+        <ExchangeRate>1.000000</ExchangeRate>
+        <WeightCharge>36.460</WeightCharge>
+        <WeightChargeTax>0.710</WeightChargeTax>
+        <TotalTransitDays>4</TotalTransitDays>
+        <PickupPostalLocAddDays>0</PickupPostalLocAddDays>
+        <DeliveryPostalLocAddDays>0</DeliveryPostalLocAddDays>
+        <PickupNonDHLCourierCode> </PickupNonDHLCourierCode>
+        <DeliveryNonDHLCourierCode> </DeliveryNonDHLCourierCode>
+        <DeliveryDate>2014-11-04</DeliveryDate>
+        <DeliveryTime>PT23H59M</DeliveryTime>
+        <DimensionalWeight>1.000</DimensionalWeight>
+        <WeightUnit>KG</WeightUnit>
+        <PickupDayOfWeekNum>5</PickupDayOfWeekNum>
+        <DestinationDayOfWeekNum>2</DestinationDayOfWeekNum>
         <QtdShpExChrg>
           <SpecialServiceType>FF</SpecialServiceType>
           <LocalServiceType>FF</LocalServiceType>
@@ -123,15 +492,15 @@
             </ChargeTaxAmountDet>
           </QtdSExtrChrgInAdCur>
           <QtdSExtrChrgInAdCur>
-            <ChargeValue>56.860</ChargeValue>
-            <ChargeTaxAmount>1.090</ChargeTaxAmount>
+            <ChargeValue>56.480</ChargeValue>
+            <ChargeTaxAmount>1.080</ChargeTaxAmount>
             <CurrencyCode>MXN</CurrencyCode>
             <CurrencyRoleTypeCode>PULCL</CurrencyRoleTypeCode>
             <ChargeTaxAmountDet>
               <TaxTypeRate>4.000</TaxTypeRate>
               <TaxTypeCode>IVA1</TaxTypeCode>
-              <TaxAmount>1.090</TaxAmount>
-              <BaseAmount>27.820</BaseAmount>
+              <TaxAmount>1.080</TaxAmount>
+              <BaseAmount>27.630</BaseAmount>
             </ChargeTaxAmountDet>
           </QtdSExtrChrgInAdCur>
           <QtdSExtrChrgInAdCur>
@@ -163,7 +532,7 @@
             <CurrencyRoleTypeCode>BILLC</CurrencyRoleTypeCode>
           </QtdSExtrChrgInAdCur>
           <QtdSExtrChrgInAdCur>
-            <ChargeValue>-270.590</ChargeValue>
+            <ChargeValue>-268.790</ChargeValue>
             <ChargeTaxAmount>0.000</ChargeTaxAmount>
             <CurrencyCode>MXN</CurrencyCode>
             <CurrencyRoleTypeCode>PULCL</CurrencyRoleTypeCode>
@@ -175,7 +544,60 @@
             <CurrencyRoleTypeCode>BASEC</CurrencyRoleTypeCode>
           </QtdSExtrChrgInAdCur>
         </QtdShpExChrg>
-        <PricingDate>2014-10-28</PricingDate>
+        <QtdShpExChrg>
+          <SpecialServiceType>II</SpecialServiceType>
+          <LocalServiceType>II</LocalServiceType>
+          <GlobalServiceName>SHIPMENT INSURANCE</GlobalServiceName>
+          <LocalServiceTypeName>SHIPMENT INSURANCE</LocalServiceTypeName>
+          <ChargeCodeType>XCH</ChargeCodeType>
+          <InsPrmRateInPercentage>1.0000</InsPrmRateInPercentage>
+          <CurrencyCode>USD</CurrencyCode>
+          <ChargeValue>11.960</ChargeValue>
+          <ChargeTaxAmount>0.460</ChargeTaxAmount>
+          <ChargeTaxAmountDet>
+            <TaxTypeRate>4.000</TaxTypeRate>
+            <TaxTypeCode>IVA1</TaxTypeCode>
+            <TaxAmount>0.460</TaxAmount>
+            <BaseAmount>11.500</BaseAmount>
+          </ChargeTaxAmountDet>
+          <QtdSExtrChrgInAdCur>
+            <ChargeValue>11.960</ChargeValue>
+            <ChargeTaxAmount>0.460</ChargeTaxAmount>
+            <CurrencyCode>USD</CurrencyCode>
+            <CurrencyRoleTypeCode>BILLC</CurrencyRoleTypeCode>
+            <ChargeTaxAmountDet>
+              <TaxTypeRate>4.000</TaxTypeRate>
+              <TaxTypeCode>IVA1</TaxTypeCode>
+              <TaxAmount>0.460</TaxAmount>
+              <BaseAmount>11.500</BaseAmount>
+            </ChargeTaxAmountDet>
+          </QtdSExtrChrgInAdCur>
+          <QtdSExtrChrgInAdCur>
+            <ChargeValue>161.220</ChargeValue>
+            <ChargeTaxAmount>6.200</ChargeTaxAmount>
+            <CurrencyCode>MXN</CurrencyCode>
+            <CurrencyRoleTypeCode>PULCL</CurrencyRoleTypeCode>
+            <ChargeTaxAmountDet>
+              <TaxTypeRate>4.000</TaxTypeRate>
+              <TaxTypeCode>IVA1</TaxTypeCode>
+              <TaxAmount>6.200</TaxAmount>
+              <BaseAmount>155.020</BaseAmount>
+            </ChargeTaxAmountDet>
+          </QtdSExtrChrgInAdCur>
+          <QtdSExtrChrgInAdCur>
+            <ChargeValue>11.960</ChargeValue>
+            <ChargeTaxAmount>0.460</ChargeTaxAmount>
+            <CurrencyCode>USD</CurrencyCode>
+            <CurrencyRoleTypeCode>BASEC</CurrencyRoleTypeCode>
+            <ChargeTaxAmountDet>
+              <TaxTypeRate>4.000</TaxTypeRate>
+              <TaxTypeCode>IVA1</TaxTypeCode>
+              <TaxAmount>0.460</TaxAmount>
+              <BaseAmount>11.500</BaseAmount>
+            </ChargeTaxAmountDet>
+          </QtdSExtrChrgInAdCur>
+        </QtdShpExChrg>
+        <PricingDate>2014-10-31</PricingDate>
         <ShippingCharge>32.670</ShippingCharge>
         <TotalTaxAmount>1.250</TotalTaxAmount>
         <QtdSInAdCur>
@@ -195,15 +617,15 @@
         <QtdSInAdCur>
           <CurrencyCode>MXN</CurrencyCode>
           <CurrencyRoleTypeCode>PULCL</CurrencyRoleTypeCode>
-          <WeightCharge>494.760</WeightCharge>
-          <TotalAmount>443.330</TotalAmount>
-          <TotalTaxAmount>16.960</TotalTaxAmount>
-          <WeightChargeTax>9.630</WeightChargeTax>
+          <WeightCharge>491.480</WeightCharge>
+          <TotalAmount>440.390</TotalAmount>
+          <TotalTaxAmount>16.850</TotalTaxAmount>
+          <WeightChargeTax>9.570</WeightChargeTax>
           <WeightChargeTaxDet>
             <TaxTypeRate>4.000</TaxTypeRate>
             <TaxTypeCode>IVA1</TaxTypeCode>
-            <WeightChargeTax>9.630</WeightChargeTax>
-            <BaseAmt>242.500</BaseAmt>
+            <WeightChargeTax>9.570</WeightChargeTax>
+            <BaseAmt>240.890</BaseAmt>
           </WeightChargeTaxDet>
         </QtdSInAdCur>
         <QtdSInAdCur>
@@ -229,6 +651,68 @@
       </QtdShp>
     </BkgDetails>
     <Srvs>
+      <Srv>
+        <GlobalProductCode>L</GlobalProductCode>
+        <MrkSrv>
+          <LocalProductCode>L</LocalProductCode>
+          <ProductShortName>EXPRESS 10:30</ProductShortName>
+          <LocalProductName>EXPRESS 10:30 DOC</LocalProductName>
+          <NetworkTypeCode>TD</NetworkTypeCode>
+          <POfferedCustAgreement>N</POfferedCustAgreement>
+          <TransInd>Y</TransInd>
+        </MrkSrv>
+        <MrkSrv>
+          <LocalServiceType>II</LocalServiceType>
+          <GlobalServiceName>SHIPMENT INSURANCE</GlobalServiceName>
+          <LocalServiceTypeName>SHIPMENT INSURANCE</LocalServiceTypeName>
+          <ChargeCodeType>XCH</ChargeCodeType>
+          <MrkSrvInd>Y</MrkSrvInd>
+        </MrkSrv>
+        <MrkSrv>
+          <LocalServiceType/>
+          <GlobalServiceName>Discount</GlobalServiceName>
+          <LocalServiceTypeName>Discount</LocalServiceTypeName>
+          <ChargeCodeType/>
+        </MrkSrv>
+        <MrkSrv>
+          <LocalServiceType>FF</LocalServiceType>
+          <GlobalServiceName>FUEL SURCHARGE</GlobalServiceName>
+          <LocalServiceTypeName>FUEL SURCHARGE</LocalServiceTypeName>
+          <ChargeCodeType>SCH</ChargeCodeType>
+          <MrkSrvInd>N</MrkSrvInd>
+        </MrkSrv>
+      </Srv>
+      <Srv>
+        <GlobalProductCode>T</GlobalProductCode>
+        <MrkSrv>
+          <LocalProductCode>T</LocalProductCode>
+          <ProductShortName>EXPRESS 12:00</ProductShortName>
+          <LocalProductName>EXPRESS 12:00 DOC</LocalProductName>
+          <NetworkTypeCode>TD</NetworkTypeCode>
+          <POfferedCustAgreement>N</POfferedCustAgreement>
+          <TransInd>Y</TransInd>
+        </MrkSrv>
+        <MrkSrv>
+          <LocalServiceType>II</LocalServiceType>
+          <GlobalServiceName>SHIPMENT INSURANCE</GlobalServiceName>
+          <LocalServiceTypeName>SHIPMENT INSURANCE</LocalServiceTypeName>
+          <ChargeCodeType>XCH</ChargeCodeType>
+          <MrkSrvInd>Y</MrkSrvInd>
+        </MrkSrv>
+        <MrkSrv>
+          <LocalServiceType/>
+          <GlobalServiceName>Discount</GlobalServiceName>
+          <LocalServiceTypeName>Discount</LocalServiceTypeName>
+          <ChargeCodeType/>
+        </MrkSrv>
+        <MrkSrv>
+          <LocalServiceType>FF</LocalServiceType>
+          <GlobalServiceName>FUEL SURCHARGE</GlobalServiceName>
+          <LocalServiceTypeName>FUEL SURCHARGE</LocalServiceTypeName>
+          <ChargeCodeType>SCH</ChargeCodeType>
+          <MrkSrvInd>N</MrkSrvInd>
+        </MrkSrv>
+      </Srv>
       <Srv>
         <GlobalProductCode>D</GlobalProductCode>
         <MrkSrv>

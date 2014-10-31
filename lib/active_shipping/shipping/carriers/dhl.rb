@@ -195,6 +195,8 @@ module ActiveMerchant
             international = options[:international]
           end
           
+          puts "BUMMS #{international}"
+          
           quotes = document.xpath("//QtdShp")
           
           quotes.each do |qtdshp|
@@ -213,21 +215,35 @@ module ActiveMerchant
             q.product_short_name = qtdshp.at('LocalProductName').text if qtdshp.at('LocalProductName')                    
             q.pickup_date_cutoff_time = qtdshp.at('PickupCutoffTime').text if qtdshp.at('PickupCutoffTime')          
             q.booking_time = qtdshp.at('BookingTime').text if qtdshp.at('BookingTime')          
-            q.currency = qtdshp.at('CurrencyCode').text if qtdshp.at('CurrencyCode')          
             q.exchange_rate = qtdshp.at('ExchangeRate').text if qtdshp.at('ExchangeRate')
             q.pricing_date = qtdshp.at('PricingDate').text if qtdshp.at('PricingDate')   
             q.total_charge = qtdshp.at('ShippingCharge').text if qtdshp.at('ShippingCharge') 
+            
             if international
-              q.weight_charge = qtdshp.at('WeightChargeTaxDet//BaseAmt').text if qtdshp.at('WeightChargeTaxDet//BaseAmt')               
+              qs = qtdshp.xpath("QtdSInAdCur")              
+              qs.each do |v|
+                if v.at('CurrencyCode').text == "MXN"
+                  #puts v
+                  q.currency = v.at('CurrencyCode').text if v.at('CurrencyCode')                                                            
+                  q.weight_charge = v.at('WeightChargeTaxDet//BaseAmt').text if v.at('WeightChargeTaxDet//BaseAmt')                                 
+                end
+              end
             else  
               q.weight_charge = qtdshp.at('WeightChargeTaxDet//BaseAmt').text if qtdshp.at('WeightChargeTaxDet//BaseAmt')               
             end
+            
             q.weight_charge_tax = qtdshp.at('WeightChargeTax').text if qtdshp.at('WeightChargeTax')                                       
             q.total_tax_amount = qtdshp.at('TotalTaxAmount').text if qtdshp.at('TotalTaxAmount')  
                         
-            parse_extra_charges(qtdshp, q)                                                                   
+            parse_extra_charges(qtdshp, q, options)                                                                   
             
             q.calculate 
+            
+            if international
+              q.total_charge = q.weight_charge + q.surcharge
+            end
+            
+            #puts "QUOTE #{q.total_charge} #{q.weight_charge_tax} #{q.total_tax_amount} #{q.weight_charge} #{q.currency} #{q.surcharge}"
             
             if q.total_charge > 0
               response.quotes << q
@@ -296,8 +312,13 @@ module ActiveMerchant
           success        
         end        
         
-        def parse_extra_charges(quote_node, dhl_quote)
+        def parse_extra_charges(quote_node, dhl_quote, options = nil)
           extras = quote_node.xpath("QtdShpExChrg")
+          international = false
+          
+          if options && options[:international]
+            international = options[:international]
+          end                    
           
           extras.each do |extra|
             e = DhlExtraCharge.new
@@ -307,9 +328,21 @@ module ActiveMerchant
             e.global_service_name = extra.at('GlobalServiceName').text if extra.at('GlobalServiceName')
             
             e.local_service_name = extra.at('LocalServiceTypeName').text if extra.at('LocalServiceTypeName')                              
-            e.currency = extra.at('CurrencyCode').text if extra.at('CurrencyCode')                              
-            e.charge_value = extra.at('ChargeTaxAmountDet//BaseAmount').text if extra.at('ChargeTaxAmountDet//BaseAmount')                              
-            e.charge_tax_amount = extra.at('ChargeTaxAmount').text if extra.at('ChargeTaxAmount')                                        
+                        
+            if international
+              qs = extra.xpath("QtdSExtrChrgInAdCur")
+              qs.each do |v|
+                if v.at('CurrencyCode').text == "MXN"
+                  e.currency = v.at('CurrencyCode').text if v.at('CurrencyCode')                              
+                  e.charge_value = v.at('ChargeTaxAmountDet//BaseAmount').text if v.at('ChargeTaxAmountDet//BaseAmount')                              
+                  e.charge_tax_amount = v.at('ChargeTaxAmount').text if v.at('ChargeTaxAmount')                                                          
+                end
+              end                            
+            else
+              e.currency = extra.at('CurrencyCode').text if extra.at('CurrencyCode')                              
+              e.charge_value = extra.at('ChargeTaxAmountDet//BaseAmount').text if extra.at('ChargeTaxAmountDet//BaseAmount')                              
+              e.charge_tax_amount = extra.at('ChargeTaxAmount').text if extra.at('ChargeTaxAmount')                                        
+            end
             
             if e.charge_value
               dhl_quote.extra_charges << e                  

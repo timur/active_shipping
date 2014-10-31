@@ -127,7 +127,7 @@ class DhlTest < Test::Unit::TestCase
     doc = Nokogiri::XML(f)
     f.close
     dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6', test: true)
-    response = dhl.parse_quote_response(doc)
+    response = dhl.parse_quote_response(doc, {})
     
     assert response.class.to_s, ActiveMerchant::Shipping::DhlQuoteResponse.class.to_s     
     assert_equal response.notes.size, 1
@@ -139,7 +139,7 @@ class DhlTest < Test::Unit::TestCase
     doc = Nokogiri::XML(f)
     f.close
     dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6', test: true)
-    response = dhl.parse_quote_response(doc)
+    response = dhl.parse_quote_response(doc, {})
     
     assert response.class.to_s, ActiveMerchant::Shipping::DhlQuoteResponse.class.to_s     
     assert_equal response.notes.size, 0
@@ -157,12 +157,36 @@ class DhlTest < Test::Unit::TestCase
     assert_equal response.quotes[1].currency, "EUR"    
   end
   
+  def test_parse_quote_response_international
+    f = File.open(MODEL_FIXTURES + "xml/dhl/response_quote_international.xml")
+    doc = Nokogiri::XML(f)
+    f.close
+    dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6', test: true)
+    response = dhl.parse_quote_response(doc, {international: true})
+    
+    assert response.class.to_s, ActiveMerchant::Shipping::DhlQuoteResponse.class.to_s     
+    puts response.quotes[0].product_short_name
+    
+    assert_equal response.quotes[0].weight_charge, 404.80
+    
+    assert_equal response.quotes[0].extra_charges.size, 2    
+    
+    puts "#{response.quotes[0].extra_charges}"
+    #assert_equal response.quotes[1].extra_charges[0].global_service_name, "SHIPMENT INSURANCE"            
+    #assert_equal response.quotes[1].extra_charges[0].charge_value, 155.020    
+
+    response.quotes[0].extra_charges.each do |e|
+      puts "#{e.currency} #{e.charge_value}"
+    end
+    
+  end  
+  
   def test_parse_quote_response_corrupt
     f = File.open(MODEL_FIXTURES + "xml/dhl/response_note_corrupt.xml")
     doc = Nokogiri::XML(f)
     f.close
     dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6', test: true)
-    response = dhl.parse_quote_response(doc)
+    response = dhl.parse_quote_response(doc, {})
     
     assert response.class.to_s, ActiveMerchant::Shipping::DhlQuoteResponse.class.to_s     
   end  
@@ -176,10 +200,8 @@ class DhlTest < Test::Unit::TestCase
     
     assert response.class.to_s, ActiveMerchant::Shipping::DhlQuoteResponse.class.to_s 
     
-    puts "COUNT #{response.quotes.size}"    
-    
     response.quotes.each do |q|
-      puts "QUOTE #{q.global_product_code} #{q.local_product_code}"
+      #puts "QUOTE #{q.global_product_code} #{q.local_product_code}"
     end
   end  
 
