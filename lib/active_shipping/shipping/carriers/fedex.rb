@@ -214,19 +214,22 @@ module ActiveMerchant
           end
           
           parse_rated_shipment_details(q, details.xpath("RatedShipmentDetails"))
+          
+          #puts "FEDEX QUOTE #{q.base_charge} #{q.total_charge} #{q.surcharge}"
           response.quotes << q
         end        
       end
       
       def parse_rated_shipment_details(quote, details)
         current_detail = nil
+        
         details.each do |detail|
           curr = detail.xpath("ShipmentRateDetail//CurrencyExchangeRate")
           if curr
             from = curr.at('FromCurrency').text
             into = curr.at('IntoCurrency').text              
             
-            if from == into
+            if into == "NMP"
               current_detail = detail
             end
           end
@@ -245,6 +248,7 @@ module ActiveMerchant
             s.surcharge_type = surcharge.at('SurchargeType').text                                        
             s.description = surcharge.at('Description').text                                                    
             s.amount = surcharge.at('Amount/Amount').text                                                    
+            #puts "#{s.amount} #{s.description}"
             quote.extra_charges << s
           end
           

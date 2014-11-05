@@ -23,6 +23,25 @@ class FedExParseQuoteResponseTest < Test::Unit::TestCase
     assert first.surcharge == 5.89                   
     assert first.extra_charges.size == 1                
   end
+  
+  def test_parse_quote_response_international
+    xml_string = File.read(Dir.pwd + "/test/fixtures/xml/fedex/rate_international.xml")
+    xml = Nokogiri::XML(xml_string)
+    
+    fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
+    response = fedex.parse_quote_response(xml)
+    
+    assert response.quotes.size == 2
+    
+    first = response.quotes[0]
+    assert first.product_code == "INTERNATIONAL_PRIORITY"
+    
+    assert first.currency == "MXN"
+    assert first.base_charge == 297.98
+    
+    assert first.surcharge == 35.71                   
+    #assert first.extra_charges.size == 1                
+  end  
     
   #def test_parse_quote_response
   #  xml_string = File.read(Dir.pwd + "/test/fixtures/xml/fedex/response_quote_mexico.xml")
