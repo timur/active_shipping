@@ -25,20 +25,14 @@ module ActiveMerchant
       
       attribute :success, Boolean
       attribute :tracking_events, Array
-      attribute :shipper_number, String      
-      attribute :ship_to_addressline1, String      
-      attribute :ship_to_addressline2, String      
-      attribute :city, String      
-      attribute :state_province_code, String                              
-      
-      attribute :postal_code, String                              
-      attribute :country_code, String                              
-      attribute :description, DateTime                              
-      attribute :pickup_date, String                              
 
       attribute :request, String
       attribute :response, String      
-
+      
+      def success?
+        @success
+      end
+      
       def to_s
         "Success: #{success} | Notes: #{notes.to_s}"
       end

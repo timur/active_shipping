@@ -149,7 +149,7 @@ module ActiveMerchant
       def parse_tracking_response(document)
         response = UpsTrackingResponse.new
         parse_tracking_status(response, document)        
-        parse_tracking(response, document)                
+        #parse_tracking(response, document)                
         response
       end
       
