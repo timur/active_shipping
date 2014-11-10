@@ -71,6 +71,8 @@ module ActiveMerchant
       # optional
       attribute :shipment_details_insured_amount, Float      
       
+      attribute :document_weight, Float            
+      
       validates :shipment_details_number_of_pieces, 
                 :shipment_details_weight, 
                 :shipment_details_global_product_code, 
@@ -178,7 +180,8 @@ module ActiveMerchant
         end
         
         def calculate_pieces
-          if pieces
+          puts "CALCULATE PIECES #{pieces.size} #{package_type}"
+          if pieces && pieces.size > 0
             number_pieces, weight = 0, 0
             pieces.each do |piece|
               if piece.quantity

@@ -38,7 +38,11 @@ module ActiveMerchant
       attribute :shipper_referenceid, String                                                
 
       attribute :request, String
-      attribute :response, String      
+      attribute :response, String
+      
+      def success?
+        @success
+      end      
 
       def to_s
         "Success: #{success} | Notes: #{notes.to_s}"

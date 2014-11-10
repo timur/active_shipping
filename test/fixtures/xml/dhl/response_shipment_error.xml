@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<res:ShipmentValidateErrorResponse xmlns:res='http://www.dhl.com' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.dhl.com ship-val-err-res.xsd'>
+  <Response>
+    <ServiceHeader>
+      <MessageTime>2014-11-08T10:00:58+01:00</MessageTime>
+      <SiteID>ZURICATA</SiteID>
+      <Password>ZURICATA</Password>
+    </ServiceHeader>
+    <Status>
+      <ActionStatus>Error</ActionStatus>
+      <Condition>
+        <ConditionCode>111</ConditionCode>
+        <ConditionData>
+          Error in parsing request XML:Error: Datatype error: In element
+          &apos;NumberOfPieces&apos; : 0 is out of bounds:[ 1 &lt;= X ]. at line
+          1, column 1250
+        </ConditionData>
+      </Condition>
+    </Status>
+  </Response>
+</res:ShipmentValidateErrorResponse>
