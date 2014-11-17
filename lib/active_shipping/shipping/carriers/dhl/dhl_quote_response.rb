@@ -43,7 +43,7 @@ module ActiveMerchant
       attribute :surcharge, Float
       attribute :delivery_date, String      
       attribute :delivery_time, String              
-      attribute :delivery_date_calculated, DateTime
+      attribute :delivery_date_calculated, String
       attribute :pickup_day_of_week, Integer                    
       attribute :destination_day_of_week, Integer                          
       attribute :pickup_date_cutoff_time, String
@@ -69,7 +69,7 @@ module ActiveMerchant
           if d
             s = "#{self.delivery_date} #{d.hour}:#{d.min}"
             s += " UTC"
-            self.delivery_date_calculated = Time.parse(s)
+            self.delivery_date_calculated = s
           end
         end
       end                                  
