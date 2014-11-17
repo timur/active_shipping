@@ -26,7 +26,11 @@ module ActiveMerchant
       attribute :ship_timestamp, DateTime
       attribute :tracking_events, Array
       attribute :request, String
-      attribute :response, String      
+      attribute :response, String  
+      
+      def success?
+        @success
+      end    
       
       def to_s
         "Success: #{success} | Notes: #{notes.to_s}"

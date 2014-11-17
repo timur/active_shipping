@@ -6,7 +6,7 @@ class FedExShipmentTest < Test::Unit::TestCase
   def setup
   end
     
-  def test_shipment_mexico
+  def test_shipment_mexico_fedex
     package = ActiveMerchant::Shipping::FedexPackage.new(quantity: 1, height: 10, width: 10, length: 10, weight: 1.5)
     
     shipment = ActiveMerchant::Shipping::FedexShipmentRequest.new(
@@ -40,7 +40,7 @@ class FedExShipmentTest < Test::Unit::TestCase
     assert_not_nil response
   end
   
-  def test_shipment_mexico_document
+  def test_shipment_mexico_document_fedex
     shipment = ActiveMerchant::Shipping::FedexShipmentRequest.new(
       service_type: "STANDARD_OVERNIGHT",      
       shipper_countrycode: "MX",
@@ -67,12 +67,12 @@ class FedExShipmentTest < Test::Unit::TestCase
     
     fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
     response = fedex.shipment(request: shipment)     
-    save_xml(response, "test_shipment_mexico_document")
+    save_xml(response, "test_shipment_mexico_document_fedex")
     assert response.success == true
     assert_not_nil response
   end  
   
-  def test_shipment_mexico_multiple
+  def test_shipment_mexico_multiple_fedex
     package = ActiveMerchant::Shipping::FedexPackage.new(quantity: 3, height: 10, width: 10, length: 10, weight: 1.5)
     
     shipment = ActiveMerchant::Shipping::FedexShipmentRequest.new(
@@ -104,20 +104,20 @@ class FedExShipmentTest < Test::Unit::TestCase
     
     fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
     response = fedex.shipment(request: shipment)     
-    save_xml(response, "test_shipment_mexico_multiple")
+    save_xml(response, "test_shipment_mexico_multiple_fedex")
     assert response.success == true
     assert response.master_trackingnumber != ""    
     assert_not_nil response
   end  
   
-  def test_shipment_multiple_raw
+  def test_shipment_multiple_raw_fedex
     fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
     response = fedex.shipment(raw_xml: "testcases/test_multiple_raw_mex.xml")     
-    save_xml(response, "test_shipment_multiple_raw_mex")
+    save_xml(response, "test_shipment_multiple_raw_fedex")
     assert_not_nil response
   end
     
-  def test_shipment_declared_value_int
+  def test_shipment_declared_value_int_fedex
     package = ActiveMerchant::Shipping::FedexPackage.new(quantity: 1, height: 10, width: 10, length: 10, weight: 1.5)
     
     shipment = ActiveMerchant::Shipping::FedexShipmentRequest.new(
@@ -145,13 +145,13 @@ class FedExShipmentTest < Test::Unit::TestCase
     
     fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
     response = fedex.shipment(request: shipment)      
-    save_xml(response, "test_shipment_declared_value_int")
+    save_xml(response, "test_shipment_declared_value_int_fedex")
     assert response.notes.size == 1
     assert response.success == true
     assert_not_nil response
   end
   
-  def test_shipment_sequence
+  def test_shipment_sequence_fedex
     package = ActiveMerchant::Shipping::FedexPackage.new(quantity: 1, height: 10, width: 10, length: 10, weight: 1.5)
     
     shipment = ActiveMerchant::Shipping::FedexShipmentRequest.new(
@@ -180,13 +180,13 @@ class FedExShipmentTest < Test::Unit::TestCase
     
     fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
     response = fedex.shipment(request: shipment)      
-    save_xml(response, "test_shipment_sequence")
+    save_xml(response, "test_shipment_sequence_fedex")
     assert response.notes.size == 1
     assert response.success == true
     assert_not_nil response
   end  
   
-  def test_shipment_insured_value
+  def test_shipment_insured_value_fedex
     package = ActiveMerchant::Shipping::FedexPackage.new(quantity: 1, height: 10, width: 10, length: 10, weight: 1.5)
     
     shipment = ActiveMerchant::Shipping::FedexShipmentRequest.new(
@@ -212,44 +212,44 @@ class FedExShipmentTest < Test::Unit::TestCase
     
     fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
     response = fedex.shipment(request: shipment)      
-    save_xml(response, "test_shipment_insured_value")
+    save_xml(response, "test_shipment_insured_value_fedex")
     assert response.notes.size == 1
     assert response.success == true
     assert_not_nil response
   end  
 
-  def test_shipment_declared_value_int_raw_xml
+  def test_shipment_declared_value_int_raw_xml_fedex
     fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
     response = fedex.shipment(raw_xml: "/testcases/ship_declared_value_int.xml")     
-    save_xml(response, "test_shipment_declared_value_int_raw_xml")
+    save_xml(response, "test_shipment_declared_value_int_raw_xml_fedex")
     assert_not_nil response
   end    
 
-  def test_shipment_declared_value_int_raw_xml_error
+  def test_shipment_declared_value_int_raw_xml_error_fedex
     fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
     response = fedex.shipment(raw_xml: "/testcases/ship_declared_value_int_error.xml")     
-    save_xml(response, "test_shipment_declared_value_int_raw_error_xml")
+    save_xml(response, "test_shipment_declared_value_int_raw_xml_error_fedex")
     assert_not_nil response
   end 
   
-  def test_shipment_insured_value_raw_xml
+  def test_shipment_insured_value_raw_xml_fedex
     fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
     response = fedex.shipment(raw_xml: "/testcases/ship_insured_value.xml")     
-    save_xml(response, "test_shipment_insured_value_raw_xml")
+    save_xml(response, "test_shipment_insured_value_raw_xml_fedex")
     assert_not_nil response
   end     
 
-  def test_shipment_declared_value_document_int_raw_xml
+  def test_shipment_declared_value_document_int_raw_xml_fedex
     fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
     response = fedex.shipment(raw_xml: "/testcases/ship_declared_value_document_int.xml")     
-    save_xml(response, "test_shipment_declared_value_document_int_raw_xml")
+    save_xml(response, "test_shipment_declared_value_document_int_raw_xml_fedex")
     assert_not_nil response
   end     
 
-  def test_shipment_reference_number_raw_xml
+  def test_shipment_reference_number_raw_xml_fedex
     fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
     response = fedex.shipment(raw_xml: "/testcases/ship_reference_number.xml")     
-    save_xml(response, "test_shipment_reference_number_raw_xml")
+    save_xml(response, "test_shipment_reference_number_raw_xml_fedex")
     assert_not_nil response
   end 
   

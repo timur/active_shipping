@@ -67,7 +67,9 @@ module ActiveMerchant
         if self.delivery_time
           d = Time.parse(self.delivery_time)
           if d
-            self.delivery_date_calculated = Time.parse("#{delivery_date} #{d.hour}:#{d.min}")
+            s = "#{self.delivery_date} #{d.hour}:#{d.min}"
+            s += " UTC"
+            self.delivery_date_calculated = Time.parse(s)
           end
         end
       end                                  

@@ -7,7 +7,7 @@ class FedExPickupTest < Test::Unit::TestCase
   end    
   
   def test_pickup_raw
-    fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
+    fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: false)
     response = fedex.find_quotes(raw_xml: "pickup_raw.xml")    
     
     save_xml(response, "test_pickup_raw")
