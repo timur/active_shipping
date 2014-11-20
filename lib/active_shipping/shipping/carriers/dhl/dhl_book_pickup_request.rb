@@ -16,6 +16,8 @@ module ActiveMerchant
 
       attribute :account_number, String      
       attribute :business, Boolean, default: false
+      attribute :residential, Boolean, default: false      
+      attribute :shipment_details, Boolean, default: false      
       attribute :company, String                  
       attribute :address, String
       attribute :package_location, String
@@ -42,9 +44,14 @@ module ActiveMerchant
         business
       end
       
+      def is_residential_address
+        residential
+      end      
+      
       def location_type
-        back = "R"
+        back = "C"
         back = "B" if is_business_address
+        back = "R" if is_residential_address        
         back
       end
             

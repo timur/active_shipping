@@ -34,14 +34,6 @@ module ActiveMerchant
         call_method(options, "parse_pickup_response")
       end
       
-      def cancel_pickup(options = {})
-        call_method(options, "parse_cancel_pickup_response")
-      end
-      
-      def modify_pickup(options = {})
-        call_method(options, "parse_pickup_response")
-      end                        
-
       def parse_shipment_response(document, options)
         response = DhlShipmentResponse.new
         parse_status_notes(response, document)        

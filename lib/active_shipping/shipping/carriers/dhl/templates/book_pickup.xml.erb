@@ -12,14 +12,11 @@
         <AccountNumber><%= @account_number %></AccountNumber>
     </Requestor>
     <Place>
-        <LocationType><%= location_type %></LocationType>
-        <% if @is_business_address %>
-          <CompanyName><%= @company %></CompanyName>
-        <% end %>
+        <LocationType>B</LocationType>
+        <CompanyName><%= @company %></CompanyName>
         <Address1><%= @address %></Address1>
-        <% if @package_location %>
-          <PackageLocation><%= @package_location %></PackageLocation>
-        <% end %>
+        <Address2></Address2>        
+        <PackageLocation><%= @package_location %></PackageLocation>
         <City><%= @city %></City>
         <CountryCode><%= @country %></CountryCode>
         <PostalCode><%= @postal_code %></PostalCode>
@@ -33,18 +30,18 @@
         <PersonName><%= @contact_name %></PersonName>
         <Phone><%= @contact_phone %></Phone>
     </PickupContact>
-    <ShipmentDetails>
-        <AccountType>D</AccountType>
-        <AccountNumber><%= @account_number %></AccountNumber>      
-        <BillToAccountNumber><%= @account_number %></BillToAccountNumber>     
-        <% if @awb_number %>           
-          <AWBNumber><%= @awb_number %></AWBNumber>
-        <% end %>
-        <% if @weight %>
-          <Weight><%= @weight %></Weight>
-          <WeightUnit>K</WeightUnit>
-        <% end %>
-        <DoorTo>DD</DoorTo>
-        <DimensionUnit>C</DimensionUnit>
-    </ShipmentDetails> 
+    <% if @shipment_details %>    
+      <ShipmentDetails>
+          <AccountType>D</AccountType>
+          <AccountNumber><%= @account_number %></AccountNumber>      
+          <BillToAccountNumber><%= @account_number %></BillToAccountNumber>             
+          <AWBNumber></AWBNumber>
+          <% if @weight %>
+            <Weight><%= @weight %></Weight>
+            <WeightUnit>K</WeightUnit>
+          <% end %>
+          <DoorTo>DD</DoorTo>
+          <DimensionUnit>C</DimensionUnit>
+      </ShipmentDetails> 
+    <% end %>      
 </req:BookPickupRequest>

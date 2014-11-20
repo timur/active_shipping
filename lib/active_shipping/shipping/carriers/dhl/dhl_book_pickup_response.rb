@@ -17,7 +17,11 @@ module ActiveMerchant
       attribute :origin_area, String            
 
       attribute :error_messages, Array      
-      
+
+      def success?
+        @success
+      end
+            
     end
   end
 end
