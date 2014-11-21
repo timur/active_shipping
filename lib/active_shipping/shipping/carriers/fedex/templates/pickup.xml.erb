@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+<SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns='http://fedex.com/ws/pickup/v10'>
+  <SOAP-ENV:Body>
+    <CreatePickupRequest>
+      <WebAuthenticationDetail>
+        <UserCredential>
+          <Key><%= @key %></Key>
+          <Password><%= @password %></Password>
+        </UserCredential>
+      </WebAuthenticationDetail>
+      <ClientDetail>
+        <AccountNumber><%= @accountNumber %></AccountNumber>
+        <MeterNumber><%= @meterNumber %></MeterNumber>
+      </ClientDetail>
+      <TransactionDetail>
+        <CustomerTransactionId>*** Create Pickup Request v10 ***</CustomerTransactionId>
+      </TransactionDetail>
+      <Version>
+        <ServiceId>disp</ServiceId>
+        <Major>10</Major>
+        <Intermediate>0</Intermediate>
+        <Minor>0</Minor>
+      </Version>
+      <OriginDetail>
+        <PickupLocation>
+          <Contact>
+            <PersonName><%= @person_name %></PersonName>
+            <CompanyName><%= @company %></CompanyName>
+            <PhoneNumber><%= @phone %></PhoneNumber>
+          </Contact>
+          <Address>
+            <StreetLines><%= @address %></StreetLines>
+            <City><%= @phone %></City>
+            <StateOrProvinceCode><%= @state %></StateOrProvinceCode>
+            <PostalCode><%= @postalcode %></PostalCode>
+            <CountryCode><%= @country %></CountryCode>
+          </Address>
+        </PickupLocation>
+        <PackageLocation><%= @package_location %></PackageLocation>
+        <BuildingPartDescription/>
+        <ReadyTimestamp><%= @pickup_time.strftime('%FT%T%:z') %></ReadyTimestamp>
+        <CompanyCloseTime><%= @close_time %></CompanyCloseTime>
+      </OriginDetail>
+      <PackageCount><%= @package_count %></PackageCount>
+      <CarrierCode>FDXE</CarrierCode>
+    </CreatePickupRequest>
+  </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

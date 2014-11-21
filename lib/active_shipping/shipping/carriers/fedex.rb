@@ -80,6 +80,33 @@ module ActiveMerchant
         resp        
       end
       
+      def book_pickup(options = {})
+        xml = ""
+        if options[:raw_xml]
+          xml = File.open(Dir.pwd + "/test/fixtures/xml/fedex/#{options[:raw_xml]}").read
+        elsif options[:raw_string]
+          xml = options[:raw_string]                    
+        else
+          request = options[:request]
+
+          request.key = @options[:key]
+          request.password = @options[:password]        
+          request.accountNumber = @options[:accountNumber]        
+          request.meterNumber = @options[:meterNumber]                        
+
+          xml = request.to_xml
+        end        
+        
+        response_raw = commit(save_request(xml), (@options[:test] || false))             
+
+        resp = parse_pickup_response(Nokogiri::XML(response_raw))
+        resp.response = response_raw
+        resp.request = last_request
+        
+        puts "HERE #{resp.class}"
+        resp        
+      end      
+      
       def tracking(options = {})
         xml = ""
         if options[:raw_xml]
@@ -142,6 +169,16 @@ module ActiveMerchant
         response
       end
       
+      def parse_pickup_response(document)
+        document.remove_namespaces!
+        response = FedexBookPickupResponse.new
+        parse_notes(response, document)
+        response_success(response, document)
+        parse_pickup(response, document)
+
+        response
+      end      
+      
       def parse_tracking_response(document)
         document.remove_namespaces!
         response = FedexTrackingResponse.new
@@ -182,6 +219,11 @@ module ActiveMerchant
         response.label = parts.at('Image') if parts.at('Image')
       end
       
+      def parse_pickup(response, document)
+        response.pickup_confirmation_number = document.xpath("//PickupConfirmationNumber")   
+        response.location = document.xpath("//Location")           
+      end
+            
       def parse_tracking(response, document)
         track_details = document.xpath("//TrackDetails")   
         response.tracking_number_unique_identifier = track_details.at('TrackingNumberUniqueIdentifier').text if track_details.at('TrackingNumberUniqueIdentifier')
