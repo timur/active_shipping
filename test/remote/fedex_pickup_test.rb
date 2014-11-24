@@ -36,6 +36,8 @@ class FedExPickupTest < Test::Unit::TestCase
     response = fedex.book_pickup(request: pickup)   
     save_xml(response, "test_book_pickup_fedex")
     
+    puts response.pickup_confirmation_number
+    
     assert response.success == true
     assert response.pickup_confirmation_number != nil     
     

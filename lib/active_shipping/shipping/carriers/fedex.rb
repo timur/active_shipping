@@ -220,8 +220,8 @@ module ActiveMerchant
       end
       
       def parse_pickup(response, document)
-        response.pickup_confirmation_number = document.xpath("//PickupConfirmationNumber")   
-        response.location = document.xpath("//Location")           
+        response.pickup_confirmation_number = document.xpath("//PickupConfirmationNumber").text   
+        response.location = document.xpath("//Location").text           
       end
             
       def parse_tracking(response, document)
