@@ -173,14 +173,20 @@
               <Units>KG</Units>
               <Value><%= @package.weight -%></Value>
             </Weight>
-            <% if @packaging_type == "YOUR_PACKAGING "%>
+            <% if @packaging_type == "YOUR_PACKAGING" %>
               <Dimensions>
                 <Length><%= @package.length -%></Length>
                 <Width><%= @package.width -%></Width>
                 <Height><%= @package.height -%></Height>
                 <Units>CM</Units>
               </Dimensions>            
-            <% end -%>              
+            <% end -%>     
+            <% unless @package.reference.blank? %>
+              <CustomerReferences>
+                <CustomerReferenceType>CUSTOMER_REFERENCE</CustomerReferenceType>
+                <Value><%= @package.reference -%></Value>
+              </CustomerReferences>                     
+            <% end %>
           </RequestedPackageLineItems>  
         <% end -%>                                  
       </RequestedShipment>

@@ -43,11 +43,8 @@ module ActiveMerchant
           xml = request.to_xml
         end        
         
-        puts "BEFORE #{xml}"
         response_raw = commit(save_request(xml), (@options[:test] || false))  
         
-        puts "RAW #{response_raw}"           
-
         resp = parse_quote_response(Nokogiri::XML(response_raw))
         resp.response = response_raw
         resp.request = last_request

@@ -16,7 +16,7 @@ module ActiveMerchant
       attribute :meterNumber, String
 
       attribute :transactionId, String
-      attribute :packaging_type, String      
+      attribute :packaging_type, String, default: "YOUR_PACKAGING"
       attribute :service_type, String            
       attribute :preferred_currency, String            
       attribute :insured_value, Float
@@ -67,11 +67,7 @@ module ActiveMerchant
           self.package_count = 1
         else
           self.package_count = @package.quantity
-        end
-        
-        unless packaging_type
-          self.packaging_type = "YOUR_PACKAGING"
-        end                        
+        end        
       end
                 
       def to_xml

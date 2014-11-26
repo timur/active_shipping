@@ -11,6 +11,8 @@ module ActiveMerchant
       attribute :width, Integer
       attribute :length, Integer      
       attribute :weight, Float  
+      
+      attribute :reference, String        
     end
   end
 end
