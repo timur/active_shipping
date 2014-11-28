@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<AccessRequest>
+   <AccessLicenseNumber><%= @access_license_number %></AccessLicenseNumber>
+   <UserId><%= @user_id %></UserId>
+   <Password><%= @password %></Password>
+</AccessRequest>
+<?xml version="1.0"?>
+<TimeInTransitRequest>
+   <Request>
+      <TransactionReference>
+         <CustomerContext></CustomerContext>
+         <XpciVersion>1.001</XpciVersion>
+      </TransactionReference>
+      <RequestAction>TimeInTransit</RequestAction>
+   </Request>
+   <TransitFrom>
+      <AddressArtifactFormat>
+         <PostcodePrimaryLow><%= @postcode_from %></PostcodePrimaryLow>
+         <CountryCode><%= @country_from %></CountryCode>
+      </AddressArtifactFormat>
+   </TransitFrom>
+   <TransitTo>
+      <AddressArtifactFormat>
+         <PostcodePrimaryLow><%= @postcode_to %></PostcodePrimaryLow>
+         <CountryCode><%= @country_to %></CountryCode>
+      </AddressArtifactFormat>
+   </TransitTo>
+   <PickupDate><%= @pickup_date %></PickupDate>
+   <MaximumListSize>5</MaximumListSize>
+   <ShipmentWeight>
+      <UnitOfMeasurement>
+         <Code>KGS</Code>
+         <Description>Kilograms</Description>
+      </UnitOfMeasurement>
+      <Weight><%= @weight %></Weight>
+   </ShipmentWeight>
+</TimeInTransitRequest>

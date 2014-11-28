@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<AccessRequest>
+  <AccessLicenseNumber>0CCCCED94B9FB025</AccessLicenseNumber>
+  <UserId>sven.crone</UserId>
+  <Password>Holaups2014</Password>
+</AccessRequest>
+<?xml version="1.0"?>
+<TimeInTransitRequest>
+  <Request>
+    <TransactionReference>
+ <CustomerContext>Your Test Case Summary Description</CustomerContext>
+      <XpciVersion>1.001</XpciVersion>
+    </TransactionReference>
+    <RequestAction>TimeInTransit</RequestAction>
+  </Request>
+  <TransitFrom>
+    <AddressArtifactFormat>
+      <PostcodePrimaryLow>11550</PostcodePrimaryLow>
+      <CountryCode>MX</CountryCode>
+
+
+    </AddressArtifactFormat>
+  </TransitFrom>
+  <TransitTo>
+    <AddressArtifactFormat>
+      <PostcodePrimaryLow>11550</PostcodePrimaryLow>
+      <CountryCode>MX</CountryCode>
+    </AddressArtifactFormat>
+  </TransitTo>
+  <PickupDate>20141127</PickupDate>
+  <MaximumListSize>5</MaximumListSize>
+  <ShipmentWeight>
+    <UnitOfMeasurement>
+      <Code>KGS</Code>
+      <Description>Kilograms</Description>
+    </UnitOfMeasurement>
+    <Weight>2</Weight>
+  </ShipmentWeight>
+</TimeInTransitRequest>

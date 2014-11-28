@@ -7,7 +7,8 @@ module ActiveMerchant
         :rates => 'ups.app/xml/Rate',
         :track => 'ups.app/xml/Track',
         :ship_confirm => 'ups.app/xml/ShipConfirm',        
-        :ship_accept => 'ups.app/xml/ShipAccept'                
+        :ship_accept => 'ups.app/xml/ShipAccept',
+        :transit => 'ups.app/xml/TimeInTransit'                        
       }
       
       DAILY_PICKUP = "01"

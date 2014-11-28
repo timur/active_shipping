@@ -63,7 +63,30 @@ module ActiveMerchant
         resp.response = response_raw
         resp.request = last_request
         resp
-      end      
+      end
+      
+      def transit(options = {})
+        xml = ""
+        if options[:raw_xml]
+          xml = File.open(Dir.pwd + "/test/fixtures/xml/ups/#{options[:raw_xml]}").read
+        elsif options[:raw_string]
+          xml = options[:raw_string]                    
+        else        
+          request = options[:request]
+          
+          request.access_license_number = @options[:access_license_number]
+          request.user_id = @options[:user_id]
+          request.password = @options[:password]  
+          
+          xml = request.to_xml
+        end
+        response_raw = commit(UpsConstants::RESOURCES[:transit], save_request(xml), true)             
+        resp = parse_transit_response(Nokogiri::XML(response_raw))
+        
+        resp.response = response_raw
+        resp.request = last_request
+        resp
+      end            
 
       def ship_confirm(options = {})
         xml = ""
@@ -122,6 +145,14 @@ module ActiveMerchant
         
         response
       end
+
+      def parse_transit_response(document)
+        response = UpsTransitResponse.new
+        response.success = parse_transit_status(document)
+        response = parse_transit(response, document)
+        
+        response
+      end      
       
       def parse_shipment_confirm_response(document)
         response = UpsShipmentResponse.new
@@ -144,7 +175,24 @@ module ActiveMerchant
         tag_value(shipment, "//ShipmentIdentificationNumber", document, "shipment_identification_number")                                
 
         shipment
-      end      
+      end
+      
+      def parse_transit(response, document)
+        summaries = document.xpath("//ServiceSummary")          
+        
+        summaries.each do |summary|
+          s = UpsTransitSummary.new
+          tag_value(s, "Service/Code", summary, "code")
+          tag_value(s, "EstimatedArrival/Time", summary, "time")          
+          tag_value(s, "EstimatedArrival/PickupDate", summary, "pickup_date")
+          tag_value(s, "EstimatedArrival/PickupTime", summary, "pickup_time")                              
+          tag_value(s, "EstimatedArrival/Date", summary, "date")         
+          tag_value(s, "EstimatedArrival/CustomerCenterCutoff", summary, "customer_cutoff")                   
+          
+          response.summaries << s                               
+        end
+        response
+      end            
       
       def parse_tracking_response(document)
         response = UpsTrackingResponse.new
@@ -219,6 +267,20 @@ module ActiveMerchant
           end
           success        
         end
+        
+        def parse_transit_status(document)
+          success = true
+          status = document.xpath("//TimeInTransitResponse/Response")
+          
+          status.each do |s|
+            code = nil
+            code = s.at('ResponseStatusCode').text if s.at('ResponseStatusCode')
+            if code && code != "1"
+              success = false
+            end             
+          end
+          success        
+        end        
         
         def parse_accept_status(document)
           success = true
