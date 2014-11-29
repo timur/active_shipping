@@ -7,6 +7,7 @@ module ActiveMerchant
       include Virtus.model
     
       attribute :code, String
+      attribute :product_name, String      
       attribute :customer_cutoff, String
       attribute :time, String
       attribute :pickup_time, String

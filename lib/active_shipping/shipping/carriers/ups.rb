@@ -183,6 +183,7 @@ module ActiveMerchant
         summaries.each do |summary|
           s = UpsTransitSummary.new
           tag_value(s, "Service/Code", summary, "code")
+          tag_value(s, "Service/Description", summary, "product_name")          
           tag_value(s, "EstimatedArrival/Time", summary, "time")          
           tag_value(s, "EstimatedArrival/PickupDate", summary, "pickup_date")
           tag_value(s, "EstimatedArrival/PickupTime", summary, "pickup_time")                              
