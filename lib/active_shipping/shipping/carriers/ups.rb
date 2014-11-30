@@ -99,9 +99,10 @@ module ActiveMerchant
           
           request.access_license_number = @options[:access_license_number]
           request.user_id = @options[:user_id]
-          request.password = @options[:password]  
-          
+          request.password = @options[:password]            
+                
           xml = request.to_xml
+          #puts "SHIP CONFIRM HERE #{xml}"              
         end
         response_raw = commit(UpsConstants::RESOURCES[:ship_confirm], save_request(xml), true)             
         resp = parse_shipment_confirm_response(Nokogiri::XML(response_raw))
@@ -112,29 +113,50 @@ module ActiveMerchant
       end
 
       def ship_accept(options = {})
+        #puts "CALL SHIP ACCEPT #{ap options.keys}"
         xml = ""
         if options[:raw_xml]
           xml = File.open(Dir.pwd + "/test/fixtures/xml/ups/#{options[:raw_xml]}").read
         elsif options[:raw_string]
           xml = options[:raw_string]                    
         else        
-          request = options[:request]
-          
+          request = options[:request]          
           request.access_license_number = @options[:access_license_number]
           request.user_id = @options[:user_id]
-          request.password = @options[:password]  
-          
+          request.password = @options[:password]            
+
           xml = request.to_xml
+          puts "SHIP ACCEPT HERE #{xml}"  
         end
-        
+                
         shipment = options[:shipment]
         
         response_raw = commit(UpsConstants::RESOURCES[:ship_accept], save_request(xml), true)             
         shipment = parse_accept_response(Nokogiri::XML(response_raw), shipment)
         
-        shipment.response = response_raw
-        shipment.request = last_request
-        shipment
+        [shipment, response_raw, last_request]
+      end
+      
+      def shipment(options = {})
+        #puts "CALL SHIPMENT in active shipping #{ap options} #{caller}"
+        response_confirm = self.ship_confirm(options)
+        
+        r = ActiveMerchant::Shipping::UpsShipmentConfirmRequest.new(
+          digest: response_confirm.digest
+        )
+
+        results = self.ship_accept(request: r, shipment: response_confirm.shipment)         
+        s = results[0]
+        
+        response_confirm.shipment = s
+        response_confirm.request_confirm = response_confirm.request
+        response_confirm.response_confirm = response_confirm.response        
+
+        response_confirm.request_confirm = results[2]
+        response_confirm.response_confirm = results[1] 
+        response_confirm.success = s.success
+        response_confirm.errors = s.message       
+        response_confirm
       end
 
       def parse_quote_response(document)
@@ -159,7 +181,7 @@ module ActiveMerchant
         response.success = parse_confirm_status(document)
         response.errors = parse_notes(document)        
         response.shipment = parse_shipment(document)
-                
+        
         response.digest = document.xpath("//ShipmentDigest")
         
         response
@@ -172,7 +194,8 @@ module ActiveMerchant
         tag_value(shipment, "//ShipmentCharges/TransportationCharges/MonetaryValue", document, "transportation_charges")        
         tag_value(shipment, "//ShipmentCharges/ServiceOptionsCharges/MonetaryValue", document, "service_options_charges")
         tag_value(shipment, "//ShipmentCharges/TotalCharges/MonetaryValue", document, "total_charges")                        
-        tag_value(shipment, "//ShipmentIdentificationNumber", document, "shipment_identification_number")                                
+        tag_value(shipment, "//ShipmentIdentificationNumber", document, "shipment_identification_number")   
+        tag_value(shipment, "//TrackingNumber", document, "tracking_number")                                        
 
         shipment
       end
@@ -206,7 +229,7 @@ module ActiveMerchant
         tag_value(shipment, "//TrackingNumber", document, "tracking_number")    
         pdf_label = document.xpath("//LabelImage/GraphicImage")
           
-        shipment.success = parse_accept_status(document)                                  
+        shipment = parse_accept_status(document, shipment)                                  
         shipment.label = pdf_label.text
         shipment
       end            
@@ -283,7 +306,9 @@ module ActiveMerchant
           success        
         end        
         
-        def parse_accept_status(document)
+        def parse_accept_status(document, shipment)
+          messages = []
+          message = ""
           success = true
           status = document.xpath("//ShipmentAcceptResponse/Response")
           
@@ -292,9 +317,17 @@ module ActiveMerchant
             code = s.at('ResponseStatusCode').text if s.at('ResponseStatusCode')
             if code && code != "1"
               success = false
+              messages << s.at('//ErrorDescription').text
+              messages << s.at('//ErrorCode').text              
+              messages << s.at('//ErrorDescription').text                            
+              
+              message = messages.join(" ")
             end             
           end
-          success        
+          
+          shipment.success = success
+          shipment.message = message
+          shipment       
         end        
                   
         def parse_status(document)

@@ -9,13 +9,13 @@
     <RequestOption>validate</RequestOption>
   </Request>
   <LabelSpecification>
-    <LabelPrintMethod>
-      <Code>EPL</Code>
-    </LabelPrintMethod>
-    <LabelStockSize>
-      <Height>4</Height>
-      <Width>6</Width>
-    </LabelStockSize>    
+     <LabelPrintMethod>
+        <Code>GIF</Code>
+     </LabelPrintMethod>
+     <HTTPUserAgent>Mozilla/4.5</HTTPUserAgent>
+     <LabelImageFormat>
+        <Code>GIF</Code>
+     </LabelImageFormat>
   </LabelSpecification>
   <Shipment>
     <RateInformation>
@@ -28,33 +28,35 @@
       <Address>
         <AddressLine1><%= @shipper_address %></AddressLine1>
         <City><%= @shipper_city %></City>
-    	  <PostalCode><%= @shipper_postal_code %></PostalCode>
-    	  <CountryCode><%= @shipper_country %></CountryCode>
+        <PostalCode><%= @shipper_postal_code %></PostalCode>
+        <CountryCode><%= @shipper_country %></CountryCode>
      </Address>
     </Shipper>
-	  <ShipTo>
+    <ShipTo>
       <CompanyName><%= @ship_to_company %></CompanyName>
       <AttentionName><%= @ship_to_name %></AttentionName>
       <PhoneNumber><%= @ship_to_phone %></PhoneNumber>
       <Address>
         <AddressLine1><%= @ship_to_address %></AddressLine1>
         <City><%= @ship_to_city %></City>
-    	  <PostalCode><%= @ship_to_postal_code %></PostalCode>
-    	  <CountryCode><%= @ship_to_country %></CountryCode>
+        <PostalCode><%= @ship_to_postal_code %></PostalCode>
+        <CountryCode><%= @ship_to_country %></CountryCode>
       </Address>
     </ShipTo>
-    <ShipFrom>
-      <CompanyName><%= @ship_from_company %></CompanyName>
-      <AttentionName><%= @ship_from_name %></AttentionName>
-      <PhoneNumber><%= @ship_from_phone %></PhoneNumber>
-      <Address>
-        <AddressLine1><%= @ship_from_address %></AddressLine1>
-        <City><%= @ship_from_city %></City>
-    	  <PostalCode><%= @ship_from_postal_code %></PostalCode>
-    	  <CountryCode><%= @ship_from_country %></CountryCode>
-      </Address>
-    </ShipFrom>
-     <PaymentInformation>
+    <% unless @ship_from_name.blank? %>      
+      <ShipFrom>
+        <CompanyName><%= @ship_from_company %></CompanyName>
+        <AttentionName><%= @ship_from_name %></AttentionName>
+        <PhoneNumber><%= @ship_from_phone %></PhoneNumber>
+        <Address>
+          <AddressLine1><%= @ship_from_address %></AddressLine1>
+          <City><%= @ship_from_city %></City>
+          <PostalCode><%= @ship_from_postal_code %></PostalCode>
+          <CountryCode><%= @ship_from_country %></CountryCode>
+        </Address>
+      </ShipFrom>
+    <% end %>
+    <PaymentInformation>
       <Prepaid>
         <BillShipper>
           <AccountNumber><%= @account_number %></AccountNumber>

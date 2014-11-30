@@ -100,7 +100,6 @@ module ActiveMerchant
         resp.response = response_raw
         resp.request = last_request
         
-        puts "HERE #{resp.class}"
         resp        
       end      
       

@@ -23,7 +23,8 @@ module ActiveMerchant
       attribute :tracking_number, String
       attribute :label, String          
       attribute :request, String
-      attribute :response, String     
+      attribute :response, String
+      attribute :message, String           
       attribute :success, Boolean               
     end    
     
@@ -31,9 +32,11 @@ module ActiveMerchant
       include Virtus.model
       
       attribute :success, Boolean
-      attribute :errors, Array
+      attribute :errors, String
       attribute :request, String
       attribute :response, String
+      attribute :request_confirm, String
+      attribute :response_confirm, String     
       attribute :digest, String      
       attribute :shipment, UpsShipment               
     end

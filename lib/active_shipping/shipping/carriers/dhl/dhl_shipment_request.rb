@@ -180,7 +180,6 @@ module ActiveMerchant
         end
         
         def calculate_pieces
-          puts "CALCULATE PIECES #{pieces.size} #{package_type}"
           if pieces && pieces.size > 0
             number_pieces, weight = 0, 0
             pieces.each do |piece|
