@@ -128,9 +128,14 @@
           <LabelFormatType>COMMON2D</LabelFormatType>
           <ImageType>PDF</ImageType>
           <LabelStockType>PAPER_LETTER</LabelStockType>
+          <CustomerSpecifiedDetail>
+            <TermsAndConditionsLocalization>
+              <LanguageCode>ES</LanguageCode>
+              <LocaleCode>MX</LocaleCode>
+            </TermsAndConditionsLocalization>
+          </CustomerSpecifiedDetail>          
         </LabelSpecification>                               
         <RateRequestTypes>ACCOUNT</RateRequestTypes>
-
         <% if @master_tracking_id %>
           <MasterTrackingId>
             <TrackingIdType><%= @tracking_id_type %></TrackingIdType>
@@ -154,6 +159,13 @@
               <Units>KG</Units>
               <Value><%= @document_weight -%></Value>
             </Weight>
+            <% unless @reference.blank? %>
+              <CustomerReferences>
+                <CustomerReferenceType>CUSTOMER_REFERENCE</CustomerReferenceType>
+                <Value><%= @reference -%></Value>
+              </CustomerReferences>                     
+            <% end %>
+            
           </RequestedPackageLineItems>  
         <% end -%>                                  
               

@@ -59,8 +59,8 @@ module ActiveMerchant
       attribute :insured_value, String      
       attribute :insured_currency, String            
 
-      attribute :packages, Array                  
-                      
+      attribute :packages, Array    
+      
       def to_xml
         ERB.new(File.new(xml_template_path).read, nil,'%<>-').result(binding)
       end      
@@ -72,6 +72,17 @@ module ActiveMerchant
       def insured?
         insured_currency && insured_value
       end
+      
+      def calculate_weight
+        return @document_weight if @envelope
+        weight = 0
+        if packages && packages.size > 0
+          packages.each do |package|
+            weight += package.weight
+          end
+        end
+        weight
+      end      
             
       private
         def xml_template_path

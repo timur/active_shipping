@@ -51,7 +51,9 @@ module ActiveMerchant
       attribute :sequence_number, String  
       attribute :master_tracking_id, String            
       attribute :tracking_id_type, String                  
-      attribute :form_id, String                        
+      attribute :form_id, String    
+      
+      attribute :reference, String                              
 
       attribute :package, FedexPackage
       attribute :package_count, Integer, default: 0
