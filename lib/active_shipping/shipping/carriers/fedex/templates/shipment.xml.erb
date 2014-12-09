@@ -118,6 +118,14 @@
         </ShippingChargesPayment> 
         <% if @declared_value %>
           <CustomsClearanceDetail>
+            <DutiesPayment>
+              <PaymentType>RECIPIENT</PaymentType>
+              <Payor>
+                <ResponsibleParty>
+                  <AccountNumber></AccountNumber>
+                </ResponsibleParty>
+              </Payor>
+            </DutiesPayment>          
             <CustomsValue>
               <Currency><%= @declared_currency %></Currency>
               <Amount><%= @declared_value %></Amount>
@@ -127,7 +135,7 @@
         <LabelSpecification>
           <LabelFormatType>COMMON2D</LabelFormatType>
           <ImageType>PDF</ImageType>
-          <LabelStockType>PAPER_LETTER</LabelStockType>
+          <LabelStockType>PAPER_8.5X11_TOP_HALF_LABEL</LabelStockType>
           <CustomerSpecifiedDetail>
             <TermsAndConditionsLocalization>
               <LanguageCode>ES</LanguageCode>
