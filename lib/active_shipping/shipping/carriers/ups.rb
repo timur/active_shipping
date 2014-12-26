@@ -89,6 +89,7 @@ module ActiveMerchant
       end            
 
       def ship_confirm(options = {})
+        puts "HERE CONFIRM #{options[:request]}"
         xml = ""
         if options[:raw_xml]
           xml = File.open(Dir.pwd + "/test/fixtures/xml/ups/#{options[:raw_xml]}").read
@@ -100,9 +101,10 @@ module ActiveMerchant
           request.access_license_number = @options[:access_license_number]
           request.user_id = @options[:user_id]
           request.password = @options[:password]            
-                
+          
+          puts "REF HERE #{request.reference}"      
           xml = request.to_xml
-          #puts "SHIP CONFIRM HERE #{xml}"              
+          puts "SHIP CONFIRM HERE #{xml}"              
         end
         response_raw = commit(UpsConstants::RESOURCES[:ship_confirm], save_request(xml), true)             
         resp = parse_shipment_confirm_response(Nokogiri::XML(response_raw))
@@ -126,7 +128,7 @@ module ActiveMerchant
           request.password = @options[:password]            
 
           xml = request.to_xml
-          puts "SHIP ACCEPT HERE #{xml}"  
+          #puts "SHIP ACCEPT HERE #{xml}"  
         end
                 
         shipment = options[:shipment]
