@@ -74,6 +74,11 @@
         <UnitOfMeasurement>KGS</UnitOfMeasurement>
         <Weight><%= calculate_weight %></Weight>
       </PackageWeight>
+      <% unless @reference.blank? %>      
+        <ReferenceNumber>
+          <Value><%= @reference %></Value>
+        </ReferenceNumber>      
+      <% end %>
     </Package>
   </Shipment>
 </ShipmentConfirmRequest>

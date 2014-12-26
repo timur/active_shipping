@@ -20,6 +20,8 @@ module ActiveMerchant
       attribute :product_code, String                  
       
       attribute :package_type, String, default: UpsConstants::PACKAGE
+
+      attribute :reference, String
       
       # Pickup 
       attribute :pickup_type, String
