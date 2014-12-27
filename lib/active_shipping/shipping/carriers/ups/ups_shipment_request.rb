@@ -83,6 +83,7 @@ module ActiveMerchant
             weight += package.weight
           end
         end
+        puts "Weight #{weight}"
         weight
       end      
             

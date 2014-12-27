@@ -49,8 +49,6 @@ class UpsShipConfirmTest < Test::Unit::TestCase
     
     assert_not_nil response
     
-    puts "HALLO #{response.class}" 
-    
     assert_not_nil response.shipment.tracking_number
     assert_not_nil response.shipment.label
     assert_not_nil response.request
