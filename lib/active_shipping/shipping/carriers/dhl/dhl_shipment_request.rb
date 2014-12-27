@@ -159,7 +159,16 @@ module ActiveMerchant
           self.duty_payment_type = "S" unless self.duty_payment_type                  
           self.billing_account_number = self.shipper_account_number if self.shipper_account_number        
           self.duty_account_number = self.shipper_account_number if self.shipper_account_number  
-          self.shipper_shipper_id = self.shipper_account_number                
+          self.shipper_shipper_id = self.shipper_account_number        
+          
+          if self.consignee_company.blank?
+            self.consignee_company = self.contact_consignee_fullname
+          end
+          
+          if self.shipper_company.blank?
+            self.shipper_company = self.contact_shipper_fullname
+          end
+
         end
         
         def calculate_currency
