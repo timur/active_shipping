@@ -89,7 +89,6 @@ module ActiveMerchant
       end            
 
       def ship_confirm(options = {})
-        puts "HERE CONFIRM #{options[:request]}"
         xml = ""
         if options[:raw_xml]
           xml = File.open(Dir.pwd + "/test/fixtures/xml/ups/#{options[:raw_xml]}").read
@@ -102,9 +101,7 @@ module ActiveMerchant
           request.user_id = @options[:user_id]
           request.password = @options[:password]            
           
-          puts "REF HERE #{request.reference}"      
           xml = request.to_xml
-          puts "SHIP CONFIRM HERE #{xml}"              
         end
         response_raw = commit(UpsConstants::RESOURCES[:ship_confirm], save_request(xml), true)             
         resp = parse_shipment_confirm_response(Nokogiri::XML(response_raw))
@@ -154,8 +151,9 @@ module ActiveMerchant
         response_confirm.request_confirm = response_confirm.request
         response_confirm.response_confirm = response_confirm.response        
 
-        response_confirm.request_confirm = results[2]
-        response_confirm.response_confirm = results[1] 
+        response_confirm.request = results[2]
+        response_confirm.response = results[1] 
+        
         response_confirm.success = s.success
         response_confirm.errors = s.message       
         response_confirm
@@ -229,11 +227,12 @@ module ActiveMerchant
       
       def parse_accept_response(document, shipment)
         tag_value(shipment, "//TrackingNumber", document, "tracking_number")    
-        pdf_label = document.xpath("//LabelImage/GraphicImage")
+        image_label = document.xpath("//LabelImage/GraphicImage")
           
-        shipment = parse_accept_status(document, shipment)                                  
-        shipment.label = pdf_label.text
-        shipment
+        s = parse_accept_status(document, shipment)                                  
+        s.label = image_label.text
+        #puts "LABEL #{shipment.label}"
+        s
       end            
       
       protected

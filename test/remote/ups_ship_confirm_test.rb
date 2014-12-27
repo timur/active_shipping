@@ -48,8 +48,11 @@ class UpsShipConfirmTest < Test::Unit::TestCase
     save_xml(response, "test_shipment_mexico_ups")
     
     assert_not_nil response
-    assert_not_nil response.tracking_number
-    assert_not_nil response.label
+    
+    puts "HALLO #{response.class}" 
+    
+    assert_not_nil response.shipment.tracking_number
+    assert_not_nil response.shipment.label
     assert_not_nil response.request
     assert_not_nil response.response        
     assert_not_nil response.request_confirm
@@ -107,7 +110,8 @@ class UpsShipConfirmTest < Test::Unit::TestCase
       digest: response_confirm.digest
     )
         
-    shipment = ups.ship_accept(request: r, shipment: response_confirm.shipment) 
+    response = ups.ship_accept(request: r, shipment: response_confirm.shipment) 
+    shipment = response[0]
     assert_not_nil shipment
     assert_not_nil shipment.tracking_number
     assert_not_nil shipment.label
