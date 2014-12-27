@@ -6,7 +6,7 @@
 <ShipmentConfirmRequest>
   <Request>
     <RequestAction>ShipConfirm</RequestAction>
-    <RequestOption>novalidate</RequestOption>
+    <RequestOption>nonvalidate</RequestOption>
   </Request>
   <LabelSpecification>
      <LabelPrintMethod>
@@ -74,11 +74,11 @@
         <UnitOfMeasurement>KGS</UnitOfMeasurement>
         <Weight><%= calculate_weight %></Weight>
       </PackageWeight>
-      <% unless @reference.blank? %>      
-        <ReferenceNumber>
-          <Value><%= @reference %></Value>
-        </ReferenceNumber>      
-      <% end %>
     </Package>
+    <% unless @reference.blank? %>      
+      <ReferenceNumber>
+        <Value><%= @reference %></Value>
+      </ReferenceNumber>      
+    <% end %>
   </Shipment>
 </ShipmentConfirmRequest>
