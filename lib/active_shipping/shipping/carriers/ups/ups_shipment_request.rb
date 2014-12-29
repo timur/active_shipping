@@ -75,6 +75,14 @@ module ActiveMerchant
         insured_currency && insured_value
       end
       
+      def ship_to_company
+        if @ship_to_company.blank?
+          return "#{@ship_to_name}"
+        else
+          return @ship_to_company
+        end
+      end
+      
       def calculate_weight
         return @document_weight if @envelope
         weight = 0
