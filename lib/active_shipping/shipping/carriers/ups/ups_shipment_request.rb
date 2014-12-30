@@ -75,7 +75,7 @@ module ActiveMerchant
         insured_currency && insured_value
       end
       
-      def ship_to_company
+      def calculate_company
         if @ship_to_company.blank?
           return "#{@ship_to_name}"
         else
@@ -91,7 +91,6 @@ module ActiveMerchant
             weight += package.weight
           end
         end
-        puts "Weight #{weight}"
         weight
       end      
             
