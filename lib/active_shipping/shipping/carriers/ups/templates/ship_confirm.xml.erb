@@ -74,6 +74,14 @@
         <UnitOfMeasurement>KGS</UnitOfMeasurement>
         <Weight><%= calculate_weight %></Weight>
       </PackageWeight>
+      <% unless insured_value.blank? %>      
+        <PackageServiceOptions>
+          <InsuredValue>
+            <CurrencyCode><%= @insured_currency %></CurrencyCode>             
+            <MonetaryValue><%= @insured_value %></MonetaryValue>
+          </InsuredValue>
+        </PackageServiceOptions>
+      <% end %>                                 
     </Package>
     <% unless @reference.blank? %>      
       <ReferenceNumber>
