@@ -59,7 +59,13 @@
           <RequestedPackageLineItems>
             <SequenceNumber>1</SequenceNumber>       
             <GroupNumber>1</GroupNumber>                   
-            <GroupPackageCount>1</GroupPackageCount>  
+            <GroupPackageCount>1</GroupPackageCount>             
+            <% if @insured_value && @insured_currency %>
+              <InsuredValue>
+                <Currency><%= @insured_currency %></Currency>
+                <Amount><%= @insured_value %></Amount>
+              </InsuredValue>    
+            <% end %>                    
              <Weight>
                <Units>KG</Units>
                <Value><%= @document_weight -%></Value>

@@ -84,7 +84,7 @@
       <Contents><%= @shipment_details_content %></Contents>
     <% end %>
     <DimensionUnit>C</DimensionUnit>
-    <% if @shipment_details_insured_amount %>
+    <% unless @shipment_details_insured_amount.blank? %>
       <InsuredAmount><%= @shipment_details_insured_amount %></InsuredAmount>
     <% end -%>                                            
     <IsDutiable><%= isDutiable %></IsDutiable>
