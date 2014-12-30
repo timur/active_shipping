@@ -21,6 +21,8 @@ module ActiveMerchant
       
       # Package or Document
       attribute :package_type, String, default: DhlConstants::PACKAGE
+      
+      attribute :piece_id, Integer, default: 0
 
       attribute :origin_country_code, String      
       attribute :origin_postal_code, String 
@@ -49,6 +51,16 @@ module ActiveMerchant
       def to_xml
         ERB.new(File.new(xml_template_path).read, nil,'%<>-').result(binding)
       end      
+      
+      def next_piece_id
+        if @piece_id == 0
+          @piece_id += 1
+          return 1
+        else
+          @piece_id += 1
+          return @piece_id
+        end
+      end
       
       def dutiable?
         if declared_currency && declared_value

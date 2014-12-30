@@ -59,6 +59,10 @@ module ActiveMerchant
           end
         end
       end
+      
+      def insure_for_package(package)
+        @insured_value / @package_count
+      end
                 
       def to_xml
         if xml_template_path

@@ -30,27 +30,52 @@
             <% end %>
             <% if @pieces && @pieces.size > 0 %>
               <Pieces>
-                <% @pieces.each_with_index do |piece, i| -%>              
-                  <Piece>
-                    <PieceID><%= piece.piece_id = i + 1 %></PieceID> 
-                    <% if @package_type == "document"%>
-                      <PackageTypeCode>FLY</PackageTypeCode>                    
+                <% @pieces.each do |piece| -%>  
+                  <% if piece.quantity > 1 %>
+                    <% 1.upto(piece.quantity) do |q| -%>
+                      <Piece>
+                        <PieceID><%= next_piece_id %></PieceID> 
+                        <% if @package_type == "document"%>
+                          <PackageTypeCode>FLY</PackageTypeCode>                    
+                        <% end %>
+                        <% if @package_type == "package"%>
+                          <% if piece.height -%>
+                            <Height><%= piece.height -%></Height>
+                          <% end -%>
+                          <% if piece.depth -%>
+                            <Depth><%= piece.depth -%></Depth>
+                          <% end -%>                    
+                          <% if piece.width -%>                    
+                            <Width><%= piece.width -%></Width>
+                          <% end -%>  
+                        <% end %>                  
+                        <% if piece.weight -%>                  
+                          <Weight><%= piece.weight -%></Weight>
+                        <% end -%>                                      
+                      </Piece>                      
                     <% end %>
-                    <% if @package_type == "package"%>
-                      <% if piece.height -%>
-                        <Height><%= piece.height -%></Height>
-                      <% end -%>
-                      <% if piece.depth -%>
-                        <Depth><%= piece.depth -%></Depth>
-                      <% end -%>                    
-                      <% if piece.width -%>                    
-                        <Width><%= piece.width -%></Width>
-                      <% end -%>  
-                    <% end %>                  
-                    <% if piece.weight -%>                  
-                      <Weight><%= piece.weight -%></Weight>
-                    <% end -%>                                      
-                  </Piece>                  
+                  <% else %>
+                    <Piece>
+                      <PieceID><%= next_piece_id %></PieceID> 
+                      <% if @package_type == "document"%>
+                        <PackageTypeCode>FLY</PackageTypeCode>                    
+                      <% end %>
+                      <% if @package_type == "package"%>
+                        <% if piece.height -%>
+                          <Height><%= piece.height -%></Height>
+                        <% end -%>
+                        <% if piece.depth -%>
+                          <Depth><%= piece.depth -%></Depth>
+                        <% end -%>                    
+                        <% if piece.width -%>                    
+                          <Width><%= piece.width -%></Width>
+                        <% end -%>  
+                      <% end %>                  
+                      <% if piece.weight -%>                  
+                        <Weight><%= piece.weight -%></Weight>
+                      <% end -%>                                      
+                    </Piece>                  
+                  <% end -%>                       
                 <% end -%>                
               </Pieces>
             <% end -%>            
