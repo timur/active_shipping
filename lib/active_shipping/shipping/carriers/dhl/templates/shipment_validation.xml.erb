@@ -24,6 +24,7 @@
     <CompanyName><%= @consignee_company %></CompanyName>
     <AddressLine><%= @consignee_address_line %></AddressLine>
     <City><%= @consignee_city %></City>
+    <Division><%= @consignee_division %></Division>    
     <PostalCode><%= @consignee_postalcode %></PostalCode>
     <CountryCode><%= @consignee_countrycode %></CountryCode>
     <CountryName><%= @consignee_countryname %></CountryName>
@@ -49,32 +50,62 @@
   <ShipmentDetails>
     <NumberOfPieces><%= @shipment_details_number_of_pieces %></NumberOfPieces>    
     <% if @pieces && @pieces.size > 0 %>
-      <Pieces>    
-        <% @pieces.each_with_index do |piece, i| -%>
-          <Piece>
-            <PieceID><%= piece.piece_id = i + 1 %></PieceID>             
-            <PackageType>CP</PackageType>
-            <% if @package_type == "package" %>            
+      <Pieces>
+        <% @pieces.each do |piece| -%>  
+          <% if piece.quantity > 1 %>
+            <% 1.upto(piece.quantity) do |q| -%>
+              <Piece>
+                <PieceID><%= next_piece_id %></PieceID> 
+                <% if @package_type == "document"%>
+                  <PackageTypeCode>FLY</PackageTypeCode>                    
+                <% end %>
+                <% if @package_type == "package"%>
+                  <PackageType>CP</PackageType>
+                  <% if piece.weight -%>                  
+                    <Weight><%= piece.weight -%></Weight>
+                  <% end -%>                                      
+                  <% if piece.width -%>                    
+                    <Width><%= piece.width -%></Width>
+                  <% end -%>  
+                  <% if piece.height -%>
+                    <Height><%= piece.height -%></Height>
+                  <% end -%>
+                  <% if piece.depth -%>
+                    <Depth><%= piece.depth -%></Depth>
+                  <% end -%>                    
+                <% end %>                  
+              </Piece>                      
+            <% end %>
+          <% else %>
+            <Piece>
+              <PieceID><%= next_piece_id %></PieceID> 
+              <% if @package_type == "document"%>
+                <PackageTypeCode>FLY</PackageTypeCode>                    
+              <% end %>
+              <% if @package_type == "package"%>
+                <PackageType>CP</PackageType>
+                <% if piece.weight -%>                  
+                  <Weight><%= piece.weight -%></Weight>
+                <% end -%>                                      
+                <% if piece.width -%>                    
+                  <Width><%= piece.width -%></Width>
+                <% end -%>  
+                <% if piece.height -%>
+                  <Height><%= piece.height -%></Height>
+                <% end -%>
+                <% if piece.depth -%>
+                  <Depth><%= piece.depth -%></Depth>
+                <% end -%>
+              <% end %>                  
               <% if piece.weight -%>                  
                 <Weight><%= piece.weight -%></Weight>
-              <% end -%>                                              
-              <% if piece.width -%>                    
-                <Width><%= piece.width -%></Width>
-              <% end -%>                    
-              <% if piece.height -%>
-                <Height><%= piece.height -%></Height>
-              <% end -%>
-              <% if piece.depth -%>
-                <Depth><%= piece.depth -%></Depth>
-              <% end -%>    
-              <% if piece.piece_content -%>
-                <PieceContents><%= piece.piece_content -%></PieceContents>
-              <% end -%>    
-            <% end -%> 
-          </Piece>
-        <% end -%>
-      </Pieces>      
-    <% end -%>
+              <% end -%>                                      
+            </Piece>                  
+          <% end -%>                       
+        <% end -%>                
+      </Pieces>
+    <% end -%>            
+
     <Weight><%= @shipment_details_weight %></Weight>
     <WeightUnit>K</WeightUnit>
     <GlobalProductCode><%= @shipment_details_global_product_code %></GlobalProductCode>
@@ -100,7 +131,7 @@
     <% end %>      
     <AddressLine><%= @shipper_address_line %></AddressLine>
     <City><%= @shipper_city %></City>
-    <Division></Division>    
+    <Division><%= @shipper_division %></Division>    
     <PostalCode><%= @shipper_postalcode %></PostalCode>   
     <CountryCode><%= @shipper_countrycode %></CountryCode>
     <CountryName><%= @shipper_countryname %></CountryName>

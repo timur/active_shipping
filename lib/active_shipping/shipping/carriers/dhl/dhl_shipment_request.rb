@@ -16,7 +16,9 @@ module ActiveMerchant
       attribute :password, String     
       
       # Package or Document
-      attribute :package_type, String, default: DhlConstants::PACKAGE       
+      attribute :package_type, String, default: DhlConstants::PACKAGE   
+      
+      attribute :piece_id, Integer, default: 0          
       
       # mandatory    
       attribute :language_code, String # not inputed by user
@@ -41,6 +43,7 @@ module ActiveMerchant
       attribute :consignee_company, String # user input               
       attribute :consignee_address_line, String # user input                                    
       attribute :consignee_city, String # user input                                 
+      attribute :consignee_division, String # user input          
       attribute :consignee_postalcode, String # user input                           
       attribute :consignee_countrycode, String # user input                    
       attribute :consignee_countryname, String # lookup mapping table                                       
@@ -86,7 +89,8 @@ module ActiveMerchant
       attribute :shipper_shipper_id, String # probably enviaya account number                   
       attribute :shipper_company, String # user input                                                          
       attribute :shipper_address_line, String # user input                                   
-      attribute :shipper_city, String # user input                                                                              
+      attribute :shipper_city, String # user input                      
+      attribute :shipper_division, String # user input                                                                                    
       attribute :shipper_countrycode, String # user input                                                                        
       attribute :shipper_countryname, String # calculated by us                                                                                    
       attribute :shipper_postalcode, String # user input                                     
@@ -176,6 +180,16 @@ module ActiveMerchant
             self.shipment_details_currency_code = CURRENCY_CODES[self.shipper_countrycode]
           end
         end
+        
+        def next_piece_id
+          if @piece_id == 0
+            @piece_id += 1
+            return 1
+          else
+            @piece_id += 1
+            return @piece_id
+          end
+        end        
         
         def calculate_country_name
           if self.shipper_countrycode
