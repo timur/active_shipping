@@ -58,6 +58,15 @@ module ActiveMerchant
       def insured?
         insured_currency && insured_value
       end
+      
+      def insure_for_package
+        i = 1
+        if @packages.size > 0
+          i = @packages.size
+        end
+        
+        @insured_value.to_f / i
+      end      
             
       private
         def xml_template_path
