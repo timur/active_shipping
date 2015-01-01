@@ -21,6 +21,7 @@
     <RateInformation>
       <NegotiatedRatesIndicator/> 
     </RateInformation> 
+    <Description><%= @description %></Description>    
     <Shipper>
       <Name><%= @shipper_name %></Name>
       <PhoneNumber><%= @shipper_phone %></PhoneNumber>
@@ -39,6 +40,7 @@
       <Address>
         <AddressLine1><%= @ship_to_address %></AddressLine1>
         <City><%= @ship_to_city %></City>
+        <StateProvinceCode><%= @ship_to_state_code %></StateProvinceCode>
         <PostalCode><%= @ship_to_postal_code %></PostalCode>
         <CountryCode><%= @ship_to_country %></CountryCode>
       </Address>
@@ -51,6 +53,7 @@
         <Address>
           <AddressLine1><%= @ship_from_address %></AddressLine1>
           <City><%= @ship_from_city %></City>
+          <StateProvinceCode><%= @ship_from_state_code %></StateProvinceCode>          
           <PostalCode><%= @ship_from_postal_code %></PostalCode>
           <CountryCode><%= @ship_from_country %></CountryCode>
         </Address>

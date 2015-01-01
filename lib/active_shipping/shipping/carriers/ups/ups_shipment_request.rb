@@ -22,6 +22,7 @@ module ActiveMerchant
       attribute :package_type, String, default: UpsConstants::PACKAGE
 
       attribute :reference, String
+      attribute :description, String      
       
       # Pickup 
       attribute :pickup_type, String
@@ -39,6 +40,7 @@ module ActiveMerchant
       attribute :ship_to_phone, String
       attribute :ship_to_address, String
       attribute :ship_to_city, String
+      attribute :ship_to_state_code, String                  
       attribute :ship_to_postal_code, String
       attribute :ship_to_country, String
       
@@ -46,6 +48,7 @@ module ActiveMerchant
       attribute :ship_from_name, String
       attribute :ship_from_phone, String
       attribute :ship_from_address, String
+      attribute :ship_from_state_code, String            
       attribute :ship_from_city, String
       attribute :ship_from_postal_code, String
       attribute :ship_from_country, String              
