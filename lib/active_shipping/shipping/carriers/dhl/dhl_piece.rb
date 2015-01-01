@@ -12,6 +12,7 @@ module ActiveMerchant
       attribute :width, Integer
       attribute :depth, Integer
       attribute :weight, Float  
+      attribute :dim_weight, Float  
       attribute :piece_content, String
     end
   end

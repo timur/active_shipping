@@ -64,6 +64,9 @@
                   <% if piece.weight -%>                  
                     <Weight><%= piece.weight -%></Weight>
                   <% end -%>                                      
+                  <% if piece.dim_weight -%>                  
+                    <DimWeight><%= piece.dim_weight -%></DimWeight>
+                  <% end -%>                                      
                   <% if piece.width -%>                    
                     <Width><%= piece.width -%></Width>
                   <% end -%>  
@@ -72,7 +75,8 @@
                   <% end -%>
                   <% if piece.depth -%>
                     <Depth><%= piece.depth -%></Depth>
-                  <% end -%>                    
+                  <% end -%>     
+                  <PieceContents><%= piece.piece_content %></PieceContents>               
                 <% end %>                  
               </Piece>                      
             <% end %>
@@ -86,8 +90,11 @@
                 <PackageType>CP</PackageType>
                 <% if piece.weight -%>                  
                   <Weight><%= piece.weight -%></Weight>
-                <% end -%>                                      
-                <% if piece.width -%>                    
+                <% end -%>                                
+                <% if piece.dim_weight -%>                  
+                  <DimWeight><%= piece.dim_weight -%></DimWeight>
+                <% end -%>
+                <% if piece.width -%>
                   <Width><%= piece.width -%></Width>
                 <% end -%>  
                 <% if piece.height -%>
@@ -97,9 +104,7 @@
                   <Depth><%= piece.depth -%></Depth>
                 <% end -%>
               <% end %>                  
-              <% if piece.weight -%>                  
-                <Weight><%= piece.weight -%></Weight>
-              <% end -%>                                      
+              <PieceContents><%= piece.piece_content %></PieceContents>                                                    
             </Piece>                  
           <% end -%>                       
         <% end -%>                
