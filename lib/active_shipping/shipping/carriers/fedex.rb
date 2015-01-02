@@ -140,7 +140,7 @@ module ActiveMerchant
           
           res = ssl_post(url, request.gsub("\n",''))                                  
         rescue Exception => e
-          puts "EXCEPTION #{e}"
+          puts "EXCEPTION FEDEX #{e.class} #{e.message} #{e.backtrace.inspect}"
         end
         res
       end

@@ -28,7 +28,8 @@ module ActiveMerchant
       attribute :pickup_type, String
       
       attribute :shipper_number, String
-      attribute :shipper_name, String      
+      attribute :shipper_name, String
+      attribute :shipper_attention, String            
       attribute :shipper_phone, String
       attribute :shipper_address, String      
       attribute :shipper_city, String
@@ -91,6 +92,7 @@ module ActiveMerchant
         weight = 0
         if packages && packages.size > 0
           packages.each do |package|
+            puts "PACKAGE #{package.class}"
             weight += package.weight
           end
         end

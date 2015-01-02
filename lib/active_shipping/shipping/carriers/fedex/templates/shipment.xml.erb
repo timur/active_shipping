@@ -1,4 +1,4 @@
-<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns='http://fedex.com/ws/ship/v13'>
+<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns='http://fedex.com/ws/ship/v15'>
   <soapenv:Body>
     <ProcessShipmentRequest>
       <WebAuthenticationDetail>
@@ -18,7 +18,7 @@
       <% end %>
       <Version>
         <ServiceId>ship</ServiceId>
-        <Major>13</Major>
+        <Major>15</Major>
         <Intermediate>0</Intermediate>
         <Minor>0</Minor>
       </Version>
@@ -112,7 +112,6 @@
           <Payor>
             <ResponsibleParty>
               <AccountNumber><%= @accountNumber %></AccountNumber>
-              <Contact />
             </ResponsibleParty>
           </Payor>
         </ShippingChargesPayment> 
@@ -130,7 +129,26 @@
               <Currency><%= @declared_currency %></Currency>
               <Amount><%= @declared_value %></Amount>
             </CustomsValue>
-          </CustomsClearanceDetail>            
+            <Commodities>
+               <NumberOfPieces><%= @package_count %></NumberOfPieces>
+               <Description><%= @reference %></Description>
+               <CountryOfManufacture>MX</CountryOfManufacture>
+               <Weight>
+                  <Units>KG</Units>
+                  <Value><%= @total_weight %></Value>
+               </Weight>
+               <Quantity><%= @package_count %></Quantity>
+               <QuantityUnits>cm</QuantityUnits>
+               <UnitPrice>
+                  <Currency><%= @declared_currency %></Currency>
+                  <Amount><%= @declared_value %></Amount>
+               </UnitPrice>
+               <CustomsValue>
+                  <Currency><%= @declared_currency %></Currency>
+                  <Amount><%= @declared_value %></Amount>
+               </CustomsValue>
+            </Commodities>            
+          </CustomsClearanceDetail> 
         <% end %>
         <LabelSpecification>
           <LabelFormatType>COMMON2D</LabelFormatType>
