@@ -48,13 +48,13 @@
           <% if @contact_shipper_fullname -%>
             <Contact>
               <% if @contact_shipper_fullname -%>
-                <PersonName><%= @contact_shipper_fullname %></PersonName>
+                <PersonName><%= I18n.transliterate(@contact_shipper_fullname) %></PersonName>
               <% end %>
               <% if @contact_shipper_company -%>
-                <CompanyName><%= @contact_shipper_company %></CompanyName>
+                <CompanyName><%= I18n.transliterate(@contact_shipper_company) %></CompanyName>
               <% end %>              
               <% if @contact_shipper_phonenumber -%>
-                <PhoneNumber><%= @contact_shipper_phonenumber %></PhoneNumber>            
+                <PhoneNumber><%= I18n.transliterate(@contact_shipper_phonenumber) %></PhoneNumber>            
               <% end %>
               <% if @contact_shipper_phonenumber_ext -%>  
                 <PhoneExtension><%= @contact_shipper_phonenumber_ext %></PhoneExtension>                        
@@ -63,26 +63,26 @@
           <% end %>
           <Address>
             <% if @shipper_address_line -%>
-              <StreetLines><%= @shipper_address_line %></StreetLines>
+              <StreetLines><%= I18n.transliterate(@shipper_address_line) %></StreetLines>
             <% end %>
             <% if @shipper_city -%>
-              <City><%= @shipper_city %></City>
+              <City><%= I18n.transliterate(@shipper_city) %></City>
             <% end %>
             <% if @shipper_provincecode %>            
-              <StateOrProvinceCode><%= @shipper_provincecode %></StateOrProvinceCode>                        
+              <StateOrProvinceCode><%= I18n.transliterate(@shipper_provincecode) %></StateOrProvinceCode>                        
             <% end %>
-            <PostalCode><%= @shipper_postalcode %></PostalCode>
-            <CountryCode><%= @shipper_countrycode %></CountryCode>
+            <PostalCode><%= I18n.transliterate(@shipper_postalcode) %></PostalCode>
+            <CountryCode><%= I18n.transliterate(@shipper_countrycode) %></CountryCode>
           </Address>
         </Shipper>
         <Recipient>
           <% if @contact_recipient_fullname -%>
             <Contact>
               <% if @contact_recipient_fullname -%>
-                <PersonName><%= @contact_recipient_fullname %></PersonName>
+                <PersonName><%= I18n.transliterate(@contact_recipient_fullname) %></PersonName>
               <% end %>
               <% if @contact_recipient_company -%>
-                <CompanyName><%= @contact_recipient_company %></CompanyName>
+                <CompanyName><%= I18n.transliterate(@contact_recipient_company) %></CompanyName>
               <% end %>
               <% if @contact_recipient_phonenumber -%>            
                 <PhoneNumber><%= @contact_recipient_phonenumber %></PhoneNumber>            
@@ -94,16 +94,16 @@
           <% end %>
           <Address>
             <% if @recipient_address_line -%>            
-              <StreetLines><%= @recipient_address_line %></StreetLines>
+              <StreetLines><%= I18n.transliterate(@recipient_address_line) %></StreetLines>
             <% end %>
             <% if @recipient_city -%>            
-              <City><%= @recipient_city %></City>
+              <City><%= I18n.transliterate(@recipient_city) %></City>
             <% end %>
             <% if @recipient_provincecode %>
-              <StateOrProvinceCode><%= @recipient_provincecode %></StateOrProvinceCode>                  
+              <StateOrProvinceCode><%= I18n.transliterate(@recipient_provincecode) %></StateOrProvinceCode>                  
             <% end %>
-            <PostalCode><%= @recipient_postalcode %></PostalCode>      
-            <CountryCode><%= @recipient_countrycode %></CountryCode>
+            <PostalCode><%= I18n.transliterate(@recipient_postalcode) %></PostalCode>      
+            <CountryCode><%= I18n.transliterate(@recipient_countrycode) %></CountryCode>
             <Residential>false</Residential>
           </Address>
         </Recipient>
@@ -188,7 +188,7 @@
             <% unless @reference.blank? %>
               <CustomerReferences>
                 <CustomerReferenceType>CUSTOMER_REFERENCE</CustomerReferenceType>
-                <Value><%= @reference -%></Value>
+                <Value><%= I18n.transliterate(@reference) -%></Value>
               </CustomerReferences>                     
             <% end %>
             

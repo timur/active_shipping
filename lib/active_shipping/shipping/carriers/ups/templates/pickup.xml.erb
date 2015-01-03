@@ -1,0 +1,58 @@
+<envr:Envelope xmlns:envr="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:common="http://www.ups.com/XMLSchema/XOLTWS/Common/v1.0" xmlns:wsf="http://www.ups.com/schema/wsf" xmlns:upss="http://www.ups.com/XMLSchema/XOLTWS/UPSS/v1.0">
+  <envr:Header>
+    <upss:UPSSecurity>
+      <upss:UsernameToken>
+        <upss:Username><%= @user_id %></upss:Username>
+        <upss:Password><%= @password %></upss:Password>
+      </upss:UsernameToken>
+      <upss:ServiceAccessToken>
+        <upss:AccessLicenseNumber><%= @access_license_number %></upss:AccessLicenseNumber>
+      </upss:ServiceAccessToken>
+    </upss:UPSSecurity>
+  </envr:Header>
+  <envr:Body>
+    <PickupCreationRequest xmlns="http://www.ups.com/XMLSchema/XOLTWS/Pickup/v1.1" xmlns:common="http://www.ups.com/XMLSchema/XOLTWS/Common/v1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <RatePickupIndicator>N</RatePickupIndicator>
+      <Shipper>
+          <Account>
+            <AccountNumber>0VR893</AccountNumber>
+            <AccountCountryCode>MX</AccountCountryCode>
+          </Account>
+      </Shipper>
+      <PickupDateInfo>
+        <CloseTime><%= close_time %></CloseTime>
+        <ReadyTime><%= ready_time %></ReadyTime>
+        <PickupDate><%= pickup_date %></PickupDate>
+      </PickupDateInfo>
+      <PickupAddress>
+        <CompanyName><%= pickup_address_company %></CompanyName>
+        <ContactName><%= pickup_address_contact %></ContactName>
+        <AddressLine><%= pickup_address_address %></AddressLine>
+        <City><%= pickup_address_city %></City>
+        <Urbanization/>
+        <PostalCode><%= pickup_address_postalcode %></PostalCode>
+        <CountryCode><%= pickup_address_country_code %></CountryCode>
+        <ResidentialIndicator>Y</ResidentialIndicator>
+        <Phone>
+          <Number><%= pickup_address_phone %></Number>
+        </Phone>
+      </PickupAddress>      
+      <AlternateAddressIndicator>Y</AlternateAddressIndicator>
+      <PickupPiece>
+        <ServiceCode>065</ServiceCode>
+        <Quantity>1</Quantity>
+        <DestinationCountryCode>MX</DestinationCountryCode>
+        <ContainerCode>01</ContainerCode>
+      </PickupPiece>
+      <% unless @weight.blank? %>
+        <TotalWeight>
+          <Weight><%= @weight %></Weight>
+          <UnitOfMeasurement>KGS</UnitOfMeasurement>
+        </TotalWeight>
+      <% end %>
+      <OverweightIndicator>N</OverweightIndicator>
+      <PaymentMethod>00</PaymentMethod>
+      <SpecialInstruction><%= instructions %></SpecialInstruction>
+    </PickupCreationRequest>
+  </envr:Body>
+</envr:Envelope>

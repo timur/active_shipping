@@ -70,23 +70,60 @@
     <Service>
       <Code><%= @product_code %></Code>
     </Service>
-    <Package>
-      <PackagingType>
-        <Code>02</Code>
-      </PackagingType>
-      <PackageWeight>
-        <UnitOfMeasurement>KGS</UnitOfMeasurement>
-        <Weight><%= calculate_weight %></Weight>
-      </PackageWeight>
-      <% unless insured_value.blank? %>      
-        <PackageServiceOptions>
-          <InsuredValue>
-            <CurrencyCode><%= @insured_currency %></CurrencyCode>             
-            <MonetaryValue><%= @insured_value %></MonetaryValue>
-          </InsuredValue>
-        </PackageServiceOptions>
-      <% end %>                           
-    </Package>
+    <% if @envelope %>
+      <Package>
+         <PackagingType>
+            <Code>00</Code>
+         </PackagingType>
+         <PackageWeight>
+            <UnitOfMeasurement>
+               <Code>KGS</Code>
+            </UnitOfMeasurement>
+            <Weight><%= @document_weight %></Weight>
+         </PackageWeight>
+         <% if insured? %>      
+           <PackageServiceOptions>
+             <InsuredValue>
+               <CurrencyCode><%= @insured_currency %></CurrencyCode>             
+               <MonetaryValue><%= @insured_value %></MonetaryValue>
+             </InsuredValue>
+           </PackageServiceOptions>
+         <% end %>                           
+      </Package>
+    <% end %>            
+    <% if @packages && @packages.size > 0 %>
+      <% @packages.each do |package| -%>
+        <Package>
+           <PackagingType>
+              <Code><%= @package_type %></Code>
+           </PackagingType>
+           <% if package.length && package.width && package.height %>
+             <Dimensions>
+                <UnitOfMeasurement>
+                   <Code>CM</Code>
+                </UnitOfMeasurement>
+                <Length><%= package.length %></Length>
+                <Width><%= package.width %></Width>
+                <Height><%= package.height %></Height>
+             </Dimensions>
+           <% end %>
+           <PackageWeight>
+              <UnitOfMeasurement>
+                 <Code>KGS</Code>
+              </UnitOfMeasurement>
+              <Weight><%= package.weight %></Weight>
+           </PackageWeight>
+           <% if insured? %>      
+             <PackageServiceOptions>
+               <InsuredValue>
+                 <CurrencyCode><%= @insured_currency %></CurrencyCode>             
+                 <MonetaryValue><%= insure_for_package %></MonetaryValue>
+               </InsuredValue>
+             </PackageServiceOptions>
+           <% end %>
+        </Package>
+      <% end %>
+    <% end %>
     <% unless @reference.blank? %>      
       <ReferenceNumber>
         <Value><%= @reference %></Value>

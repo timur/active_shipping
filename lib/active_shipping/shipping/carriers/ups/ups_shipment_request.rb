@@ -79,6 +79,15 @@ module ActiveMerchant
         insured_currency && insured_value
       end
       
+      def insure_for_package
+        i = 1
+        if @packages.size > 0
+          i = @packages.size
+        end
+        
+        @insured_value.to_f / i
+      end      
+      
       def calculate_company
         if @ship_to_company.blank?
           return "#{@ship_to_name}"
