@@ -20,13 +20,19 @@ module ActiveMerchant
       attribute :service_options_charges, Float
       attribute :total_charges, Float      
       attribute :shipment_identification_number, String      
-      attribute :tracking_number, String
-      attribute :label, String          
+      attribute :packages, Array
       attribute :request, String
       attribute :response, String
       attribute :message, String           
       attribute :success, Boolean               
-    end    
+    end
+    
+    class UpsPackageReponse
+      include Virtus.model
+      
+      attribute :tracking_number, String
+      attribute :label, String                 
+    end        
     
     class UpsShipmentResponse
       include Virtus.model

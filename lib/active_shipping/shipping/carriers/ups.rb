@@ -195,7 +195,6 @@ module ActiveMerchant
         tag_value(shipment, "//ShipmentCharges/ServiceOptionsCharges/MonetaryValue", document, "service_options_charges")
         tag_value(shipment, "//ShipmentCharges/TotalCharges/MonetaryValue", document, "total_charges")                        
         tag_value(shipment, "//ShipmentIdentificationNumber", document, "shipment_identification_number")   
-        tag_value(shipment, "//TrackingNumber", document, "tracking_number")                                        
 
         shipment
       end
@@ -225,15 +224,16 @@ module ActiveMerchant
         response
       end
       
+      
       def parse_accept_response(document, shipment)
-        tag_value(shipment, "//TrackingNumber", document, "tracking_number")    
-        image_label = document.xpath("//LabelImage/GraphicImage")
-          
         s = parse_accept_status(document, shipment)                                  
-        s.label = image_label.text
-        #puts "LABEL #{shipment.label}"
+        package_results = document.xpath("//PackageResults")        
+        
+        package_results.each do |result|
+          s.packages << UpsPackageReponse.new(tracking_number: result.xpath("TrackingNumber").text, label: result.xpath("LabelImage/GraphicImage").text)
+        end
         s
-      end            
+      end                    
       
       protected
 
