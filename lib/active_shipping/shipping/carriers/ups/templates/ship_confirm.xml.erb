@@ -21,42 +21,42 @@
     <RateInformation>
       <NegotiatedRatesIndicator/> 
     </RateInformation> 
-    <Description><%= @description %></Description>    
+    <Description><%= I18n.transliterate(@description) %></Description>    
     <Shipper>
-      <Name><%= @shipper_name %></Name>
-      <AttentionName><%= @shipper_name %></AttentionName>      
+      <Name><%= I18n.transliterate(@shipper_name) %></Name>
+      <AttentionName><%= I18n.transliterate(@shipper_name) %></AttentionName>      
       <PhoneNumber><%= @shipper_phone %></PhoneNumber>
       <ShipperNumber><%= @shipper_number %></ShipperNumber>
       <Address>
-        <AddressLine1><%= @shipper_address %></AddressLine1>
-        <City><%= @shipper_city %></City>
-        <PostalCode><%= @shipper_postal_code %></PostalCode>
-        <CountryCode><%= @shipper_country %></CountryCode>
+        <AddressLine1><%= I18n.transliterate(@shipper_address) %></AddressLine1>
+        <City><%= I18n.transliterate(@shipper_city) %></City>
+        <PostalCode><%= I18n.transliterate(@shipper_postal_code) %></PostalCode>
+        <CountryCode><%= I18n.transliterate(@shipper_country) %></CountryCode>
      </Address>
     </Shipper>
     <ShipTo>
-      <CompanyName><%= calculate_company %></CompanyName>
-      <AttentionName><%= @ship_to_name %></AttentionName>
+      <CompanyName><%= I18n.transliterate(calculate_company) %></CompanyName>
+      <AttentionName><%= I18n.transliterate(@ship_to_name) %></AttentionName>
       <PhoneNumber><%= @ship_to_phone %></PhoneNumber>
       <Address>
-        <AddressLine1><%= @ship_to_address %></AddressLine1>
-        <City><%= @ship_to_city %></City>
+        <AddressLine1><%= I18n.transliterate(@ship_to_address) %></AddressLine1>
+        <City><%= I18n.transliterate(@ship_to_city) %></City>
         <StateProvinceCode><%= @ship_to_state_code %></StateProvinceCode>
         <PostalCode><%= @ship_to_postal_code %></PostalCode>
-        <CountryCode><%= @ship_to_country %></CountryCode>
+        <CountryCode><%= I18n.transliterate(@ship_to_country) %></CountryCode>
       </Address>
     </ShipTo>
     <% unless @ship_from_name.blank? %>      
       <ShipFrom>
-        <CompanyName><%= @ship_from_company %></CompanyName>
-        <AttentionName><%= @ship_from_name %></AttentionName>
+        <CompanyName><%= I18n.transliterate(@ship_from_company) %></CompanyName>
+        <AttentionName><%= I18n.transliterate(@ship_from_name) %></AttentionName>
         <PhoneNumber><%= @ship_from_phone %></PhoneNumber>
         <Address>
-          <AddressLine1><%= @ship_from_address %></AddressLine1>
-          <City><%= @ship_from_city %></City>
+          <AddressLine1><%= I18n.transliterate(@ship_from_address) %></AddressLine1>
+          <City><%= I18n.transliterate(@ship_from_city) %></City>
           <StateProvinceCode><%= @ship_from_state_code %></StateProvinceCode>          
           <PostalCode><%= @ship_from_postal_code %></PostalCode>
-          <CountryCode><%= @ship_from_country %></CountryCode>
+          <CountryCode><%= I18n.transliterate(@ship_from_country) %></CountryCode>
         </Address>
       </ShipFrom>
     <% end %>
@@ -126,7 +126,7 @@
     <% end %>
     <% unless @reference.blank? %>      
       <ReferenceNumber>
-        <Value><%= @reference %></Value>
+        <Value><%= I18n.transliterate(@reference) %></Value>
       </ReferenceNumber>      
     <% end %>
   </Shipment>

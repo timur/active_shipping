@@ -354,9 +354,10 @@ module ActiveMerchant
 
             tag_value(quote, "Service/Code", q, "product_code")
             tag_value(quote, "TransportationCharges//CurrencyCode", q, "currency")
-            tag_value(quote, "TransportationCharges//MonetaryValue", q, "base_charge")            
-            tag_value(quote, "TotalCharges//MonetaryValue", q, "total_charge")                        
-            tag_value(quote, "ServiceOptionsCharges//MonetaryValue", q, "surcharge")                                                
+            #tag_value(quote, "TransportationCharges//MonetaryValue", q, "base_charge")            
+            tag_value(quote, "NegotiatedRates//MonetaryValue", q, "base_charge")                        
+            tag_value(quote, "NegotiatedRates//MonetaryValue", q, "total_charge")                        
+            #tag_value(quote, "ServiceOptionsCharges//MonetaryValue", q, "surcharge")                                                
             
             quote.set_product_name
             back << quote

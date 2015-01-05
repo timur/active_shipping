@@ -69,14 +69,14 @@
               </UnitOfMeasurement>
               <Weight><%= @document_weight %></Weight>
            </PackageWeight>
-           <% if insured? %>      
              <PackageServiceOptions>
-               <InsuredValue>
-                 <CurrencyCode><%= @insured_currency %></CurrencyCode>             
-                 <MonetaryValue><%= @insured_value %></MonetaryValue>
-               </InsuredValue>
-             </PackageServiceOptions>
-           <% end %>                           
+               <% if insured? %>                     
+                <InsuredValue>
+                  <CurrencyCode><%= @insured_currency %></CurrencyCode>             
+                  <MonetaryValue><%= @insured_value %></MonetaryValue>
+                </InsuredValue>
+               <% end %>                             
+             </PackageServiceOptions>             
         </Package>
       <% end %>            
       <% if @packages && @packages.size > 0 %>
