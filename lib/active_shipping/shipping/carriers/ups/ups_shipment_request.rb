@@ -76,7 +76,11 @@ module ActiveMerchant
       end
       
       def insured?
-        insured_currency && insured_value
+        if insured_value.blank?
+          return false
+        else
+          return true
+        end
       end
       
       def insure_for_package
