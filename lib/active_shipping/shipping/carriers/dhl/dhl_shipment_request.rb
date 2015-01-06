@@ -72,7 +72,8 @@ module ActiveMerchant
       attribute :shipment_details_currency_code, String # calculated by us
       attribute :shipment_details_content, String # user input                                     
       # optional
-      attribute :shipment_details_insured_amount, Float      
+      attribute :shipment_details_insured_amount, Float                  
+      attribute :shipment_details_insured_currency, String            
       
       attribute :document_weight, Float            
       
@@ -176,7 +177,7 @@ module ActiveMerchant
         end
         
         def calculate_currency
-          if self.shipper_countrycode
+          if self.shipment_details_currency_code.blank? && self.shipper_countrycode
             self.shipment_details_currency_code = CURRENCY_CODES[self.shipper_countrycode]
           end
         end

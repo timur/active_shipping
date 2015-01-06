@@ -62,10 +62,10 @@
                 <% if @package_type == "package"%>
                   <PackageType>CP</PackageType>
                   <% if piece.weight -%>                  
-                    <Weight><%= piece.weight -%></Weight>
+                    <Weight><%= piece.weight.round(1) -%></Weight>
                   <% end -%>                                      
                   <% if piece.dim_weight -%>                  
-                    <DimWeight><%= piece.dim_weight -%></DimWeight>
+                    <DimWeight><%= piece.dim_weight.round(1) -%></DimWeight>
                   <% end -%>                                      
                   <% if piece.width -%>                    
                     <Width><%= piece.width -%></Width>
@@ -89,10 +89,10 @@
               <% if @package_type == "package"%>
                 <PackageType>CP</PackageType>
                 <% if piece.weight -%>                  
-                  <Weight><%= piece.weight -%></Weight>
+                  <Weight><%= piece.weight.round(1) -%></Weight>
                 <% end -%>                                
                 <% if piece.dim_weight -%>                  
-                  <DimWeight><%= piece.dim_weight -%></DimWeight>
+                  <DimWeight><%= piece.dim_weight.round(1) -%></DimWeight>
                 <% end -%>
                 <% if piece.width -%>
                   <Width><%= piece.width -%></Width>
@@ -111,7 +111,7 @@
       </Pieces>
     <% end -%>            
 
-    <Weight><%= @shipment_details_weight %></Weight>
+    <Weight><%= @shipment_details_weight.round(1) %></Weight>
     <WeightUnit>K</WeightUnit>
     <GlobalProductCode><%= @shipment_details_global_product_code %></GlobalProductCode>
     <LocalProductCode><%= @shipment_details_local_product_code %></LocalProductCode>
