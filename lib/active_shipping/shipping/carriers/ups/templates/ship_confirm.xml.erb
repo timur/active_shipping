@@ -25,7 +25,7 @@
     <Shipper>
       <Name><%= I18n.transliterate(@shipper_name) %></Name>
       <AttentionName><%= I18n.transliterate(@shipper_name) %></AttentionName>      
-      <PhoneNumber><%= @shipper_phone.slice(0..13) %></PhoneNumber>
+      <PhoneNumber><%= @shipper_phone.delete(' ').slice(0..14) %></PhoneNumber>
       <ShipperNumber><%= @shipper_number %></ShipperNumber>
       <Address>
         <AddressLine1><%= I18n.transliterate(@shipper_address) %></AddressLine1>
@@ -37,7 +37,7 @@
     <ShipTo>
       <CompanyName><%= I18n.transliterate(calculate_company) %></CompanyName>
       <AttentionName><%= I18n.transliterate(@ship_to_name) %></AttentionName>
-      <PhoneNumber><%= @ship_to_phone.slice(0..13) %></PhoneNumber>
+      <PhoneNumber><%= @ship_to_phone.delete(' ').slice(0..14) %></PhoneNumber>
       <Address>
         <AddressLine1><%= I18n.transliterate(@ship_to_address) %></AddressLine1>
         <City><%= I18n.transliterate(@ship_to_city) %></City>
@@ -50,7 +50,7 @@
       <ShipFrom>
         <CompanyName><%= I18n.transliterate(@ship_from_company) %></CompanyName>
         <AttentionName><%= I18n.transliterate(@ship_from_name) %></AttentionName>
-        <PhoneNumber><%= @ship_from_phone.slice(0..13) %></PhoneNumber>
+        <PhoneNumber><%= @ship_from_phone.delete(' ').slice(0..14) %></PhoneNumber>
         <Address>
           <AddressLine1><%= I18n.transliterate(@ship_from_address) %></AddressLine1>
           <City><%= I18n.transliterate(@ship_from_city) %></City>

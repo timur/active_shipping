@@ -24,7 +24,7 @@
                 <Piece>
                   <PieceID>1</PieceID>
                   <PackageTypeCode>FLY</PackageTypeCode>
-                  <Weight><%= @document_weight %></Weight>
+                  <Weight><%= @document_weight.round(1) %></Weight>
                 </Piece>
               </Pieces>                        
             <% end %>
@@ -50,7 +50,7 @@
                           <% end -%>  
                         <% end %>                  
                         <% if piece.weight -%>                  
-                          <Weight><%= piece.weight -%></Weight>
+                          <Weight><%= piece.weight.round(1) -%></Weight>
                         <% end -%>                                      
                       </Piece>                      
                     <% end %>
@@ -72,7 +72,7 @@
                         <% end -%>  
                       <% end %>                  
                       <% if piece.weight -%>                  
-                        <Weight><%= piece.weight -%></Weight>
+                        <Weight><%= piece.weight.round(1) -%></Weight>
                       <% end -%>                                      
                     </Piece>                  
                   <% end -%>                       
