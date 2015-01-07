@@ -223,7 +223,6 @@ module ActiveMerchant
               q.weight_charge = qtdshp.at('WeightChargeTaxDet//BaseAmt').text if qtdshp.at('WeightChargeTaxDet//BaseAmt')               
             end
             
-            #puts "FIGGE #{q.currency} #{international} #{qtdshp}"
             q.weight_charge_tax = qtdshp.at('WeightChargeTax').text if qtdshp.at('WeightChargeTax')                                       
             q.total_tax_amount = qtdshp.at('TotalTaxAmount').text if qtdshp.at('TotalTaxAmount')  
                         
@@ -234,8 +233,6 @@ module ActiveMerchant
             if international
               q.total_charge = q.weight_charge + q.surcharge
             end
-            
-            #puts "QUOTE #{q.total_charge} #{q.weight_charge_tax} #{q.total_tax_amount} #{q.weight_charge} #{q.currency} #{q.surcharge}"
             
             if q.total_charge > 0
               response.quotes << q

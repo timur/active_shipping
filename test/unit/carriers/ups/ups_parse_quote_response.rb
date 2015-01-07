@@ -17,16 +17,37 @@ class UpsParseQuoteResponseTest < Test::Unit::TestCase
     assert response.notes.size == 2
     assert response.quotes.size == 3      
         
-    assert response.quotes[0].total_charge.to_f == 240.99               
-    assert response.quotes[0].currency == "MXN"        
-    assert response.quotes[0].surcharge == 0
-    assert response.quotes[0].total_charge == 240.99
-    assert response.quotes[0].product_code.to_i == 100              
+    #assert response.quotes[0].total_charge.to_f == 240.99               
+    #assert response.quotes[0].currency == "MXN"        
+    #assert response.quotes[0].surcharge == 0
+  #  assert response.quotes[0].total_charge == 240.99
+    #assert response.quotes[0].product_code.to_i == 100              
     
     assert response.quotes[2].product_code == "07"                  
     assert response.quotes[2].product_name == "UPS Worldwide Express"
     
   end
+  
+  def test_parse_quote_response_ups_currency
+    xml_string = File.read(Dir.pwd + "/test/fixtures/xml/ups/quote_currency.xml")
+    xml = Nokogiri::XML(xml_string)
+    
+    ups = UPS.new(access_license_number: 'BCBDB1BD667FDBFA', password: 'Shipper7', user_id: 'svencrone', test: true)
+    response = ups.parse_quote_response(xml)
+    
+    assert response.success == true
+    assert response.quotes.size == 4    
+        
+    assert response.quotes[0].total_charge.to_f == 942.99               
+    assert response.quotes[0].currency == "MXN"        
+    #assert response.quotes[0].surcharge == 0
+    #assert response.quotes[0].total_charge == 240.99
+    #assert response.quotes[0].product_code.to_i == 100              
+    #
+    #assert response.quotes[2].product_code == "07"                  
+    #assert response.quotes[2].product_name == "UPS Worldwide Express"
+    #
+  end  
   
   #def test_quote_error
   #  xml_string = File.read(Dir.pwd + "/test/fixtures/xml/fedex/quote_error.xml")

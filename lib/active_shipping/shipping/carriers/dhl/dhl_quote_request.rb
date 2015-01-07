@@ -38,6 +38,10 @@ module ActiveMerchant
       
       attribute :declared_value, String
       attribute :document_weight, Float      
+      attribute :weight, Float     
+      
+      attribute :number_pieces, Integer                  
+      
       attribute :time_zone, String, default: "Mexico City"
       attribute :ready_time, Time      
       
@@ -104,6 +108,20 @@ module ActiveMerchant
         end
         off
       end
+      
+      def calculate_pieces
+        if pieces && pieces.size > 0
+          number_pieces, weight = 0, 0
+          pieces.each do |piece|
+            if piece.quantity
+              number_pieces += piece.quantity 
+            else
+              number_pieces += 1
+            end            
+          end
+          self.number_pieces = number_pieces
+        end
+      end      
 
       # ready dates are only mon-fri
       def ready_date(t = Time.now)

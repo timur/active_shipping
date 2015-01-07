@@ -19,6 +19,8 @@
             <ReadyTimeGMTOffset><%= time_offset %></ReadyTimeGMTOffset>
             <DimensionUnit>CM</DimensionUnit>
             <WeightUnit>KG</WeightUnit>
+            <NumberOfPieces><%= @number_pieces %></NumberOfPieces>
+            <ShipmentWeight><%= @weight.round(1) %></ShipmentWeight>            
             <% if @package_type == "document" %>
               <Pieces>
                 <Piece>

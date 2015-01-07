@@ -353,7 +353,7 @@ module ActiveMerchant
             quote = UpsQuote.new
 
             tag_value(quote, "Service/Code", q, "product_code")
-            tag_value(quote, "TransportationCharges//CurrencyCode", q, "currency")
+            tag_value(quote, "NegotiatedRates//CurrencyCode", q, "currency")
             #tag_value(quote, "TransportationCharges//MonetaryValue", q, "base_charge")            
             tag_value(quote, "NegotiatedRates//MonetaryValue", q, "base_charge")                        
             tag_value(quote, "NegotiatedRates//MonetaryValue", q, "total_charge")                        
