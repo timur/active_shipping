@@ -115,7 +115,7 @@
             </ResponsibleParty>
           </Payor>
         </ShippingChargesPayment> 
-        <% if @declared_value %>
+        <% if @declared_value || international? %>
           <CustomsClearanceDetail>
             <DutiesPayment>
               <PaymentType>RECIPIENT</PaymentType>

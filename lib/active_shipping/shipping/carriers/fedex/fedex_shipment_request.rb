@@ -69,6 +69,10 @@ module ActiveMerchant
           self.package_count = 1
         end        
       end
+      
+      def international?
+        @recipient_countrycode != "MX"
+      end
                 
       def to_xml
         ERB.new(File.new(xml_template_path).read, nil,'%<>-').result(binding)
