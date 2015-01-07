@@ -48,7 +48,11 @@
     </Reference>    
   <% end %> 
   <ShipmentDetails>
-    <NumberOfPieces><%= @shipment_details_number_of_pieces %></NumberOfPieces>    
+    <% if @package_type == "document"%>
+      <NumberOfPieces>1</NumberOfPieces>        
+    <% else %>
+      <NumberOfPieces><%= @shipment_details_number_of_pieces %></NumberOfPieces>        
+    <% end %>
     <% if @pieces && @pieces.size > 0 %>
       <Pieces>
         <% @pieces.each do |piece| -%>  

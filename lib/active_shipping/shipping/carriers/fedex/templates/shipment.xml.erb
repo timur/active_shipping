@@ -128,26 +128,48 @@
             <CustomsValue>
               <Currency><%= @declared_currency %></Currency>
               <Amount><%= @declared_value %></Amount>
-            </CustomsValue>
-            <Commodities>
-               <NumberOfPieces><%= @package_count %></NumberOfPieces>
-               <Description><%= @reference %></Description>
-               <CountryOfManufacture>MX</CountryOfManufacture>
-               <Weight>
-                  <Units>KG</Units>
-                  <Value><%= @total_weight %></Value>
-               </Weight>
-               <Quantity><%= @package_count %></Quantity>
-               <QuantityUnits>cm</QuantityUnits>
-               <UnitPrice>
-                  <Currency><%= @declared_currency %></Currency>
-                  <Amount><%= @declared_value %></Amount>
-               </UnitPrice>
-               <CustomsValue>
-                  <Currency><%= @declared_currency %></Currency>
-                  <Amount><%= @declared_value %></Amount>
-               </CustomsValue>
-            </Commodities>            
+            </CustomsValue>         
+            <% if @envelope %>
+              <Commodities>
+                 <NumberOfPieces>1</NumberOfPieces>
+                 <Description><%= @reference %></Description>
+                 <CountryOfManufacture>MX</CountryOfManufacture>
+                 <Weight>
+                    <Units>KG</Units>
+                    <Value>1</Value>
+                 </Weight>
+                 <Quantity>1</Quantity>
+                 <QuantityUnits>cm</QuantityUnits>
+                 <UnitPrice>
+                    <Currency>USD</Currency>
+                    <Amount>1.000000</Amount>
+                 </UnitPrice>
+                 <CustomsValue>
+                    <Currency>USD</Currency>
+                    <Amount>1.000000</Amount>
+                 </CustomsValue>
+              </Commodities>
+            <% else %>               
+              <Commodities>
+                 <NumberOfPieces><%= @package_count %></NumberOfPieces>
+                 <Description><%= @reference %></Description>
+                 <CountryOfManufacture>MX</CountryOfManufacture>
+                 <Weight>
+                    <Units>KG</Units>
+                    <Value><%= @total_weight %></Value>
+                 </Weight>
+                 <Quantity><%= @package_count %></Quantity>
+                 <QuantityUnits>cm</QuantityUnits>
+                 <UnitPrice>
+                    <Currency><%= @declared_currency %></Currency>
+                    <Amount><%= @declared_value %></Amount>
+                 </UnitPrice>
+                 <CustomsValue>
+                    <Currency><%= @declared_currency %></Currency>
+                    <Amount><%= @declared_value %></Amount>
+                 </CustomsValue>
+              </Commodities>  
+            <% end %>          
           </CustomsClearanceDetail> 
         <% end %>
         <LabelSpecification>
