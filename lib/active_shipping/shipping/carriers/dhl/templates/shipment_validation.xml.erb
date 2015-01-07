@@ -48,7 +48,7 @@
     </Reference>    
   <% end %> 
   <ShipmentDetails>
-    <% if @package_type == "document"%>
+    <% if @package_type == "document" %>
       <NumberOfPieces>1</NumberOfPieces>        
     <% else %>
       <NumberOfPieces><%= @shipment_details_number_of_pieces %></NumberOfPieces>        
