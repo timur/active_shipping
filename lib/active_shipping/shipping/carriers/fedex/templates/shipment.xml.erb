@@ -133,7 +133,7 @@
               <Commodities>
                  <NumberOfPieces>1</NumberOfPieces>
                  <Description><%= @reference %></Description>
-                 <CountryOfManufacture>MX</CountryOfManufacture>
+                 <CountryOfManufacture><%= @shipper_countrycode %></CountryOfManufacture>
                  <Weight>
                     <Units>KG</Units>
                     <Value>1</Value>
@@ -184,6 +184,7 @@
           </CustomerSpecifiedDetail>          
         </LabelSpecification>                               
         <RateRequestTypes>ACCOUNT</RateRequestTypes>
+        
         <% if @master_tracking_id %>
           <MasterTrackingId>
             <TrackingIdType><%= @tracking_id_type %></TrackingIdType>
@@ -212,8 +213,7 @@
                 <CustomerReferenceType>CUSTOMER_REFERENCE</CustomerReferenceType>
                 <Value><%= I18n.transliterate(@reference) -%></Value>
               </CustomerReferences>                     
-            <% end %>
-            
+            <% end %>            
           </RequestedPackageLineItems>  
         <% end -%>                                  
               
