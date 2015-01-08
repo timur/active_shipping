@@ -207,7 +207,7 @@ module ActiveMerchant
             q.booking_time = qtdshp.at('BookingTime').text if qtdshp.at('BookingTime')          
             q.exchange_rate = qtdshp.at('ExchangeRate').text if qtdshp.at('ExchangeRate')
             q.pricing_date = qtdshp.at('PricingDate').text if qtdshp.at('PricingDate')   
-            q.total_charge = qtdshp.at('ShippingCharge').text if qtdshp.at('ShippingCharge') 
+            q.total_charge = qtdshp.at('ShippingCharge').text if qtdshp.at('ShippingCharge')         
             q.currency = qtdshp.at('CurrencyCode').text if qtdshp.at('CurrencyCode')                       
             
             if international
