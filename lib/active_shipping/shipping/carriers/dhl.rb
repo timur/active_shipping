@@ -128,7 +128,13 @@ module ActiveMerchant
           tag_value(response, "//Consignee//RegisteredAccount", document, "consignee_registered_account")                                                      
           tag_value(response, "//Consignee//Contact//PersonName", document, "contact_consignee_fullname")                                                      
           tag_value(response, "//Consignee//Contact//PhoneNumber", document, "contact_consignee_phonenumber")                                                      
-          tag_value(response, "//Consignee//Contact//PhoneExtension", document, "contact_consignee_phoneext")                                                                                              
+          tag_value(response, "//Consignee//Contact//PhoneExtension", document, "contact_consignee_phoneext")
+          
+          pieces = document.xpath("//Pieces")          
+          
+          pieces.each do |piece|
+             response.airwaybillnumbers << piece.at('LicensePlate').text
+           end                                                                                              
         end
         
         def parse_tracking(response, document)
@@ -234,7 +240,7 @@ module ActiveMerchant
               q.total_charge = q.weight_charge + q.surcharge
             end
             
-            if q.total_charge > 0
+            if q.total_charge > 0 && q.weight_charge >= 1
               response.quotes << q
             end
           end        

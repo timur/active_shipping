@@ -67,6 +67,12 @@ module ActiveMerchant
       def calculate_attributes
         if envelope
           self.package_count = 1
+          if self.declared_value.blank?
+            self.declared_value = 0
+          end
+          if self.declared_currency == "NMP"
+            self.declared_currency = "USD"
+          end
         end        
       end
       

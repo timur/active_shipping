@@ -1,86 +1,122 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://fedex.com/ws/ship/v13">
-   <soapenv:Body>
-      <ProcessShipmentRequest>
-         <WebAuthenticationDetail>
-            <UserCredential>
-               <Key>rscqm75MLampLUuV</Key>
-               <Password>8rTZHQ6vbyOsGOgtwMXrZ1kIU</Password>
-            </UserCredential>
-         </WebAuthenticationDetail>
-         <ClientDetail>
-            <AccountNumber>510087267</AccountNumber>
-            <MeterNumber>118511895</MeterNumber>
-         </ClientDetail>
-         <Version>
-            <ServiceId>ship</ServiceId>
-            <Major>13</Major>
-            <Intermediate>0</Intermediate>
-            <Minor>0</Minor>
-         </Version>
-         <RequestedShipment>
-            <ShipTimestamp>2014-09-18T14:34:24.96Z</ShipTimestamp>
-            <DropoffType>REGULAR_PICKUP</DropoffType>
-            <ServiceType>FedEx First Overnight</ServiceType>
-            <PackagingType>YOUR_PACKAGING</PackagingType>
-            <TotalWeight>
+<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns='http://fedex.com/ws/ship/v15'>
+  <soapenv:Body>
+    <ProcessShipmentRequest>
+   <WebAuthenticationDetail>
+      <UserCredential>
+         <Key>THMNl2nJQBc0U41y</Key>
+         <Password>Fj7tkfla7Hpou1JUNTbKSO6aF</Password>
+      </UserCredential>
+   </WebAuthenticationDetail>
+   <ClientDetail>
+      <AccountNumber>342914012</AccountNumber>
+      <MeterNumber>106259821</MeterNumber>
+   </ClientDetail>
+   <Version>
+      <ServiceId>ship</ServiceId>
+      <Major>15</Major>
+      <Intermediate>0</Intermediate>
+      <Minor>0</Minor>
+   </Version>
+   <RequestedShipment>
+      <ShipTimestamp>2015-01-09T21:05:28.07Z</ShipTimestamp>
+      <DropoffType>REGULAR_PICKUP</DropoffType>
+      <ServiceType>INTERNATIONAL_PRIORITY</ServiceType>
+      <PackagingType>YOUR_PACKAGING</PackagingType>
+      <Shipper>
+         <Contact>
+            <PersonName>Aisha hans</PersonName>
+            <CompanyName>Keeling, Sanford and Will</CompanyName>
+            <PhoneNumber>123123</PhoneNumber>
+         </Contact>
+         <Address>
+            <StreetLines>Ebert Squares</StreetLines>
+            <City>Wolfland</City>
+            <StateOrProvinceCode />
+            <PostalCode>03020</PostalCode>
+            <CountryCode>MX</CountryCode>
+         </Address>
+      </Shipper>
+      <Recipient>
+         <Contact>
+            <PersonName>Aleen Hyatt</PersonName>
+            <CompanyName>Wintheiser-Waters</CompanyName>
+            <PhoneNumber>123123iiiiiiiii</PhoneNumber>
+         </Contact>
+         <Address>
+            <StreetLines>Presley Ridges</StreetLines>
+            <City>Ethanville</City>
+            <StateOrProvinceCode>NY</StateOrProvinceCode>
+            <PostalCode>13606</PostalCode>
+            <CountryCode>US</CountryCode>
+            <Residential>false</Residential>
+         </Address>
+      </Recipient>
+      <ShippingChargesPayment>
+         <PaymentType>SENDER</PaymentType>
+         <Payor>
+            <ResponsibleParty>
+               <AccountNumber>342914012</AccountNumber>
+            </ResponsibleParty>
+         </Payor>
+      </ShippingChargesPayment>
+      <CustomsClearanceDetail>
+         <DutiesPayment>
+            <PaymentType>RECIPIENT</PaymentType>
+            <Payor>
+               <ResponsibleParty>
+                  <AccountNumber />
+               </ResponsibleParty>
+            </Payor>
+         </DutiesPayment>
+         <CustomsValue>
+            <Currency>NMP</Currency>
+            <Amount>0</Amount>
+         </CustomsValue>
+         <Commodities>
+            <NumberOfPieces>1</NumberOfPieces>
+            <Description>lks</Description>
+            <CountryOfManufacture>MX</CountryOfManufacture>
+            <Weight>
                <Units>KG</Units>
-               <Value>2.0</Value>
-            </TotalWeight>
-            <Shipper>
-               <Contact>
-                  <PersonName>Amalia Sanford</PersonName>
-                  <CompanyName>Schmitt, Toy and Yost</CompanyName>
-                  <PhoneNumber>123123</PhoneNumber>
-                  <PhoneExtension />
-               </Contact>
-               <Address>
-                  <StreetLines>Rodriguez Ford 466</StreetLines>
-                  <City>Ciudad de México</City>
-                  <PostalCode>11510</PostalCode>
-                  <CountryCode>MX</CountryCode>
-               </Address>
-            </Shipper>
-            <Recipient>
-               <Contact>
-                  <PersonName>Angie Oberbrunner</PersonName>
-                  <CompanyName>Casper-Bashirian</CompanyName>
-                  <PhoneNumber>123123</PhoneNumber>
-                  <PhoneExtension />
-               </Contact>
-               <Address>
-                  <StreetLines>Reynold Route 494</StreetLines>
-                  <City>Ciudad de México</City>
-                  <PostalCode>11510</PostalCode>
-                  <CountryCode>MX</CountryCode>
-                  <Residential>false</Residential>
-               </Address>
-            </Recipient>
-            <ShippingChargesPayment>
-               <PaymentType>SENDER</PaymentType>
-               <Payor>
-                  <ResponsibleParty>
-                     <AccountNumber>510087267</AccountNumber>
-                     <Contact />
-                  </ResponsibleParty>
-               </Payor>
-            </ShippingChargesPayment>
-            <LabelSpecification>
-               <LabelFormatType>COMMON2D</LabelFormatType>
-               <ImageType>PDF</ImageType>
-               <LabelStockType>PAPER_7X4.75</LabelStockType>
-            </LabelSpecification>
-            <RateRequestTypes>ACCOUNT</RateRequestTypes>
-            <PackageCount>1</PackageCount>
-            <RequestedPackageLineItems>
-               <SequenceNumber>1</SequenceNumber>
-               <GroupPackageCount>1</GroupPackageCount>
-               <Weight>
-                  <Units>KG</Units>
-                  <Value>2.0</Value>
-               </Weight>
-            </RequestedPackageLineItems>
-         </RequestedShipment>
-      </ProcessShipmentRequest>
-   </soapenv:Body>
+               <Value>1</Value>
+            </Weight>
+            <Quantity>1</Quantity>
+            <QuantityUnits>cm</QuantityUnits>
+            <UnitPrice>
+               <Currency>USD</Currency>
+               <Amount>1.000000</Amount>
+            </UnitPrice>
+            <CustomsValue>
+               <Currency>USD</Currency>
+               <Amount>1.000000</Amount>
+            </CustomsValue>
+         </Commodities>
+      </CustomsClearanceDetail>
+      <LabelSpecification>
+         <LabelFormatType>COMMON2D</LabelFormatType>
+         <ImageType>PDF</ImageType>
+         <LabelStockType>PAPER_8.5X11_TOP_HALF_LABEL</LabelStockType>
+         <CustomerSpecifiedDetail>
+            <TermsAndConditionsLocalization>
+               <LanguageCode>ES</LanguageCode>
+               <LocaleCode>MX</LocaleCode>
+            </TermsAndConditionsLocalization>
+         </CustomerSpecifiedDetail>
+      </LabelSpecification>
+      <RateRequestTypes>ACCOUNT</RateRequestTypes>
+      <PackageCount>1</PackageCount>
+      <RequestedPackageLineItems>
+         <GroupPackageCount>1</GroupPackageCount>
+         <Weight>
+            <Units>KG</Units>
+            <Value>1.0</Value>
+         </Weight>
+         <CustomerReferences>
+            <CustomerReferenceType>CUSTOMER_REFERENCE</CustomerReferenceType>
+            <Value>lks</Value>
+         </CustomerReferences>
+      </RequestedPackageLineItems>
+   </RequestedShipment>
+</ProcessShipmentRequest>
+  </soapenv:Body>
 </soapenv:Envelope>

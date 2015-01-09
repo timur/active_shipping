@@ -231,6 +231,13 @@ class FedExShipmentTest < Test::Unit::TestCase
     save_xml(response, "test_shipment_declared_value_int_raw_xml_error_fedex")
     assert_not_nil response
   end 
+
+  def test_shipment_error_fedex
+    fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)
+    response = fedex.shipment(raw_xml: "/error.xml")     
+    save_xml(response, "test_shipment_error_fedex")
+    assert_not_nil response
+  end 
   
   def test_shipment_insured_value_raw_xml_fedex
     fedex = FedEx.new(key: 'rscqm75MLampLUuV', password: '8rTZHQ6vbyOsGOgtwMXrZ1kIU', accountNumber: '510087267', meterNumber: '118511895', test: true)

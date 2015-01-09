@@ -13,6 +13,7 @@ module ActiveMerchant
       attribute :response, String      
       attribute :label, String
       attribute :airwaybillnumber, String                  
+      attribute :airwaybillnumbers, Array                        
       attribute :shipment_date, Date
       attribute :product_name, String
       attribute :delivery_time_code, String             
