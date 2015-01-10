@@ -32,7 +32,18 @@ class ResponseTest < Test::Unit::TestCase
     assert response.notes[0].action_code == "Success"
     assert response.is_success? == true
   end
-  
+
+  def test_response_multiple
+    xml_string = File.read(Dir.pwd + "/test/fixtures/xml/dhl/response_shipment_multiple.xml")
+    xml = Nokogiri::XML(xml_string)
+    
+    dhl = Dhl.new(site_id: 'DHLMexico', password: 'hUv5E3nMjQz6', test: true)
+    response = dhl.parse_shipment_response(xml, {})
+    
+    puts "AIRWAY #{response.airwaybillnumbers.size}"
+    assert response.airwaybillnumbers.size == 3
+  end  
+
   def test_response
     xml_string = File.read(Dir.pwd + "/test/fixtures/xml/dhl/response_shipment.xml")
     xml = Nokogiri::XML(xml_string)

@@ -130,11 +130,11 @@ module ActiveMerchant
           tag_value(response, "//Consignee//Contact//PhoneNumber", document, "contact_consignee_phonenumber")                                                      
           tag_value(response, "//Consignee//Contact//PhoneExtension", document, "contact_consignee_phoneext")
           
-          pieces = document.xpath("//Pieces")          
+          pieces = document.xpath("//Pieces/Piece")   
           
           pieces.each do |piece|
-             response.airwaybillnumbers << piece.at('LicensePlate').text
-           end                                                                                              
+            response.airwaybillnumbers << piece.at('LicensePlate').text
+          end                                                                                              
         end
         
         def parse_tracking(response, document)

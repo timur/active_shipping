@@ -16,7 +16,6 @@ module ActiveMerchant
       attr_accessor :url           
       
       TEST_URL = 'https://wwwcie.ups.com'
-      #https://wwwcie.ups.com/ups.app/xml/Track
       LIVE_URL = 'https://onlinetools.ups.com'
 
       def find_quotes(options = {})
@@ -64,6 +63,29 @@ module ActiveMerchant
         resp.request = last_request
         resp
       end
+      
+      def pickup(options = {})
+        xml = ""
+        if options[:raw_xml]
+          xml = File.open(Dir.pwd + "/test/fixtures/xml/ups/#{options[:raw_xml]}").read
+        elsif options[:raw_string]
+          xml = options[:raw_string]                    
+        else        
+          request = options[:request]
+          
+          request.access_license_number = @options[:access_license_number]
+          request.user_id = @options[:user_id]
+          request.password = @options[:password]  
+          
+          xml = request.to_xml
+        end
+        response_raw = commit(UpsConstants::RESOURCES[:pickup], save_request(xml), true)             
+        resp = parse_pickup_response(Nokogiri::XML(response_raw))
+        
+        resp.response = response_raw
+        resp.request = last_request
+        resp
+      end      
       
       def transit(options = {})
         xml = ""
@@ -219,11 +241,16 @@ module ActiveMerchant
       
       def parse_tracking_response(document)
         response = UpsTrackingResponse.new
-        parse_tracking_status(response, document)        
-        #parse_tracking(response, document)                
+        parse_tracking_status(response, document)                    
         response
       end
-      
+
+      def parse_pickup_response(document)
+        response = UpsPickupResponse.new
+        parse_pickup_status(response, document)                    
+        parse_pickup(response, document)                            
+        response
+      end      
       
       def parse_accept_response(document, shipment)
         s = parse_accept_status(document, shipment)                                  
@@ -246,6 +273,20 @@ module ActiveMerchant
           end
         end
         
+        def parse_pickup_status(response, document)
+          document.remove_namespaces!
+          status = document.xpath("//PickupCreationResponse/Response/ResponseStatus/Description")
+
+          if status && status.text == "Success"
+            response.success = true
+          else
+            response.success = false
+          end
+        end        
+        
+        def parse_pickup(response, document)       
+          tag_value(response, "//PRN", document, "pickup_confirmation_number")                       
+        end                                    
         
         def parse_tracking(response, document)          
           tag_value(response, "//Shipment/Shipper/ShipperNumber", document, "shipper_number")

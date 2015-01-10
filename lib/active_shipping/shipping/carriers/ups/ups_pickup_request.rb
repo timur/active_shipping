@@ -29,12 +29,24 @@ module ActiveMerchant
       attribute :pickup_address_phone, String                  
 
       attribute :instructions, String      
+      attribute :service_code, String          
+      attribute :quantity, Integer      
       
       attribute :weight, Float            
       
       def to_xml
         ERB.new(File.new(xml_template_path).read, nil,'%<>-').result(binding)
       end      
+      
+      def calculate
+        if @service_code.blank?
+          @service_code = "065"
+        end
+        if @quantity.blank?
+          @quantity = 1
+        end
+
+      end
       
       private
         def xml_template_path

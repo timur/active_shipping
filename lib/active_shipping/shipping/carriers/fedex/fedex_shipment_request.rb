@@ -70,7 +70,7 @@ module ActiveMerchant
           if self.declared_value.blank?
             self.declared_value = 0
           end
-          if self.declared_currency.blank
+          if self.declared_currency.blank?
             self.declared_currency = "USD"
           end
           
