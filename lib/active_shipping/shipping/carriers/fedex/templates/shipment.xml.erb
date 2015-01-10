@@ -132,7 +132,7 @@
             <% if @envelope %>
               <Commodities>
                  <NumberOfPieces>1</NumberOfPieces>
-                 <Description><%= @reference %></Description>
+                 <Description><%= @shipment.description %></Description>
                  <CountryOfManufacture><%= @shipper_countrycode %></CountryOfManufacture>
                  <Weight>
                     <Units>KG</Units>
@@ -141,18 +141,18 @@
                  <Quantity>1</Quantity>
                  <QuantityUnits>cm</QuantityUnits>
                  <UnitPrice>
-                    <Currency>USD</Currency>
+                    <Currency><%= @declared_currency %></Currency>
                     <Amount>1.000000</Amount>
                  </UnitPrice>
                  <CustomsValue>
-                    <Currency>USD</Currency>
+                    <Currency><%= @declared_currency %></Currency>
                     <Amount>1.000000</Amount>
                  </CustomsValue>
               </Commodities>
             <% else %>               
               <Commodities>
                  <NumberOfPieces><%= @package_count %></NumberOfPieces>
-                 <Description><%= @reference %></Description>
+                 <Description><%= @shipment.description %></Description>
                  <CountryOfManufacture>MX</CountryOfManufacture>
                  <Weight>
                     <Units>KG</Units>

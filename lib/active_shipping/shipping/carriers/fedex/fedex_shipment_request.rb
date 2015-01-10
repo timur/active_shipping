@@ -70,8 +70,16 @@ module ActiveMerchant
           if self.declared_value.blank?
             self.declared_value = 0
           end
-          if self.declared_currency == "NMP"
+          if self.declared_currency.blank
             self.declared_currency = "USD"
+          end
+          
+          unless self.declared_value.blank?
+            unless self.insured_value.blank?
+              if self.insured_value > self.declared_value
+                self.insured_value = self.declared_value
+              end
+            end
           end
         end        
       end
