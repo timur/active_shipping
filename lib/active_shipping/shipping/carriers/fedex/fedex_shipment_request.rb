@@ -19,6 +19,7 @@ module ActiveMerchant
       attribute :packaging_type, String, default: "YOUR_PACKAGING"
       attribute :service_type, String            
       attribute :preferred_currency, String            
+      attribute :description, String         
       attribute :insured_value, Float
       attribute :insured_currency, String
       attribute :declared_value, Float
