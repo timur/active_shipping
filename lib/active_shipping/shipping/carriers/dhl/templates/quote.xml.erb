@@ -24,13 +24,13 @@
             <% else %>
               <NumberOfPieces><%= @number_pieces %></NumberOfPieces>
             <% end %>
-            <ShipmentWeight><%= @weight.round(1) %></ShipmentWeight>            
+            <ShipmentWeight><% unless @weight.blank? %><%= @weight.round(1) %><% end %></ShipmentWeight>            
             <% if @package_type == "document" %>
               <Pieces>
                 <Piece>
                   <PieceID>1</PieceID>
                   <PackageTypeCode>FLY</PackageTypeCode>
-                  <Weight><%= @document_weight.round(1) %></Weight>
+                  <Weight><% unless @document_weight.blank? %><%= @document_weight.round(1) %><% end %></Weight>
                 </Piece>
               </Pieces>                        
             <% end %>
