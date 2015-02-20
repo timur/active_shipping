@@ -56,7 +56,7 @@
     <% if @pieces && @pieces.size > 0 %>
       <Pieces>
         <% @pieces.each do |piece| -%>  
-          <% if piece.quantity > 1 %>
+          <% if piece.quantity && piece.quantity > 1 %>
             <% 1.upto(piece.quantity) do |q| -%>
               <Piece>
                 <PieceID><%= next_piece_id %></PieceID> 
