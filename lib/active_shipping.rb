@@ -37,6 +37,7 @@ autoload :Quantified, 'vendor/quantified/lib/quantified'
 
 require 'net/https'
 require 'active_utils'
+include ActiveUtils
 
 require 'active_shipping/shipping/carriers/dhl/dhl_constants'
 require 'active_shipping/shipping/carriers/ups/ups_constants'

@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency('activesupport', '= 3.2.21')
   s.add_dependency('i18n')
-  s.add_dependency('active_utils', '>= 1.0.1')
+  s.add_dependency('active_utils', '>= 3.0.0')
   s.add_dependency('builder')
   s.add_dependency('awesome_print')  
   s.add_dependency('virtus')  
