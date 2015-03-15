@@ -28,7 +28,7 @@ module ActiveMerchant
       attribute :package_count, Integer
       
       attribute :weight, Float            
-      attribute :pickup_time, String                  
+      attribute :pickup_time_string, String                  
                       
       def to_xml
         ERB.new(File.new(xml_template_path).read, nil,'%<>-').result(binding)
