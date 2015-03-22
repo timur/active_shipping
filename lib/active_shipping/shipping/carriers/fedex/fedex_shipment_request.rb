@@ -85,6 +85,10 @@ module ActiveMerchant
         end        
       end
       
+      def declared?
+        !@declared_value.blank? && !@declared_currency.blank?
+      end
+      
       def international?
         @recipient_countrycode != "MX"
       end
