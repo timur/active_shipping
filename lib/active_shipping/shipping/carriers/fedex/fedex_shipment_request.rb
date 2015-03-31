@@ -68,13 +68,7 @@ module ActiveMerchant
       def calculate_attributes
         if envelope
           self.package_count = 1
-          if self.declared_value.blank?
-            self.declared_value = 0
-          end
-          if self.declared_currency.blank?
-            self.declared_currency = "USD"
-          end
-          
+                    
           unless self.declared_value.blank?
             unless self.insured_value.blank?
               if self.insured_value > self.declared_value
