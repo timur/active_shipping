@@ -33,7 +33,7 @@ module ActiveMerchant
           
           xml = request.to_xml
         end
-        response_raw = commit(UpsConstants::RESOURCES[:rates], save_request(xml), options[:test])             
+        response_raw = commit(UpsConstants::RESOURCES[:rates], save_request(xml), @options[:test] || false)             
         resp = parse_quote_response(Nokogiri::XML(response_raw))
 
         resp.response = response_raw
@@ -56,7 +56,7 @@ module ActiveMerchant
           
           xml = request.to_xml
         end
-        response_raw = commit(UpsConstants::RESOURCES[:track], save_request(xml), true)             
+        response_raw = commit(UpsConstants::RESOURCES[:track], save_request(xml), @options[:test] || false)             
         resp = parse_tracking_response(Nokogiri::XML(response_raw))
         
         resp.response = response_raw
@@ -79,7 +79,7 @@ module ActiveMerchant
           
           xml = request.to_xml
         end
-        response_raw = commit(UpsConstants::RESOURCES[:pickup], save_request(xml), true)             
+        response_raw = commit(UpsConstants::RESOURCES[:pickup], save_request(xml), @options[:test] || false)             
         resp = parse_pickup_response(Nokogiri::XML(response_raw))
         
         resp.response = response_raw
@@ -102,7 +102,7 @@ module ActiveMerchant
           
           xml = request.to_xml
         end
-        response_raw = commit(UpsConstants::RESOURCES[:transit], save_request(xml), true)             
+        response_raw = commit(UpsConstants::RESOURCES[:transit], save_request(xml), @options[:test] || false)             
         resp = parse_transit_response(Nokogiri::XML(response_raw))
         
         resp.response = response_raw
@@ -125,7 +125,7 @@ module ActiveMerchant
           
           xml = request.to_xml
         end
-        response_raw = commit(UpsConstants::RESOURCES[:ship_confirm], save_request(xml), true)             
+        response_raw = commit(UpsConstants::RESOURCES[:ship_confirm], save_request(xml), @options[:test] || false)             
         resp = parse_shipment_confirm_response(Nokogiri::XML(response_raw))
         
         resp.response = response_raw
@@ -152,14 +152,13 @@ module ActiveMerchant
                 
         shipment = options[:shipment]
         
-        response_raw = commit(UpsConstants::RESOURCES[:ship_accept], save_request(xml), true)             
+        response_raw = commit(UpsConstants::RESOURCES[:ship_accept], save_request(xml), @options[:test] || false)             
         shipment = parse_accept_response(Nokogiri::XML(response_raw), shipment)
         
         [shipment, response_raw, last_request]
       end
       
       def shipment(options = {})
-        #puts "CALL SHIPMENT in active shipping #{ap options} #{caller}"
         response_confirm = self.ship_confirm(options)
         
         r = ActiveMerchant::Shipping::UpsShipmentConfirmRequest.new(
