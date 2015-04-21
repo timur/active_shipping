@@ -25,6 +25,10 @@ module ActiveMerchant
       def to_xml
         ERB.new(File.new(xml_template_path).read, nil,'%<>-').result(binding)
       end      
+      
+      def international?
+        @country_from != @country_to
+      end
             
       private
       

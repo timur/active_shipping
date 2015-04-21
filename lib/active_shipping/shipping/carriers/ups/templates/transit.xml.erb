@@ -15,14 +15,34 @@
    </Request>
    <TransitFrom>
       <AddressArtifactFormat>
-         <PostcodePrimaryLow><%= @postcode_from %></PostcodePrimaryLow>
-         <CountryCode><%= @country_from %></CountryCode>
+         <% if !international? %>        
+           <PostcodePrimaryLow><%= @postcode_from %></PostcodePrimaryLow>
+           <CountryCode><%= @country_from %></CountryCode>
+         <% end %>
+         
+         <% if international? %>
+           <PoliticalDivision2>Mexico DF</PoliticalDivision2>
+           <PoliticalDivision1>DF</PoliticalDivision1>
+           <CountryCode><%= @country_from %></CountryCode>
+           <PostcodePrimaryLow><%= @postcode_from %></PostcodePrimaryLow>
+           <PostcodePrimaryHigh><%= @postcode_from %></PostcodePrimaryHigh>
+         <% end %>         
       </AddressArtifactFormat>
    </TransitFrom>
    <TransitTo>
       <AddressArtifactFormat>
-         <PostcodePrimaryLow><%= @postcode_to %></PostcodePrimaryLow>
-         <CountryCode><%= @country_to %></CountryCode>
+         <% if !international? %>
+           <PostcodePrimaryLow><%= @postcode_to %></PostcodePrimaryLow>
+           <CountryCode><%= @country_to %></CountryCode>
+         <% end %>
+                  
+         <% if international? %>
+           <PoliticalDivision2>Mexico DF</PoliticalDivision2>
+           <PoliticalDivision1>DF</PoliticalDivision1>
+           <CountryCode><%= @country_to %></CountryCode>
+           <PostcodePrimaryLow><%= @postcode_to %></PostcodePrimaryLow>
+           <PostcodePrimaryHigh><%= @postcode_to %></PostcodePrimaryHigh>
+        <% end %>         
       </AddressArtifactFormat>
    </TransitTo>
    <PickupDate><%= @pickup_date %></PickupDate>
@@ -34,4 +54,10 @@
       </UnitOfMeasurement>
       <Weight><%= @weight %></Weight>
    </ShipmentWeight>
+   <% if international? %>
+     <InvoiceLineTotal>
+       <CurrencyCode>USD</CurrencyCode>
+       <MonetaryValue>1.0</MonetaryValue>
+     </InvoiceLineTotal>   
+  <% end %>
 </TimeInTransitRequest>
